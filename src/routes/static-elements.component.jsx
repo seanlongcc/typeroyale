@@ -13,7 +13,7 @@ const StaticElements = () => {
 				rel='noopener noreferrer'
 				target='_blank'
 			>
-				Version 1.0.0
+				GitHub
 			</a>
 			<button className='absolute right-0 p-5'>Log In</button>
 			<Outlet />
