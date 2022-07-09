@@ -4,7 +4,7 @@ const StaticElements = () => {
 	return (
 		<div>
 			<Link className='absolute left-0 text-4xl font-bold p-5' to='/'>
-				TypeRoyal
+				TypeRoyale
 			</Link>
 			<button className='absolute bottom-0 p-5'>Settings</button>
 			<a

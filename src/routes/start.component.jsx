@@ -2,12 +2,12 @@ import { Link, Outlet } from 'react-router-dom';
 
 const Start = () => {
 	return (
-		<div className='grid grid-rows-3 items-center justify-center h-screen'>
-			<h1 className='text-3xl'>Start</h1>
-			<Link className='text-1xl' to='/practice'>
-				Practice
-			</Link>
-			<button className='text-1xl'>Multiplayer</button>
+		<div
+			className='text-2xl grid grid-rows-3 items-center justify-center h-screen 
+		border-8 border-solid border-red-600'
+		>
+			<Link to='/practice'>Practice</Link>
+			<Link to='/multiplayer'>Multiplayer</Link>
 			<Outlet />
 		</div>
 	);
