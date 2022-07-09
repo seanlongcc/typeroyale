@@ -7,7 +7,14 @@ const StaticElements = () => {
 				TypeRoyal
 			</Link>
 			<button className='absolute bottom-0 p-5'>Settings</button>
-			<h1 className='absolute bottom-0 right-0 p-5'>Version 1.0.0</h1>
+			<a
+				className='absolute bottom-0 right-0 p-5'
+				href='https://github.com/seanlongcc/typeroyale'
+				rel='noopener noreferrer'
+				target='_blank'
+			>
+				Version 1.0.0
+			</a>
 			<button className='absolute right-0 p-5'>Log In</button>
 			<Outlet />
 		</div>
