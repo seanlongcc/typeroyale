@@ -1,7 +1,9 @@
+import PracticeModes from '../components/practice/practice-modes.component';
 const Practice = () => {
 	return (
-		<div className='flex items-center justify-center h-screen'>
-			epic practice goes here
+		<div className='flex flex-col items-center justify-center h-screen'>
+			<h1 className='text-3xl'>PRACTICE</h1>
+			<PracticeModes />
 		</div>
 	);
 };
