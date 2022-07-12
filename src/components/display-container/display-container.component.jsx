@@ -1,3 +1,14 @@
-const QuoteBox = (quote, setQuote) => {};
+import PracticeModes from "../practice/practice-modes.component";
 
-export default QuoteBox;
+const DisplayContainer = ({ content }) => {
+  const { quoteBox, stats, textBox } = content;
+  return (
+    <div className="container">
+      {content.map((components) => (
+        <PracticeModes />
+      ))}
+    </div>
+  );
+};
+
+export default DisplayContainer;
