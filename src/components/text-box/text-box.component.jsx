@@ -1,0 +1,53 @@
+import { useState } from 'react';
+
+const validChars =
+	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
+
+const TextBox = () => {
+	//placeholder text for now
+	let passage = 'the quick brown fox jumps';
+
+	const [typed, setTyped] = useState('');
+
+	document.onkeydown = (e) => {
+		if (e.key === 'Backspace') {
+			if (typed.length > 0) {
+				setTyped((typed) => typed.slice(0, -1));
+			}
+		} else if (
+			validChars.includes(e.key) &&
+			//this limits the maximum length of typed characters
+			typed.length <= passage.length - 1
+		) {
+			setTyped((typed) => typed + e.key);
+		}
+	};
+
+	return (
+		<div className='text-3xl'>
+			<div>
+				{/* splits passage into array of single characters and maps each character to an index */}
+				{passage.split('').map((c, i) => {
+					if (typed[i] === c) {
+						return (
+							<span key={i} className='text-green-500'>
+								{c}
+							</span>
+						);
+					} else if (typed[i]) {
+						return (
+							<span key={i} className='text-red-500 bg-transparent bg-red-100'>
+								{c}
+							</span>
+						);
+					} else {
+						//returns the passage if nothing is typed, renders all at once
+						return <span key={i}>{c}</span>;
+					}
+				})}
+			</div>
+		</div>
+	);
+};
+
+export default TextBox;
