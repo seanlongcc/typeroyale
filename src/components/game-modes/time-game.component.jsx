@@ -21,6 +21,11 @@ const TimeGame = () => {
 
 	return (
 		<div>
+			<span
+				className={ready ? 'hidden' : 'flex flex-col items-center text-5xl'}
+			>
+				{mode}
+			</span>
 			<span className='flex flex-col items-center text-5xl'>
 				{ready && <ClockDown gameTime={mode} />}
 			</span>
