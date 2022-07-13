@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../button.component';
+import Button from '../button/button.component';
 
 const PassageGame = () => {
 	const [mode, setMode] = useState('all');

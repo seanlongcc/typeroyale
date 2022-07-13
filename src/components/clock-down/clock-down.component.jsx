@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const Clock = () => {
-	const [time, setTime] = useState(60);
+const ClockDown = ({ gameTime }) => {
+	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -14,4 +14,4 @@ const Clock = () => {
 	return <div>{time}</div>;
 };
 
-export default Clock;
+export default ClockDown;

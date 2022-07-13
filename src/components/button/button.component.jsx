@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const Button = ({ label, size, border, mode, setMode }) => {
 	const styling =
 		//if mode is equivalent to label, set bg to gray
