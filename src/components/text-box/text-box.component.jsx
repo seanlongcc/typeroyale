@@ -25,7 +25,7 @@ const TextBox = () => {
 
 	return (
 		<div className='text-3xl'>
-			<div>
+			<span>
 				{/* splits passage into array of single characters and maps each character to an index */}
 				{passage.split('').map((c, i) => {
 					if (typed[i] === c) {
@@ -45,7 +45,7 @@ const TextBox = () => {
 						return <span key={i}>{c}</span>;
 					}
 				})}
-			</div>
+			</span>
 		</div>
 	);
 };
