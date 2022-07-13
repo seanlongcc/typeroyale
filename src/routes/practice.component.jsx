@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PracticeModes from '../components/practice/practice-modes.component';
+import PracticeModes from '../components/practice-modes/practice-modes.component';
 import Clock from '../components/clock/clock.component';
 import TextBox from '../components/text-box/text-box.component';
 
