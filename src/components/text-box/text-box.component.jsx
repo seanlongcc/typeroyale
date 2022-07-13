@@ -16,7 +16,7 @@ const TextBox = () => {
 			}
 		} else if (
 			validChars.includes(e.key) &&
-			//this limits the maximum length of typed characters
+			//this limits the maximum length of typed characters, -1 since it renders first
 			typed.length <= passage.length - 1
 		) {
 			setTyped((typed) => typed + e.key);
