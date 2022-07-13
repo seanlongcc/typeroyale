@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import PracticeModes from '../components/practice/practice-modes.component';
 import Clock from '../components/clock/clock.component';
-import { useState } from 'react';
+import TextBox from '../components/text-box/text-box.component';
 
 const Practice = () => {
 	const [ready, setReady] = useState(false);
@@ -9,7 +10,9 @@ const Practice = () => {
 		<div className='flex flex-col items-center justify-center h-screen'>
 			{/* conditional rendering: inline If with logical && operator, runs Clock if ready is true */}
 			<span className='text-5xl'>{ready && <Clock />}</span>
-			<span className='text-3xl'>PRACTICE TEXT HERE</span>
+			<span className=''>
+				<TextBox />
+			</span>
 			<span className=''>
 				<PracticeModes />
 			</span>
