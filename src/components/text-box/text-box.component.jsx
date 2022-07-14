@@ -1,13 +1,10 @@
-import { useState } from 'react';
-
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
+const validCharSet = new Set(validChars.split(''));
 
-const TextBox = () => {
+const TextBox = ({ typed, setTyped, setReady }) => {
 	//placeholder text for now
 	let passage = 'the quick brown fox jumps';
-
-	const [typed, setTyped] = useState('');
 
 	document.onkeydown = (e) => {
 		if (e.key === 'Backspace') {
@@ -15,10 +12,13 @@ const TextBox = () => {
 				setTyped((typed) => typed.slice(0, -1));
 			}
 		} else if (
-			validChars.includes(e.key) &&
-			//this limits the maximum length of typed characters, -1 since it renders first
+			validCharSet.has(e.key) &&
+			//limits the maximum length of typed characters, -1 since it renders first
 			typed.length <= passage.length - 1
 		) {
+			if (typed.length === 0) {
+				setReady(true);
+			}
 			setTyped((typed) => typed + e.key);
 		}
 	};
