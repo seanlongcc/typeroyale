@@ -7,7 +7,7 @@ import TextBox from '../text-box/text-box.component';
 let passage = 'the quick brown fox jumps';
 
 const TimeGame = () => {
-	const [mode, setMode] = useState('60');
+	const [mode, setMode] = useState(60);
 	const [ready, setReady] = useState(false);
 	const [typed, setTyped] = useState('');
 	const [customTime, setCustomTime] = useState('');
@@ -16,7 +16,7 @@ const TimeGame = () => {
 		if (parseInt(customTime) <= 604800) {
 			setMode(customTime);
 		} else {
-			setMode('60');
+			setMode(60);
 		}
 	};
 
@@ -37,7 +37,6 @@ const TimeGame = () => {
 			<span className='flex flex-col items-center text-5xl'>
 				{mode !== 'custom' && ready && <ClockDown gameTime={mode} />}
 			</span>
-
 			<span className='text-3xl'>
 				{mode !== 'custom' ? (
 					<TextBox
@@ -53,10 +52,10 @@ const TimeGame = () => {
 			</span>
 			{/* conditional rendering: inline If with logical && operator: run Clock if ready is true */}
 			<span className='grid grid-cols-6'>
-				<Button label={'15'} mode={mode} setMode={setMode} />
-				<Button label={'30'} mode={mode} setMode={setMode} />
-				<Button label={'60'} mode={mode} setMode={setMode} />
-				<Button label={'120'} mode={mode} setMode={setMode} />
+				<Button label={15} mode={mode} setMode={setMode} />
+				<Button label={30} mode={mode} setMode={setMode} />
+				<Button label={60} mode={mode} setMode={setMode} />
+				<Button label={120} mode={mode} setMode={setMode} />
 				{mode === 'custom' ? (
 					<input
 						className='width w-14 outline-none'
