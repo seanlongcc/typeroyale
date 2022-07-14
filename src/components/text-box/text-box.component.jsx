@@ -1,12 +1,8 @@
-const validChars =
-	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
+const validChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
 const validCharSet = new Set(validChars.split(''));
 
-const TextBox = ({ typed, setTyped, setReady }) => {
-	//placeholder text for now
-	let passage = 'the quick brown fox jumps';
-
-	document.onkeydown = (e) => {
+const TextBox = ({ passage, typed, setTyped, setReady }) => {
+	const handleKeyDown = (e) => {
 		if (e.key === 'Backspace') {
 			if (typed.length > 0) {
 				setTyped((typed) => typed.slice(0, -1));
@@ -24,7 +20,7 @@ const TextBox = ({ typed, setTyped, setReady }) => {
 	};
 
 	return (
-		<div className='text-3xl'>
+		<div id="text-box" className='outline-none text-3xl' tabIndex={0} onKeyDown={handleKeyDown}>
 			<span>
 				{/* splits passage into array of single characters and maps each character to an index */}
 				{passage.split('').map((c, i) => {
