@@ -12,12 +12,15 @@ const TimeGame = () => {
   const [typed, setTyped] = useState({val: "", attempted: 0});
   const [customTime, setCustomTime] = useState("");
 
-  const handleOnBlur = () => {
-    if (parseInt(customTime) <= 604800) {
+  const handleEnter = (e, type) => {
+    if(type === "enter" && e.key !== "Enter")
+      return;
+
+    if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
       setMode(customTime);
-    } else {
+
+    else
       setMode("60");
-    }
   };
 
   // ensures text box is focused after mode change
@@ -56,7 +59,8 @@ const TimeGame = () => {
             type='text'
             value={customTime}
             onChange={(e) => setCustomTime(e.target.value)}
-            onBlur={handleOnBlur}
+            onKeyDown={(e) => handleEnter(e, "enter")}
+            onBlur={(e) => handleEnter(e, "blur")}
           />
         }
       </span>
