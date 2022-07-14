@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-const ClockDown = ({ gameTime }) => {
-	const [time, setTime] = useState(gameTime);
+const ClockDown = ({ gameTime, typed, passage }) => {
+  const [time, setTime] = useState(gameTime);
 
-	useEffect(() => {
-		setTimeout(() => {
-			if (time > 0) {
-				setTime(time - 1);
-			}
-		}, 1000);
-	});
+  useEffect(() => {
+    setTimeout(() => {
+      if (time > 0) {
+        setTime(time - 1);
+      }
+    }, 1000);
+  });
 
-	return <div>{time}</div>;
+	// temporary
+	let stats = `wpm: ${(typed.val.length / gameTime).toFixed(2)}\naccuracy:${1 - ((typed.attempted - passage.length) / passage.length)}`
+
+  return <div>{ time === 0 ? stats : time }</div>;
 };
 
 export default ClockDown;
