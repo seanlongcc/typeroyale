@@ -9,15 +9,15 @@ let passage = 'the quick brown fox jumps';
 const TimeGame = () => {
 	const [mode, setMode] = useState(60);
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState('');
+	const [typed, setTyped] = useState({ val: '', attempted: 0 });
 	const [customTime, setCustomTime] = useState('');
 
-	const handleOnBlur = () => {
-		if (parseInt(customTime) <= 604800) {
+	const handleEnter = (e, type) => {
+		if (type === 'enter' && e.key !== 'Enter') return;
+
+		if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
 			setMode(customTime);
-		} else {
-			setMode(60);
-		}
+		else setMode('60');
 	};
 
 	// ensures text box is focused after mode change
@@ -35,8 +35,11 @@ const TimeGame = () => {
 				{mode}
 			</span>
 			<span className='flex flex-col items-center text-5xl'>
-				{mode !== 'custom' && ready && <ClockDown gameTime={mode} />}
+				{mode !== 'custom' && ready && (
+					<ClockDown typed={typed} gameTime={mode} passage={passage} />
+				)}
 			</span>
+
 			<span className='text-3xl'>
 				{mode !== 'custom' ? (
 					<TextBox
@@ -50,22 +53,22 @@ const TimeGame = () => {
 					passage
 				)}
 			</span>
-			{/* conditional rendering: inline If with logical && operator: run Clock if ready is true */}
+
 			<span className='grid grid-cols-6'>
-				<Button label={15} mode={mode} setMode={setMode} />
-				<Button label={30} mode={mode} setMode={setMode} />
-				<Button label={60} mode={mode} setMode={setMode} />
-				<Button label={120} mode={mode} setMode={setMode} />
-				{mode === 'custom' ? (
+				{[15, 30, 60, 120].map((time, i) => (
+					<Button key={i} label={time} mode={mode} setMode={setMode} />
+				))}
+				{mode !== 'custom' ? (
+					<Button label={'custom'} mode={mode} setMode={setMode} />
+				) : (
 					<input
 						className='width w-14 outline-none'
 						type='text'
 						value={customTime}
 						onChange={(e) => setCustomTime(e.target.value)}
-						onBlur={handleOnBlur}
-					></input>
-				) : (
-					<Button label={'custom'} mode={mode} setMode={setMode} />
+						onKeyDown={(e) => handleEnter(e, 'enter')}
+						onBlur={(e) => handleEnter(e, 'blur')}
+					/>
 				)}
 			</span>
 		</div>

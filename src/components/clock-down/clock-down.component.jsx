@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GameStats from '../game-stats/game-stats.component';
 
-const ClockDown = ({ gameTime }) => {
+const ClockDown = ({ gameTime, typed, passage }) => {
 	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
@@ -12,7 +12,15 @@ const ClockDown = ({ gameTime }) => {
 		}, 1000);
 	});
 
-	return <div>{time === 0 ? <GameStats /> : time}</div>;
+	return (
+		<div>
+			{time === 0 ? (
+				<GameStats typed={typed} gameTime={gameTime} passage={passage} />
+			) : (
+				time
+			)}
+		</div>
+	);
 };
 
 export default ClockDown;
