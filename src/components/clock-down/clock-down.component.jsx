@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GameStats from '../game-stats/game-stats.component';
 
-const ClockDown = ({ gameTime }) => {
+const ClockDown = ({ gameTime, typed, passage }) => {
 	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
@@ -12,7 +12,12 @@ const ClockDown = ({ gameTime }) => {
 		}, 1000);
 	});
 
-	return <div>{time === 0 ? <GameStats /> : time}</div>;
+	// temporary
+	let stats = `wpm: ${(typed.val.length / gameTime).toFixed(2)}\naccuracy:${
+		1 - (typed.attempted - passage.length) / passage.length
+	}`;
+
+	return <div>{time === 0 ? stats : time}</div>;
 };
 
 export default ClockDown;
