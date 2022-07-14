@@ -9,17 +9,9 @@ const validChars =
 const TimeGame = () => {
   const [mode, setMode] = useState("60");
   const [ready, setReady] = useState(false);
-  const [firstChar, setFirstChar] = useState("");
 
-  //second parameter of [mode] makes it conditionally fire and depends on mode, start clock
-  useEffect(() => {
-    document.onkeydown = (e) => {
-      if (validChars.includes(e.key)) {
-        setReady(true);
-        setFirstChar(e.key);
-      }
-    };
-  }, [mode]);
+  // 
+  const [typed, setTyped] = useState("");
 
   return (
     <div>
@@ -31,7 +23,7 @@ const TimeGame = () => {
       <span className="flex flex-col items-center text-5xl">
         {ready && <ClockDown gameTime={mode} />}
       </span>
-      <span>{<TextBox firstChar={firstChar} />}</span>
+      <span>{<TextBox typed={typed} setTyped={setTyped} setReady={setReady}/>}</span>
       {/* conditional rendering: inline If with logical && operator: run Clock if ready is true */}
       <span className="grid grid-cols-5">
         <Button label={"15"} mode={mode} setMode={setMode} />
