@@ -12,12 +12,15 @@ const ClockDown = ({ gameTime, typed, passage }) => {
 		}, 1000);
 	});
 
-	// temporary
-	let stats = `wpm: ${(typed.val.length / gameTime).toFixed(2)}\naccuracy:${
-		1 - (typed.attempted - passage.length) / passage.length
-	}`;
-
-	return <div>{time === 0 ? stats : time}</div>;
+	return (
+		<div>
+			{time === 0 ? (
+				<GameStats typed={typed} gameTime={gameTime} passage={passage} />
+			) : (
+				time
+			)}
+		</div>
+	);
 };
 
 export default ClockDown;

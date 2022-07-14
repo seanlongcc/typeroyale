@@ -7,7 +7,7 @@ import TextBox from '../text-box/text-box.component';
 let passage = 'the quick brown fox jumps';
 
 const TimeGame = () => {
-	const [mode, setMode] = useState('60');
+	const [mode, setMode] = useState(60);
 	const [ready, setReady] = useState(false);
 	const [typed, setTyped] = useState({ val: '', attempted: 0 });
 	const [customTime, setCustomTime] = useState('');
@@ -55,7 +55,7 @@ const TimeGame = () => {
 			</span>
 
 			<span className='grid grid-cols-6'>
-				{['15', '30', '60', '120'].map((time, i) => (
+				{[15, 30, 60, 120].map((time, i) => (
 					<Button key={i} label={time} mode={mode} setMode={setMode} />
 				))}
 				{mode !== 'custom' ? (
