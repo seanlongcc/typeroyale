@@ -1,4 +1,4 @@
-import PracticeModes from '../components/practice-modes/practice-modes.component';
+import PracticeModes from '../components/practice-modes/practice-modes';
 
 const Practice = () => {
 	return (
