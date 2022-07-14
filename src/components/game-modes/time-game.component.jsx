@@ -6,8 +6,6 @@ import TextBox from '../text-box/text-box.component';
 const TimeGame = () => {
 	const [mode, setMode] = useState('60');
 	const [ready, setReady] = useState(false);
-
-	//
 	const [typed, setTyped] = useState('');
 
 	return (
