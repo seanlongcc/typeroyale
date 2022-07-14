@@ -6,10 +6,10 @@ const Button = ({ label, size, border, mode, setMode }) => {
 			: `hover:text-gray-400 ${size} ${border}`;
 
 	return (
-		// on click, set the mode to current label of button, styling is run after
-			<button className={styling} onClick={() => setMode(label)}>
-				{label}
-			</button>
+		//on click, set the mode to current label of button, styling is run after
+		<button className={styling} onClick={() => setMode(label)}>
+			{label}
+		</button>
 	);
 };
 
