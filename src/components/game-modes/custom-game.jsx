@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../button/button.component';
+import Button from '../button/button';
 
 const CustomGame = () => {
 	const [mode, setMode] = useState('change');

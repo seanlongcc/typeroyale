@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import GameStats from '../game-stats/game-stats.component';
+import GameStats from '../game-stats/game-stats';
 
 const ClockDown = ({ gameTime, typed, passage }) => {
 	const [time, setTime] = useState(gameTime);

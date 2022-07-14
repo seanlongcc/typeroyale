@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import StaticElements from './routes/static-elements.component';
-import Start from './routes/start.component';
-import Practice from './routes/practice.component';
-import Multiplayer from './routes/multiplayer.component';
+import StaticElements from './routes/static-elements';
+import Start from './routes/start';
+import Practice from './routes/practice';
+import Multiplayer from './routes/multiplayer';
 
 const App = () => {
 	return (

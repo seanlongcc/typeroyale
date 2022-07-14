@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import Button from '../button/button.component';
-import TimeGame from '../game-modes/time-game.component';
-import WordsGame from '../game-modes/words-game.component';
-import PassageGame from '../game-modes/passage-game.component';
-import CustomGame from '../game-modes/custom-game.component';
+import Button from '../button/button';
+import TimeGame from '../game-modes/time-game';
+import WordsGame from '../game-modes/words-game';
+import PassageGame from '../game-modes/passage-game';
+import CustomGame from '../game-modes/custom-game.jsx';
 
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');

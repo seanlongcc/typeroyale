@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Button from '../button/button.component';
-import ClockDown from '../clock-down/clock-down.component';
-import TextBox from '../text-box/text-box.component';
+import Button from '../button/button';
+import ClockDown from '../clock-down/clock-down';
+import TextBox from '../text-box/text-box';
 
 // temporary
 let passage = 'the quick brown fox jumps';
