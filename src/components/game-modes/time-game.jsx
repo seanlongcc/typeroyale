@@ -14,7 +14,6 @@ const TimeGame = () => {
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
-
 		if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
 			setMode(customTime);
 		else setMode('60');
@@ -24,6 +23,7 @@ const TimeGame = () => {
 	useEffect(() => {
 		if (document.getElementById('text-box') && mode !== 'custom') {
 			document.getElementById('text-box').focus();
+			console.log('focused');
 		}
 	}, [mode]);
 
@@ -68,6 +68,7 @@ const TimeGame = () => {
 						onChange={(e) => setCustomTime(e.target.value)}
 						onKeyDown={(e) => handleEnter(e, 'enter')}
 						onBlur={(e) => handleEnter(e, 'blur')}
+						autoFocus
 					/>
 				)}
 			</span>
