@@ -23,7 +23,6 @@ const TimeGame = () => {
 	useEffect(() => {
 		if (document.getElementById('text-box') && mode !== 'custom') {
 			document.getElementById('text-box').focus();
-			console.log('focused');
 		}
 	}, [mode]);
 
