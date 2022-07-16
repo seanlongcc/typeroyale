@@ -7,11 +7,16 @@ const validCharSet = new Set(validChars.split(''));
 const TextBox = ({ passage, typed, setTyped, setReady }) => {
 	const handleKeyDown = (e) => {
 		if (e.key === 'Backspace') {
-			if (typed.val.length > 0)
-				setTyped({ val: typed.val.slice(0, -1), attempted: typed.attempted });
+			if (typed.val.length > 0) {
+				setTyped({
+					val: typed.val.slice(0, -1),
+					attempted: typed.attempted - 1,
+				});
+			}
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
-			if (typed.val.length === 0) setReady(true);
-
+			if (typed.val.length === 0) {
+				setReady(true);
+			}
 			setTyped({ val: typed.val + e.key, attempted: typed.attempted + 1 });
 		}
 	};
@@ -28,8 +33,8 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 				{passage.split('').map((c, i) => {
 					if (typed.val[i] === c) {
 						return (
-							<span>
-								<span key={i} className='text-green-500'>
+							<span key={i}>
+								<span className='text-green-500'>
 									{c}
 									{i === typed.attempted - 1 && <Caret />}
 								</span>
@@ -37,11 +42,8 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 						);
 					} else if (typed.val[i]) {
 						return (
-							<span>
-								<span
-									key={i}
-									className='text-red-500 bg-transparent bg-red-100'
-								>
+							<span key={i}>
+								<span className='text-red-500 bg-transparent bg-red-100'>
 									{c}
 									{i === typed.attempted - 1 && <Caret />}
 								</span>
@@ -50,8 +52,8 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 					} else {
 						//returns the passage if nothing is typed, renders all at once
 						return (
-							<span>
-								<span key={i}>
+							<span key={i}>
+								<span>
 									{typed.attempted === 0 && i === 0 && <Caret />}
 									{c}
 								</span>
