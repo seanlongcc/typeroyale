@@ -6,7 +6,6 @@ const validChars =
 const validCharSet = new Set(validChars.split(""));
 
 const TextBox = ({ passage, typed, setTyped, setReady }) => {
-  const [correctKeys, setCorrectKeys] = useState(0);
   const handleKeyDown = (e) => {
     if (e.key === "Backspace") {
       if (typed.val.length > 0) {
@@ -34,8 +33,6 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
         {/* splits passage into array of single characters and maps each character to an index */}
         {passage.split("").map((c, i) => {
           if (typed.val[i] === c) {
-            setCorrectKeys((correctKeys) => correctKeys + 1);
-            console.log(correctKeys);
             return (
               <span key={i}>
                 <span className='text-green-500'>
