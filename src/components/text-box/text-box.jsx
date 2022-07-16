@@ -10,14 +10,14 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 			if (typed.val.length > 0) {
 				setTyped({
 					val: typed.val.slice(0, -1),
-					attempted: typed.attempted - 1,
+					attempted: typed.keysPressed - 1,
 				});
 			}
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
 			if (typed.val.length === 0) {
 				setReady(true);
 			}
-			setTyped({ val: typed.val + e.key, attempted: typed.attempted + 1 });
+			setTyped({ val: typed.val + e.key, attempted: typed.keysPressed + 1 });
 		}
 	};
 
@@ -36,7 +36,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 							<span key={i}>
 								<span className='text-green-500'>
 									{c}
-									{i === typed.attempted - 1 && <Caret />}
+									{i === typed.keysPressed - 1 && <Caret />}
 								</span>
 							</span>
 						);
@@ -45,7 +45,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 							<span key={i}>
 								<span className='text-red-500 bg-transparent bg-red-100'>
 									{c}
-									{i === typed.attempted - 1 && <Caret />}
+									{i === typed.keysPressed - 1 && <Caret />}
 								</span>
 							</span>
 						);
@@ -54,7 +54,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 						return (
 							<span key={i}>
 								<span>
-									{typed.attempted === 0 && i === 0 && <Caret />}
+									{typed.keysPressed === 0 && i === 0 && <Caret />}
 									{c}
 								</span>
 							</span>

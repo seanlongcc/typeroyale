@@ -9,7 +9,7 @@ let passage = 'the quick brown fox jumps';
 const TimeGame = () => {
 	const [mode, setMode] = useState(60);
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState({ val: '', attempted: 0 });
+	const [typed, setTyped] = useState({ val: '', keysPressed: 0 });
 	const [customTime, setCustomTime] = useState('');
 
 	const handleEnter = (e, type) => {
