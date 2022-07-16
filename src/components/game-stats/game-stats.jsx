@@ -1,6 +1,6 @@
 const GameStats = ({ gameTime, typed, passage }) => {
 	//bro this is working very wrong but its a start
-	let stats = `wpm: ${(typed.val.length / gameTime).toFixed(2)}\naccuracy:${
+	let stats = `wpm: ${(typed.val.length / gameTime).toFixed(2)}\n accuracy:${
 		1 - (typed.attempted - passage.length) / passage.length
 	}`;
 
