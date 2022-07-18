@@ -10,21 +10,21 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 			if (typed.val.length > 0) {
 				setTyped({
 					val: typed.val.slice(0, -1),
-					attempted: typed.keysPressed - 1,
+					keysPressed: typed.keysPressed - 1,
 				});
 			}
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
 			if (typed.val.length === 0) {
 				setReady(true);
 			}
-			setTyped({ val: typed.val + e.key, attempted: typed.keysPressed + 1 });
+			setTyped({ val: typed.val + e.key, keysPressed: typed.keysPressed + 1 });
 		}
 	};
 
 	return (
 		<div
 			id='text-box'
-			className='outline-none text-3x'
+			className='outline-none text-3xl box-content max-w-screen-md max-h-48 border-2 border-blue-500'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
