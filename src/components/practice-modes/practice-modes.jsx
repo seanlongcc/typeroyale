@@ -8,6 +8,8 @@ import CustomGame from '../game-modes/custom-game.jsx';
 
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
+	const [ready, setReady] = useState(false);
+	const [typed, setTyped] = useState({ val: '', keysPressed: 0 });
 
 	//time is default since state starts as time
 	const renderMode = () => {
@@ -15,7 +17,14 @@ const PracticeModes = () => {
 			case 'words':
 				return <WordsGame />;
 			case 'time':
-				return <TimeGame />;
+				return (
+					<TimeGame
+						ready={ready}
+						setReady={setReady}
+						typed={typed}
+						setTyped={setTyped}
+					/>
+				);
 			case 'passage':
 				return <PassageGame />;
 			case 'custom':
@@ -27,12 +36,31 @@ const PracticeModes = () => {
 
 	return (
 		<div>
-			<span>{renderMode()}</span>
+			<span tabIndex={0}>{renderMode()}</span>
 			<span className='grid grid-cols-4 '>
-				<Button label={'time'} mode={mode} setMode={setMode} />
-				<Button label={'words'} mode={mode} setMode={setMode} />
-				<Button label={'passage'} mode={mode} setMode={setMode} />
-				<Button label={'custom'} mode={mode} setMode={setMode} />
+				{['time', 'words', 'passage', 'custom'].map((label, i) => (
+					<Button
+						key={i}
+						label={label}
+						mode={mode}
+						setMode={setMode}
+						{...setReady}
+						{...setTyped}
+					/>
+				))}
+			</span>
+			<span className='flex flex-col items-center'>
+				<button
+					className='text-2xl hover:text-gray-400 hover:animate-pulse'
+					onClick={() => {
+						setReady(false);
+						setTyped({ val: '', keysPressed: 0 });
+						//focuses the <Textbox/> component through its id
+						document.getElementById('text-box').focus();
+					}}
+				>
+					Restart
+				</button>
 			</span>
 		</div>
 	);

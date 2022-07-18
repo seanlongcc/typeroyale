@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import GameStats from '../game-stats/game-stats';
 
-const ClockDown = ({ gameTime, typed, passage }) => {
+const ClockDown = ({ gameTime, typed, passage, setReady }) => {
 	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
 		setTimeout(() => {
 			if (time > 0) {
 				setTime(time - 1);
+			} else {
+				setReady(false);
 			}
 		}, 1000);
 	});
