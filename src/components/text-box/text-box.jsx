@@ -24,7 +24,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 	return (
 		<div
 			id='text-box'
-			className='outline-none text-3xl box-content max-w-screen-md max-h-48 border-2 border-blue-500'
+			className='outline-none text-3xl box-content max-w-screen-md max-h-44 border-2 border-blue-500'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
@@ -36,7 +36,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 							<span key={i}>
 								<span className='text-green-500'>
 									{c}
-									{i === typed.keysPressed - 1 && <Caret />}
+									{i === typed.val.length - 1 && <Caret />}
 								</span>
 							</span>
 						);
@@ -45,7 +45,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 							<span key={i}>
 								<span className='text-red-500 bg-transparent bg-red-100'>
 									{c}
-									{i === typed.keysPressed - 1 && <Caret />}
+									{i === typed.val.length - 1 && <Caret />}
 								</span>
 							</span>
 						);
@@ -54,7 +54,7 @@ const TextBox = ({ passage, typed, setTyped, setReady }) => {
 						return (
 							<span key={i}>
 								<span>
-									{typed.keysPressed === 0 && i === 0 && <Caret />}
+									{typed.val.length === 0 && i === 0 && <Caret />}
 									{c}
 								</span>
 							</span>
