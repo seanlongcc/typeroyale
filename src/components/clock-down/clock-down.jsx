@@ -13,7 +13,7 @@ const ClockDown = ({ gameTime, typed, passage }) => {
 	});
 
 	return (
-		<div>
+		<div className='text-9xl'>
 			{time === 0 ? (
 				<GameStats typed={typed} gameTime={gameTime} passage={passage} />
 			) : (

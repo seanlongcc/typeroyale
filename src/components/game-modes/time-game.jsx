@@ -4,7 +4,8 @@ import ClockDown from '../clock-down/clock-down';
 import TextBox from '../text-box/text-box';
 
 // temporary
-let passage = 'the quick brown fox jumps';
+let passage =
+	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 const TimeGame = () => {
 	const [mode, setMode] = useState(60);
@@ -33,11 +34,11 @@ const TimeGame = () => {
 	return (
 		<div>
 			<span
-				className={ready ? 'hidden' : 'flex flex-col items-center text-5xl'}
+				className={ready ? 'hidden' : 'flex flex-col items-center text-9xl'}
 			>
 				{mode}
 			</span>
-			<span className='flex flex-col items-center text-5xl'>
+			<span className='flex flex-col items-center '>
 				{mode !== 'custom' && ready && (
 					<ClockDown typed={typed} gameTime={mode} passage={passage} />
 				)}
