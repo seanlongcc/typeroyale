@@ -10,8 +10,9 @@ const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
 	const [typed, setTyped] = useState({ val: '', keysPressed: 0 });
+	const [caps, setCaps] = useState(false);
 
-	//time is default since state starts as time
+	// time is default since state starts as time
 	const renderMode = () => {
 		switch (mode) {
 			case 'words':
@@ -34,10 +35,24 @@ const PracticeModes = () => {
 		}
 	};
 
+	// checks if caps is on
+	onkeydown = (e) => {
+		if (e.getModifierState('CapsLock')) {
+			setCaps(true);
+		} else {
+			setCaps(false);
+		}
+	};
+
 	return (
-		<div>
-			<span tabIndex={0}>{renderMode()}</span>
-			<span className='grid grid-cols-4 '>
+		<div className='flex flex-col items-center'>
+			<span className='text-5xl animate-bounce'>
+				{caps && <span>Caps Lock</span>}
+			</span>
+			<span tabIndex={0} className='outline-none'>
+				{renderMode()}
+			</span>
+			<span className='grid grid-cols-4 text-lg'>
 				{['time', 'words', 'passage', 'custom'].map((label, i) => (
 					<Button
 						key={i}
@@ -51,7 +66,7 @@ const PracticeModes = () => {
 			</span>
 			<span className='flex flex-col items-center'>
 				<button
-					className='text-2xl hover:text-gray-400 hover:animate-pulse'
+					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
 					onClick={() => {
 						setReady(false);
 						setTyped({ val: '', keysPressed: 0 });
@@ -61,6 +76,9 @@ const PracticeModes = () => {
 				>
 					Restart
 				</button>
+			</span>
+			<span className='flex flex-col items-center'>
+				key + enter - restart test
 			</span>
 		</div>
 	);

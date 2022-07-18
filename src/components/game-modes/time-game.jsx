@@ -26,7 +26,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 	}, [mode]);
 
 	return (
-		<div>
+		<div className='flex flex-col items-center'>
 			<span
 				className={ready ? 'hidden' : 'flex flex-col items-center text-9xl'}
 			>
@@ -51,7 +51,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 					mode={mode}
 				/>
 			</span>
-			<span className='grid grid-cols-6 absolute-center'>
+			<span className='grid grid-cols-6 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
 						key={i}
