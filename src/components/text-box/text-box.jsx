@@ -6,18 +6,17 @@ const validCharSet = new Set(validChars.split(''));
 
 const TextBox = ({ passage, typed, setTyped, setReady }) => {
 	const handleKeyDown = (e) => {
-		if (e.key === 'Backspace') {
-			if (typed.val.length > 0) {
-				setTyped({
-					val: typed.val.slice(0, -1),
-					keysPressed: typed.keysPressed - 1,
-				});
-			}
+		if (e.key === 'Backspace' && typed.val.length > 0) {
+			setTyped({val: typed.val.slice(0, -1), keysPressed: [...typed.keysPressed, {key: e.key, time: new Date()}], done: false});
+
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
-			if (typed.val.length === 0) {
-				setReady(true);
-			}
-			setTyped({ val: typed.val + e.key, keysPressed: typed.keysPressed + 1 });
+				if (typed.val.length === 0)
+					setReady(true);
+
+				if(typed.val + e.key === passage)
+					setTyped({val: typed.val, keysPressed: typed.keysPressed, done: true});
+
+				setTyped({val: typed.val + e.key, keysPressed: [...typed.keysPressed, {key: e.key, time: new Date()}], done: false});
 		}
 	};
 

@@ -9,7 +9,7 @@ import CustomGame from '../game-modes/custom-game.jsx';
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState({ val: '', keysPressed: 0 });
+	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false});
 	const [caps, setCaps] = useState(false);
 
 	// time is default since state starts as time
@@ -59,8 +59,8 @@ const PracticeModes = () => {
 						label={label}
 						mode={mode}
 						setMode={setMode}
-						{...setReady}
-						{...setTyped}
+						setReady={setReady}
+						setTyped={setTyped}
 					/>
 				))}
 			</span>
@@ -69,16 +69,12 @@ const PracticeModes = () => {
 					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
 					onClick={() => {
 						setReady(false);
-						setTyped({ val: '', keysPressed: 0 });
-						//focuses the <Textbox/> component through its id
+						setTyped({ val: '', keysPressed: [], done: false });
 						document.getElementById('text-box').focus();
 					}}
 				>
-					Restart
+					tab + enter - restart test
 				</button>
-			</span>
-			<span className='flex flex-col items-center'>
-				key + enter - restart test
 			</span>
 		</div>
 	);

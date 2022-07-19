@@ -12,7 +12,7 @@ const Button = ({ label, size, border, mode, setMode, setReady, setTyped }) => {
 			onClick={() => {
 				setMode(label);
 				setReady(false);
-				setTyped({ val: '', keysPressed: 0 });
+				setTyped({ val: '', keysPressed: [] });
 			}}
 			//makes the buttons not tabbable
 			tabIndex={-1}
