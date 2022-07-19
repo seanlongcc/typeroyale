@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
-import GameStats from '../game-stats/game-stats';
 
-const ClockDown = ({ gameTime, typed, passage, setReady }) => {
+const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
-		setTimeout(() => {
-			if (time > 0) {
-				setTime(time - 1);
-			} else {
-				setReady(false);
-			}
+		if(ready) {
+			setTimeout(() => {
+				if (time > 0) {
+					setTime(time - 1);
+				} else {
+					setTyped({...typed, done: true})
+					setReady(false);
+				}
 		}, 1000);
-	});
+		}
+	}, [ready, time]);
+
+	useEffect(() => {setTime(gameTime)}, [gameTime])
 
 	return (
 		<div className='text-9xl'>
-			{time === 0 ? (
-				<GameStats typed={typed} gameTime={gameTime} passage={passage} />
-			) : (
-				time
-			)}
+			{ready ? time : gameTime || "custom"}
 		</div>
 	);
 };
