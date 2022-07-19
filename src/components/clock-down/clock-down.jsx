@@ -4,25 +4,23 @@ const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 	const [time, setTime] = useState(gameTime);
 
 	useEffect(() => {
-		if(ready) {
+		if (ready) {
 			setTimeout(() => {
 				if (time > 0) {
 					setTime(time - 1);
 				} else {
-					setTyped({...typed, done: true})
+					setTyped({ ...typed, done: true });
 					setReady(false);
 				}
-		}, 1000);
+			}, 1000);
 		}
-	}, [ready, time]);
+	}, [ready, setReady, setTyped, time, typed]);
 
-	useEffect(() => {setTime(gameTime)}, [gameTime])
+	useEffect(() => {
+		setTime(gameTime);
+	}, [gameTime]);
 
-	return (
-		<div className='text-9xl'>
-			{ready ? time : gameTime || "custom"}
-		</div>
-	);
+	return <div className='text-9xl'>{ready ? time : gameTime || 'custom'}</div>;
 };
 
 export default ClockDown;

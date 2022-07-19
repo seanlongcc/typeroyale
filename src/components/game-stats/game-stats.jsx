@@ -7,26 +7,19 @@ const GameStats = ({ gameTime, typed, passage }) => {
 		let total = 0;
 
 		typed.keysPressed.forEach((elem) => {
-			if(elem.key === 'Backspace'){
+			if (elem.key === 'Backspace') {
 				ptr -= 1;
 				return;
 			}
 
-			if(elem.key === passage[ptr])
-				correct += 1
+			if (elem.key === passage[ptr]) correct += 1;
 
 			ptr += 1;
 			total += 1;
 		});
 
 		return [correct, total];
-	}
-
-
-	//bro this is working very wrong but its a start
-	//   const stats = `wpm: ${wpm}\n cpm: ${cps}\n accuracy:${
-	//     1 - (typed.keysPressed - passage.length) / passage.length
-	//   }`;
+	};
 
 	return (
 		<div className='text-6xl grid grid-rows-3 py-2'>
@@ -34,7 +27,7 @@ const GameStats = ({ gameTime, typed, passage }) => {
 			<span>cps: {cps}</span>
 			<span>chars typed: {acc()[1]}</span>
 			<span>incorrect chars: {acc()[1] - acc()[0]}</span>
-			<span>acc: {(acc()[0] / acc()[1]).toFixed(2)}</span>
+			<span>acc: {((acc()[0] / acc()[1]) * 100).toFixed(2)}%</span>
 		</div>
 	);
 };
