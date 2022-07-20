@@ -50,6 +50,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
     }
   };
 
+  console.log(document.hasFocus("text-box"));
   return (
     <div
       id='text-box'
@@ -87,7 +88,10 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
               return (
                 <span key={i}>
                   <span>
-                    {typed.val.length === 0 && i === 0 && <Caret />}
+                    {document.hasFocus("text-box") &&
+                      typed.val.length === 0 &&
+                      i === 0 && <Caret />}
+
                     {c}
                   </span>
                 </span>
