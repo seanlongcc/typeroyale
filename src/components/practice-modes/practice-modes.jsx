@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { waitFor } from '@testing-library/react';
 
 import Button from '../button/button';
 import TimeGame from '../game-modes/time-game';
@@ -9,7 +10,7 @@ import CustomGame from '../game-modes/custom-game.jsx';
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false});
+	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
 	const [caps, setCaps] = useState(false);
 
 	// time is default since state starts as time
@@ -44,6 +45,13 @@ const PracticeModes = () => {
 		}
 	};
 
+	const nextGame = async () => {
+		setReady(false);
+		setTyped({ val: '', keysPressed: [], done: false });
+		await waitFor(() => document.querySelector('text-box'));
+		document.getElementById('text-box').focus();
+	};
+
 	return (
 		<div className='flex flex-col items-center'>
 			<span className='text-5xl animate-bounce'>
@@ -64,11 +72,22 @@ const PracticeModes = () => {
 					/>
 				))}
 			</span>
-			<span className='flex flex-col items-center'>
+			<span className={typed.done ? 'flex flex-col items-center' : 'hidden'}>
+				<button
+					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
+					onClick={() => {
+						nextGame();
+					}}
+				>
+					tab + enter - next test
+				</button>
+			</span>
+			<span className={!typed.done ? 'flex flex-col items-center' : 'hidden'}>
 				<button
 					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
 					onClick={() => {
 						setReady(false);
+						setTyped({ ...typed, done: false });
 						setTyped({ val: '', keysPressed: [], done: false });
 						document.getElementById('text-box').focus();
 					}}
@@ -76,6 +95,7 @@ const PracticeModes = () => {
 					tab + enter - restart test
 				</button>
 			</span>
+			<span></span>
 		</div>
 	);
 };
