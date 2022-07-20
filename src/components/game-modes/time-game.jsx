@@ -31,6 +31,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 		}
 	}, [mode]);
 
+
 	return (
 		<div className='flex flex-col items-center'>
 			<span className='flex flex-col items-center'>
@@ -53,6 +54,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 					typed={typed}
 					setTyped={setTyped}
 					setReady={setReady}
+					ready={ready}
 					mode={mode}
 				/>
 			</span>

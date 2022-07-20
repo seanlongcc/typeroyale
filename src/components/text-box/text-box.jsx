@@ -1,30 +1,36 @@
 import Caret from '../caret/caret';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const MAX_CHARS = 150;
 const validChars ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
 const validCharSet = new Set(validChars.split(''));
 
-const TextBox = ({ passage, typed, setTyped, setReady}) => {
+const TextBox = ({ passage, typed, setTyped, ready, setReady}) => {
 
-	const updatePtr = (end) => {
+	const updatePtr = useCallback((end) => {
 		let ptr = end + MAX_CHARS;
 		while(passage[ptr] !== " " && ptr < passage.length)
 			ptr++;
 
 		return {start: end, end: ptr}
-	};
+	}, [passage]);
 
 	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
+
+	useEffect(() => {
+		if(!ready)
+			setPassagePtr(updatePtr(0));
+	}, [ready, setPassagePtr, updatePtr]);
+
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Backspace' && typed.val.length > 0) {
 			setTyped({val: typed.val.slice(0, -1), keysPressed: [...typed.keysPressed, {key: e.key, time: new Date()}], done: false});
 
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
-				console.log(typed.val.length + 1, passagePtr);
-				if (typed.val.length === 0)
+				if (typed.val.length === 0) {
 					setReady(true);
+				}
 
 				setTyped((t) => {
 					return ({val: t.val + e.key, keysPressed: [...t.keysPressed, {key: e.key, time: new Date()}], done: (t.val + e.key) === passage})
