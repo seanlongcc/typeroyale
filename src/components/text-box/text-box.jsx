@@ -1,5 +1,5 @@
 import Caret from '../caret/caret';
-import { useEffect, useCallback, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const MAX_CHARS = 150;
 const validChars =
@@ -54,7 +54,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	return (
 		<div
 			id='text-box'
-			className='outline-none text-3xl box-content max-w-screen-md max-h-44 border-2 border-blue-500'
+			className='outline-none text-3xl box-content max-w-screen-md max-h-28 border-2 border-blue-500'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>

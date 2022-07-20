@@ -24,7 +24,6 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
-		console.log('effect', mode);
 		if (document.getElementById('text-box') && mode !== 'custom') {
 			document.getElementById('text-box').focus();
 		}

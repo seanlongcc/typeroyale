@@ -3,18 +3,17 @@ import { useEffect, useState } from 'react';
 const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 	const [time, setTime] = useState(gameTime);
 
+	if (time <= 0 && ready) setTyped({ ...typed, done: true });
+
 	useEffect(() => {
-		if (ready) {
-			setTimeout(() => {
-				if (time > 0) {
-					setTime(time - 1);
-				} else {
-					setTyped({ ...typed, done: true });
-					setReady(false);
-				}
-			}, 1000);
+		if (!ready) setTime(gameTime);
+		else {
+			const timer = setInterval(() => setTime((t) => t - 1), 1000);
+			return () => {
+				clearInterval(timer);
+			};
 		}
-	}, [ready, setReady, setTyped, time, typed]);
+	}, [ready, setReady, gameTime, setTime]);
 
 	useEffect(() => {
 		setTime(gameTime);
