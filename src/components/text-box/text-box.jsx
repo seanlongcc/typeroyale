@@ -1,35 +1,52 @@
 import Caret from '../caret/caret';
+import { useState } from 'react';
 
-const validChars =
-	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
+const MAX_CHARS = 150;
+const validChars ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
 const validCharSet = new Set(validChars.split(''));
 
-const TextBox = ({ passage, typed, setTyped, setReady }) => {
+const TextBox = ({ passage, typed, setTyped, setReady}) => {
+
+	const updatePtr = (end) => {
+		let ptr = end + MAX_CHARS;
+		while(passage[ptr] !== " " && ptr < passage.length)
+			ptr++;
+
+		return {start: end, end: ptr}
+	};
+
+	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
+
 	const handleKeyDown = (e) => {
 		if (e.key === 'Backspace' && typed.val.length > 0) {
 			setTyped({val: typed.val.slice(0, -1), keysPressed: [...typed.keysPressed, {key: e.key, time: new Date()}], done: false});
 
 		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
+				console.log(typed.val.length + 1, passagePtr);
 				if (typed.val.length === 0)
 					setReady(true);
 
-				if(typed.val + e.key === passage)
-					setTyped({val: typed.val, keysPressed: typed.keysPressed, done: true});
+				setTyped((t) => {
+					return ({val: t.val + e.key, keysPressed: [...t.keysPressed, {key: e.key, time: new Date()}], done: (t.val + e.key) === passage})
+				});
 
-				setTyped({val: typed.val + e.key, keysPressed: [...typed.keysPressed, {key: e.key, time: new Date()}], done: false});
+				if( (typed.val.length + 1 === passagePtr.end) && (typed.val.length !== passagePtr.start))
+					setPassagePtr(updatePtr(passagePtr.end));
+				
 		}
 	};
 
 	return (
 		<div
 			id='text-box'
-			className='outline-none text-3xl box-content max-w-screen-md max-h-44 border-2 border-blue-500'
+			className='outline-none text-3xl box-content max-w-screen-md max-h-28 border-2 border-blue-500'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
 			<span>
 				{/* splits passage into array of single characters and maps each character to an index */}
-				{passage.split('').map((c, i) => {
+				{passage.slice(passagePtr.start, passagePtr.end).split('').map((c, i) => {
+					i += passagePtr.start;
 					if (typed.val[i] === c) {
 						return (
 							<span key={i}>

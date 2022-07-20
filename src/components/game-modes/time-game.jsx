@@ -5,9 +5,11 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 
 // temporary
-let passage =
-	'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ';
-// et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+let passage =`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+
 const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState("");
@@ -15,7 +17,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') 
 			return;
-			
+
 		if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
 			setMode(customTime);
 	
@@ -24,7 +26,6 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
-		console.log("effect", mode)
 		if (document.getElementById('text-box') && mode !== 'custom') {
 			document.getElementById('text-box').focus();
 		}

@@ -7,7 +7,6 @@ const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 		setTyped({...typed, done: true})
 
 	useEffect(() => {
-		console.log("effect!");
 		if(ready) {
 			setTimeout(() => {
 				if (time > 0) {
