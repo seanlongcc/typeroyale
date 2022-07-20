@@ -11,7 +11,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 		(end) => {
 			let ptr = end + MAX_CHARS;
 			while (passage[ptr] !== ' ' && ptr < passage.length) ptr++;
-
 			return { start: end, end: ptr };
 		},
 		[passage]
