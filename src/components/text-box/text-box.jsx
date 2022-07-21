@@ -7,6 +7,8 @@ const validChars =
 const validCharSet = new Set(validChars.split(""));
 
 const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
+  const [textFocused, setTextFocused] = useState(false);
+  const [click, setClick] = useState(false);
   const updatePtr = useCallback(
     (end) => {
       let ptr = end + MAX_CHARS;
@@ -15,7 +17,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
     },
     [passage]
   );
-
   const [passagePtr, setPassagePtr] = useState(updatePtr(0));
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
   }, [ready, setPassagePtr, updatePtr]);
 
   const handleKeyDown = (e) => {
+    console.log(typed.val);
     if (e.key === "Backspace" && typed.val.length > 0) {
       setTyped({
         val: typed.val.slice(0, -1),
@@ -50,7 +52,26 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
     }
   };
 
-  console.log(document.hasFocus("text-box"));
+  // functon to check if text-box is focused
+  const isFocused = () => {
+    if (document.getElementById("text-box") === document.activeElement) {
+      setTextFocused(true);
+      setClick(false);
+    } else {
+      setTextFocused(false);
+    }
+  };
+
+  // changes state when clicking button
+  onmouseup = (e) => {
+    setClick(!click);
+  };
+
+  // calls inFocused function whenever a mouse click is registered
+  useEffect(() => {
+    isFocused();
+  }, [click, typed]);
+
   return (
     <div
       id='text-box'
@@ -70,7 +91,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
                 <span key={i}>
                   <span className='text-green-500'>
                     {c}
-                    {i === typed.val.length - 1 && <Caret />}
+                    {textFocused && i === typed.val.length - 1 && <Caret />}
                   </span>
                 </span>
               );
@@ -79,7 +100,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
                 <span key={i}>
                   <span className='text-red-500 bg-transparent bg-red-100'>
                     {c}
-                    {i === typed.val.length - 1 && <Caret />}
+                    {textFocused && i === typed.val.length - 1 && <Caret />}
                   </span>
                 </span>
               );
@@ -88,10 +109,9 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
               return (
                 <span key={i}>
                   <span>
-                    {document.hasFocus("text-box") &&
-                      typed.val.length === 0 &&
-                      i === 0 && <Caret />}
-
+                    {textFocused && typed.val.length === 0 && i === 0 && (
+                      <Caret />
+                    )}
                     {c}
                   </span>
                 </span>

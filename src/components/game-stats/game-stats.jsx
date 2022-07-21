@@ -22,7 +22,7 @@ const GameStats = ({ gameTime, typed, passage }) => {
   };
 
   return (
-    <div className='text-6xl grid grid-rows-3 py-2'>
+    <div className='text-6xl grid grid-rows-3 py-2 border-2 border-blue-500'>
       <span>wpm: {wpm}</span>
       <span>cps: {cps}</span>
       <span>chars typed: {acc()[1]}</span>
