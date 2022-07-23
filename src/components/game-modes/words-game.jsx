@@ -3,6 +3,7 @@ import Button from '../button/button';
 import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
+import Passage from '../passage/passage';
 
 // temporary
 let passage = `tell century got pick bed definition hello room color enemy`;
@@ -37,7 +38,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 					<ClockUp
 						typed={typed}
 						setTyped={setTyped}
-						passage={passage}
+						passage={<Passage />}
 						ready={ready}
 						setReady={setReady}
 						time={time}

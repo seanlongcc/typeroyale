@@ -1,5 +1,6 @@
 import Caret from '../caret/caret';
 import { useState, useEffect, useCallback } from 'react';
+import Passage from '../passage/passage';
 
 const MAX_CHARS = 150;
 const validChars =
