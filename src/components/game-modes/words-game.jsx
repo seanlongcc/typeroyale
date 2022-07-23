@@ -93,7 +93,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 					/>
 				)}
 			</span>
-			<Passage />
 		</div>
 	);
 };
