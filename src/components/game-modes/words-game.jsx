@@ -38,7 +38,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 					<ClockUp
 						typed={typed}
 						setTyped={setTyped}
-						passage={<Passage />}
+						passage={passage}
 						ready={ready}
 						setReady={setReady}
 						time={time}
@@ -93,6 +93,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 					/>
 				)}
 			</span>
+			<Passage />
 		</div>
 	);
 };
