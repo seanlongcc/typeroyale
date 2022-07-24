@@ -63,14 +63,15 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
   };
 
   // changes state when clicking button
-  onmouseup = (e) => {
+  onmouseup = () => {
+    console.log(click);
     setClick(!click);
   };
 
   // calls inFocused function whenever a mouse click is registered
   useEffect(() => {
     isFocused();
-  }, [click, typed]);
+  }, [click, typed, setClick, setTextFocused]);
 
   return (
     <div
