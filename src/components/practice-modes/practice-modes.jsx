@@ -95,6 +95,7 @@ const PracticeModes = () => {
           tab + enter - restart test
         </button>
       </span>
+      <span></span>
     </div>
   );
 };

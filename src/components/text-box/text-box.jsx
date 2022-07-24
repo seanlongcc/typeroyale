@@ -9,6 +9,7 @@ const validCharSet = new Set(validChars.split(""));
 const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
   const [textFocused, setTextFocused] = useState(false);
   const [click, setClick] = useState(false);
+
   const updatePtr = useCallback(
     (end) => {
       let ptr = end + MAX_CHARS;
@@ -17,6 +18,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
     },
     [passage]
   );
+
   const [passagePtr, setPassagePtr] = useState(updatePtr(0));
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
   }, [ready, setPassagePtr, updatePtr]);
 
   const handleKeyDown = (e) => {
-    console.log(typed.val);
+    console.log(typed.val.len);
     if (e.key === "Backspace" && typed.val.length > 0) {
       setTyped({
         val: typed.val.slice(0, -1),
@@ -52,26 +54,24 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
     }
   };
 
-  // functon to check if text-box is focused
-  const isFocused = () => {
-    if (document.getElementById("text-box") === document.activeElement) {
-      setTextFocused(true);
-      setClick(false);
-    } else {
-      setTextFocused(false);
-    }
-  };
-
-  // changes state when clicking button
-  onmouseup = () => {
+  //changes state when clicking mouse
+  onmouseup = (e) => {
     console.log(click);
     setClick(!click);
   };
 
-  // calls inFocused function whenever a mouse click is registered
   useEffect(() => {
+    // functon to check if text-box is focused
+    const isFocused = () => {
+      if (document.getElementById("text-box") === document.activeElement) {
+        setTextFocused(true);
+        setClick(false);
+      } else {
+        setTextFocused(false);
+      }
+    };
     isFocused();
-  }, [click, typed, setClick, setTextFocused]);
+  }, [textFocused, click, typed]);
 
   return (
     <div
@@ -89,32 +89,29 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
             i += passagePtr.start;
             if (typed.val[i] === c) {
               return (
-                <span key={i}>
-                  <span className='text-green-500'>
-                    {c}
-                    {textFocused && i === typed.val.length - 1 && <Caret />}
-                  </span>
+                <span key={i} className='text-green-500'>
+                  {c}
+                  {textFocused && i === typed.val.length - 1 && <Caret />}
                 </span>
               );
             } else if (typed.val[i]) {
               return (
-                <span key={i}>
-                  <span className='text-red-500 bg-transparent bg-red-100'>
-                    {c}
-                    {textFocused && i === typed.val.length - 1 && <Caret />}
-                  </span>
+                <span
+                  key={i}
+                  className='text-red-500 bg-transparent bg-red-100'
+                >
+                  {c}
+                  {textFocused && i === typed.val.length - 1 && <Caret />}
                 </span>
               );
             } else {
               //returns the passage if nothing is typed, renders all at once
               return (
                 <span key={i}>
-                  <span>
-                    {textFocused && typed.val.length === 0 && i === 0 && (
-                      <Caret />
-                    )}
-                    {c}
-                  </span>
+                  {textFocused && typed.val.length === 0 && i === 0 && (
+                    <Caret />
+                  )}
+                  {c}
                 </span>
               );
             }

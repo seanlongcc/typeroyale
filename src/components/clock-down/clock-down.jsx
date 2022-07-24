@@ -5,9 +5,9 @@ const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 
   useEffect(() => {
     if (time <= 0 && ready) {
-      setTyped({ ...typed, done: true });
+      setTyped((t) => ({ ...t, done: true }));
     }
-  }, [time, typed, ready, setTyped]);
+  }, [time, ready, setTyped]);
 
   useEffect(() => {
     if (!ready) setTime(gameTime);
