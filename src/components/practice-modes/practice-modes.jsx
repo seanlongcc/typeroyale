@@ -6,6 +6,26 @@ import TimeGame from "../game-modes/time-game";
 import WordsGame from "../game-modes/words-game";
 import PassageGame from "../game-modes/passage-game";
 import CustomGame from "../game-modes/custom-game.jsx";
+import ENGLISH_200 from "../../assets/word-lists/english-200.json";
+import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
+
+const Passage = ({ wordCount, chooseList }) => {
+  //temp
+  wordCount = 100;
+  chooseList = ENGLISH_200.words;
+  const wordList = [];
+  let passage = "";
+
+  for (let i = 1; i <= wordCount; i++) {
+    const word = chooseList[Math.floor(Math.random() * 200)];
+    wordList.push(word);
+  }
+
+  passage = wordList.join(" ");
+  console.log(passage);
+  console.log(typeof passage === "string" || passage instanceof String);
+  return passage;
+};
 
 const PracticeModes = () => {
   const [mode, setMode] = useState("time");
@@ -28,7 +48,14 @@ const PracticeModes = () => {
           />
         );
       case "passage":
-        return <PassageGame />;
+        return (
+          <PassageGame
+            ready={ready}
+            setReady={setReady}
+            typed={typed}
+            setTyped={setTyped}
+          />
+        );
       case "custom":
         return <CustomGame />;
       default:

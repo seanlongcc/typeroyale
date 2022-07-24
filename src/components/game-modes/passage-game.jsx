@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Button from "../button/button";
-import Passage from "../passage/passage";
 
-const PassageGame = () => {
+const PassageGame = (ready, setReady, typed, setTyped) => {
   const [mode, setMode] = useState("all");
   return (
     <div className='grid grid-cols-5'>
