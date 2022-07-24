@@ -9,6 +9,7 @@ const validCharSet = new Set(validChars.split(''));
 const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
+
 	const updatePtr = useCallback(
 		(end) => {
 			let ptr = end + MAX_CHARS;
@@ -17,6 +18,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 		},
 		[passage]
 	);
+
 	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
 
 	useEffect(() => {
@@ -87,32 +89,29 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 						i += passagePtr.start;
 						if (typed.val[i] === c) {
 							return (
-								<span key={i}>
-									<span className='text-green-500'>
-										{c}
-										{textFocused && i === typed.val.length - 1 && <Caret />}
-									</span>
+								<span key={i} className='text-green-500'>
+									{c}
+									{textFocused && i === typed.val.length - 1 && <Caret />}
 								</span>
 							);
 						} else if (typed.val[i]) {
 							return (
-								<span key={i}>
-									<span className='text-red-500 bg-transparent bg-red-100'>
-										{c}
-										{textFocused && i === typed.val.length - 1 && <Caret />}
-									</span>
+								<span
+									key={i}
+									className='text-red-500 bg-transparent bg-red-100'
+								>
+									{c}
+									{textFocused && i === typed.val.length - 1 && <Caret />}
 								</span>
 							);
 						} else {
 							//returns the passage if nothing is typed, renders all at once
 							return (
 								<span key={i}>
-									<span>
-										{textFocused && typed.val.length === 0 && i === 0 && (
-											<Caret />
-										)}
-										{c}
-									</span>
+									{textFocused && typed.val.length === 0 && i === 0 && (
+										<Caret />
+									)}
+									{c}
 								</span>
 							);
 						}
