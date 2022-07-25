@@ -56,7 +56,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 
 	//changes state when clicking mouse
 	onmouseup = (e) => {
-		console.log(click);
 		setClick(!click);
 	};
 
