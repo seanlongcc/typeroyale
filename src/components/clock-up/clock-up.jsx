@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 const ClockUp = ({ ready, setReady, time, setTime }) => {
+
 	useEffect(() => {
 		if (!ready) setTime(0);
 		else {

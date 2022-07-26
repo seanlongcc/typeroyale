@@ -75,7 +75,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	return (
 		<div
 			id='text-box'
-			className='outline-none text-3xl box-content max-w-screen-md max-h-28 border-2 border-blue-500'
+			className='outline-none text-3xl box-content max-w-screen-md h-28 m-10'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
