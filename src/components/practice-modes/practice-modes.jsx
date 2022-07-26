@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { waitFor } from "@testing-library/react";
 
 import Button from "../button/button";
@@ -6,25 +6,6 @@ import TimeGame from "../game-modes/time-game";
 import WordsGame from "../game-modes/words-game";
 import PassageGame from "../game-modes/passage-game";
 import CustomGame from "../game-modes/custom-game.jsx";
-
-import ENGLISH_200 from "../../assets/word-lists/english-200.json";
-import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
-
-const Passage = () => {
-  //temp
-  const wordCount = 100;
-  const chooseList = ENGLISH_200.words;
-  const wordList = [];
-  let passage = "";
-
-  for (let i = 1; i <= wordCount; i++) {
-    const word = chooseList[Math.floor(Math.random() * 200)];
-    wordList.push(word);
-    passage = wordList.join(" ");
-  }
-  console.log("im in");
-  return passage;
-};
 
 const PracticeModes = () => {
   const [mode, setMode] = useState("time");
@@ -42,7 +23,6 @@ const PracticeModes = () => {
             setReady={setReady}
             typed={typed}
             setTyped={setTyped}
-            passage={Passage()}
           />
         );
       case "time":
@@ -52,7 +32,6 @@ const PracticeModes = () => {
             setReady={setReady}
             typed={typed}
             setTyped={setTyped}
-            passage={Passage()}
           />
         );
       case "passage":
@@ -88,7 +67,7 @@ const PracticeModes = () => {
       <span tabIndex={0} className='outline-none'>
         {renderMode()}
       </span>
-      <span className='grid grid-cols-4 text-lg'>
+      <div className='grid grid-cols-4 gap-2 text-lg h-7'>
         {["time", "words", "passage", "custom"].map((label, i) => (
           <Button
             key={i}
@@ -99,7 +78,7 @@ const PracticeModes = () => {
             setTyped={setTyped}
           />
         ))}
-      </span>
+      </div>
       <span className={typed.done ? "flex flex-col items-center" : "hidden"}>
         <button
           className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
@@ -112,7 +91,7 @@ const PracticeModes = () => {
       </span>
       <span className={!typed.done ? "flex flex-col items-center" : "hidden"}>
         <button
-          className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
+          className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse mt-5'
           onClick={() => {
             setReady(false);
             setTyped({ ...typed, done: false });
@@ -123,7 +102,6 @@ const PracticeModes = () => {
           tab + enter - restart test
         </button>
       </span>
-      <span></span>
     </div>
   );
 };

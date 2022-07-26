@@ -1,21 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Button from "../button/button";
 import ClockDown from "../clock-down/clock-down";
 import GameStats from "../game-stats/game-stats";
 import TextBox from "../text-box/text-box";
+import ClockDown2 from "../clock-down/clock-down2";
 
-// temporary
-//let passage = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
 
-const TimeGame = ({ typed, setTyped, ready, setReady, passage }) => {
+const generatePassage = (wordCount) => {
+  const chooseList = ENGLISH_1k.words;
+  const wordList = Array(wordCount)
+    .fill(0)
+    .map((_) => chooseList[Math.floor(Math.random() * 1000)]);
+  return wordList.join(" ");
+};
+
+const TimeGame = ({ typed, setTyped, ready, setReady }) => {
   const [mode, setMode] = useState(60);
   const [customTime, setCustomTime] = useState("");
+  const passage = useMemo(
+    () => generatePassage(mode === "custom" ? 100 : mode * 150),
+    [mode]
+  );
 
   const handleEnter = (e, type) => {
     if (type === "enter" && e.key !== "Enter") return;
 
     if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
-      setMode(customTime);
+      setMode(parseInt(customTime));
     else setMode(60);
   };
 
@@ -55,7 +67,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, passage }) => {
           <span />
         )}
       </span>
-      <span className='grid grid-cols-6 absolute-center text-lg'>
+      <span className='grid grid-cols-5 gap-2 h-7 w-72 absolute-center text-lg'>
         {[15, 30, 60, 120].map((time, i) => (
           <Button
             key={i}
@@ -76,7 +88,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, passage }) => {
           />
         ) : (
           <input
-            className='width w-14 outline-none'
+            className='outline-none'
             type='number'
             value={customTime}
             onChange={(e) => setCustomTime(e.target.value)}

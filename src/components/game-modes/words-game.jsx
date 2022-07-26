@@ -1,25 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Button from '../button/button';
 import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 
-// temporary
-//let passage = `tell century got pick bed definition hello room color enemy`;
-//  amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-// commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-// Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+import ENGLISH_1k from '../../assets/word-lists/english-1000.json';
 
-const WordsGame = ({ typed, setTyped, ready, setReady, passage }) => {
+const generatePassage = (wordCount) => {
+	const chooseList = ENGLISH_1k.words;
+	const wordList = Array(wordCount)
+		.fill(0)
+		.map((_) => chooseList[Math.floor(Math.random() * 1000)]);
+	return wordList.join(' ');
+};
+
+const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
+
+	const passage = useMemo(
+		() => generatePassage(mode === 'custom' ? 100 : mode),
+		[mode]
+	);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
 
 		if (parseInt(customLimit) <= 604800 && parseInt(customLimit) > 0)
-			setMode(customLimit);
+			setMode(parseInt(customLimit));
 		else setMode(60);
 	};
 
@@ -37,7 +46,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady, passage }) => {
 					<ClockUp
 						typed={typed}
 						setTyped={setTyped}
-						passage={passage}
 						ready={ready}
 						setReady={setReady}
 						time={time}
@@ -61,9 +69,10 @@ const WordsGame = ({ typed, setTyped, ready, setReady, passage }) => {
 					<span />
 				)}
 			</span>
-			<span className='grid grid-cols-6 absolute-center text-lg'>
+			<span className='grid grid-cols-5 gap-2 h-7 w-72 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
+						className='max-width-14'
 						key={i}
 						label={time}
 						mode={mode}
@@ -82,7 +91,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady, passage }) => {
 					/>
 				) : (
 					<input
-						className='width w-14 outline-none'
+						className='outline-none'
 						type='number'
 						value={customLimit}
 						onChange={(e) => setCustomLimit(e.target.value)}
