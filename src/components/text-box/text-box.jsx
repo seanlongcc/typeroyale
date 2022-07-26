@@ -9,22 +9,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
 
-	// const updatePtr = useCallback(
-	// 	(end) => {
-	// 		let ptr = end;
-	// 		let newLines = 0;
-
-	// 		while(newLines !== 3 && ptr < passage.length) {
-	// 			if(passage[ptr++] === "\n")
-	// 				newLines += 1;	
-	// 		}
-
-	// 		return { start: end, end: ptr };
-	// 	},
-	// 	[passage]
-	// );
-
-
 	const updatePtr = useCallback(
 		(end) => {
 			let ptr = end;
