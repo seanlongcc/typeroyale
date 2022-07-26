@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { waitFor } from "@testing-library/react";
 
 import Button from "../button/button";
@@ -6,24 +6,27 @@ import TimeGame from "../game-modes/time-game";
 import WordsGame from "../game-modes/words-game";
 import PassageGame from "../game-modes/passage-game";
 import CustomGame from "../game-modes/custom-game.jsx";
+
 import ENGLISH_200 from "../../assets/word-lists/english-200.json";
 import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
 
-const Passage = ({ wordCount, chooseList }) => {
+const Passage = () => {
   //temp
-  wordCount = 100;
-  chooseList = ENGLISH_200.words;
-  const wordList = [];
+  const wordCount = 100;
+  const chooseList = ENGLISH_200.words;
+  const [wordList, setWordList] = useState([]);
   let passage = "";
 
-  for (let i = 1; i <= wordCount; i++) {
-    const word = chooseList[Math.floor(Math.random() * 200)];
-    wordList.push(word);
-  }
+  useEffect(() => {
+    for (let i = 1; i <= wordCount; i++) {
+      const word = chooseList[Math.floor(Math.random() * 200)];
+      setWordList([...wordList, { word }]);
+    }
+    console.log({ wordList });
+  });
 
-  passage = wordList.join(" ");
-  console.log(passage);
-  console.log(typeof passage === "string" || passage instanceof String);
+  //passage = wordList.val.join(" ");
+  console.log({ wordList });
   return passage;
 };
 
@@ -37,7 +40,15 @@ const PracticeModes = () => {
   const renderMode = () => {
     switch (mode) {
       case "words":
-        return <WordsGame />;
+        return (
+          <WordsGame
+            ready={ready}
+            setReady={setReady}
+            typed={typed}
+            setTyped={setTyped}
+            passage={Passage()}
+          />
+        );
       case "time":
         return (
           <TimeGame
@@ -45,17 +56,11 @@ const PracticeModes = () => {
             setReady={setReady}
             typed={typed}
             setTyped={setTyped}
+            passage={Passage()}
           />
         );
       case "passage":
-        return (
-          <PassageGame
-            ready={ready}
-            setReady={setReady}
-            typed={typed}
-            setTyped={setTyped}
-          />
-        );
+        return <PassageGame />;
       case "custom":
         return <CustomGame />;
       default:
@@ -122,7 +127,6 @@ const PracticeModes = () => {
           tab + enter - restart test
         </button>
       </span>
-      <span></span>
     </div>
   );
 };
