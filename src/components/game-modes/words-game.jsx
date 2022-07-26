@@ -3,21 +3,14 @@ import Button from '../button/button';
 import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
-
-import ENGLISH_1k from '../../assets/word-lists/english-1000.json';
-
-const generatePassage = (wordCount) => {
-	const chooseList = ENGLISH_1k.words;
-	const wordList = Array(wordCount).fill(0).map( _ => chooseList[Math.floor(Math.random() * 1000)]);
-	return wordList.join(' ');
-};
+import { generateRandomPassage } from './PassageGeneration';
 
 const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
+	const passage = useMemo(() => generateRandomPassage(mode === 'custom' ? 100 : mode, typed.done), [mode, typed.done]);
 
-	const passage = useMemo(() => generatePassage(mode === 'custom' ? 100 : mode), [mode]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
@@ -36,7 +29,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 	}, [mode]);
 
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center w-screen'>
 			<span className='flex flex-col items-center'>
 				{!typed.done ? (
 					<ClockUp
@@ -65,7 +58,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 					<span />
 				)}
 			</span>
-			<span className='grid grid-cols-5 gap-2 h-7 w-72 absolute-center text-lg'>
+			<span className='grid grid-cols-5 h-7 w-72 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
 						className="max-width-14"

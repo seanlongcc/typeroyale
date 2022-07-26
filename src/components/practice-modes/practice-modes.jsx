@@ -55,6 +55,7 @@ const PracticeModes = () => {
 	const nextGame = async () => {
 		setReady(false);
 		setTyped({ val: '', keysPressed: [], done: false });
+		setMode(m => m);
 		await waitFor(() => document.querySelector('text-box'));
 		document.getElementById('text-box').focus();
 	};
@@ -67,7 +68,7 @@ const PracticeModes = () => {
 			<span tabIndex={0} className='outline-none'>
 				{renderMode()}
 			</span>
-			<div className='grid grid-cols-4 gap-2 text-lg h-7'>
+			<div className='grid grid-cols-4 gap-1 text-lg h-7'>
 				{['time', 'words', 'passage', 'custom'].map((label, i) => (
 					<Button
 						key={i}
@@ -104,6 +105,6 @@ const PracticeModes = () => {
 			</span>
 		</div>
 	);
-};
+	};
 
 export default PracticeModes;

@@ -3,19 +3,12 @@ import Button from '../button/button';
 import ClockDown from '../clock-down/clock-down';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
-
-import ENGLISH_1k from '../../assets/word-lists/english-1000.json';
-
-const generatePassage = (wordCount) => {
-	const chooseList = ENGLISH_1k.words;
-	const wordList = Array(wordCount).fill(0).map( _ => chooseList[Math.floor(Math.random() * 1000)]);
-	return wordList.join(' ');
-};
+import { generateRandomPassage } from './PassageGeneration';
 
 const TimeGame = ({ typed, setTyped, ready, setReady}) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
-	const passage = useMemo(() => generatePassage(mode === 'custom' ? 100 : mode*150), [mode]);
+	const passage = useMemo(() => generateRandomPassage(mode === 'custom' ? 100 : mode*150), [mode]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
@@ -62,7 +55,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady}) => {
 					<span />
 				)}
 			</span>
-			<span className='grid grid-cols-5 gap-2 h-7 w-72 absolute-center text-lg'>
+			<span className='grid grid-cols-5 h-7 w-72 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
 						key={i}
