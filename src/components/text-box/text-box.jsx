@@ -9,17 +9,36 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
 
+	// const updatePtr = useCallback(
+	// 	(end) => {
+	// 		let ptr = end;
+	// 		let newLines = 0;
+
+	// 		while(newLines !== 3 && ptr < passage.length) {
+	// 			if(passage[ptr++] === "\n")
+	// 				newLines += 1;	
+	// 		}
+
+	// 		return { start: end, end: ptr };
+	// 	},
+	// 	[passage]
+	// );
+
+
 	const updatePtr = useCallback(
 		(end) => {
 			let ptr = end;
 			let newLines = 0;
+			let turnPt = 0;
 
-			while(newLines !== 3 && ptr < passage.length) {
-				if(passage[ptr++] === "\n")
-					newLines += 1;	
+			while(newLines !== 3 && ptr < passage.display.length) {
+				if(passage.display[ptr++] === "\n") {
+					newLines += 1;
+					turnPt = (newLines === 2) ? ptr : turnPt;
+				}
 			}
 
-			return { start: end, end: ptr };
+			return { start: end, turnPt: turnPt, end: ptr };
 		},
 		[passage]
 	);
@@ -37,24 +56,22 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 				keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 				done: false,
 			});
-		} else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
+		} else if (validCharSet.has(e.key) && typed.val.length < passage.raw.length) {
 			if (typed.val.length === 0) {
 				setReady(true);
 			}
 
 			setTyped((t) => {
+				console.log(t.val + e.key === passage.raw)
 				return {
 					val: t.val + e.key,
 					keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
-					done: t.val + e.key === passage,
+					done: t.val + e.key === passage.raw,
 				};
 			});
 
-			if (
-				typed.val.length + 1 === passagePtr.end &&
-				typed.val.length !== passagePtr.start
-			)
-				setPassagePtr(updatePtr(passagePtr.end));
+			if (typed.val.length + 1 === passagePtr.turnPt && typed.val.length !== passagePtr.start)
+				setPassagePtr(updatePtr(passagePtr.turnPt));
 		}
 	};
 
@@ -80,12 +97,12 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 			onKeyDown={handleKeyDown}
 		>	
 			<span>
-				{passage
+				{passage.display
 					.slice(passagePtr.start, passagePtr.end)
 					.split('')
-					.map((c, i) => {
-						i += passagePtr.start;
-						if (typed.val[i] === c) {
+						.map((c, i) => {
+							i += passagePtr.start;
+							if (typed.val[i] === c) {
 							return (
 								<span key={i} className='text-green-500'>
 									{c}

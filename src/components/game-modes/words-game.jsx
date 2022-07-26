@@ -41,7 +41,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={time} passage={passage} />
+					<GameStats typed={typed} gameTime={time} passage={passage.raw} />
 				)}
 			</span>
 			<span>
