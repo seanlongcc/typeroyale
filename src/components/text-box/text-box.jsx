@@ -26,7 +26,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	}, [ready, setPassagePtr, updatePtr]);
 
 	const handleKeyDown = (e) => {
-		console.log(typed.val.len);
 		if (e.key === 'Backspace' && typed.val.length > 0) {
 			setTyped({
 				val: typed.val.slice(0, -1),

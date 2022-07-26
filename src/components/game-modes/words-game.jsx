@@ -8,7 +8,9 @@ import ENGLISH_1k from '../../assets/word-lists/english-1000.json';
 
 const generatePassage = (wordCount) => {
 	const chooseList = ENGLISH_1k.words;
-	const wordList = Array(wordCount).fill(0).map( _ => chooseList[Math.floor(Math.random() * 1000)]);
+	const wordList = Array(wordCount)
+		.fill(0)
+		.map((_) => chooseList[Math.floor(Math.random() * 1000)]);
 	return wordList.join(' ');
 };
 
@@ -17,14 +19,16 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
 
-	const passage = useMemo(() => generatePassage(mode === 'custom' ? 100 : mode), [mode]);
+	const passage = useMemo(
+		() => generatePassage(mode === 'custom' ? 100 : mode),
+		[mode]
+	);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
 
 		if (parseInt(customLimit) <= 604800 && parseInt(customLimit) > 0)
 			setMode(parseInt(customLimit));
-
 		else setMode(60);
 	};
 
@@ -68,7 +72,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 			<span className='grid grid-cols-5 gap-2 h-7 w-72 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
-						className="max-width-14"
+						className='max-width-14'
 						key={i}
 						label={time}
 						mode={mode}

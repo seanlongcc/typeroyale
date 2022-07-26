@@ -3,19 +3,25 @@ import Button from '../button/button';
 import ClockDown from '../clock-down/clock-down';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
+import ClockDown2 from '../clock-down/clock-down2';
 
 import ENGLISH_1k from '../../assets/word-lists/english-1000.json';
 
 const generatePassage = (wordCount) => {
 	const chooseList = ENGLISH_1k.words;
-	const wordList = Array(wordCount).fill(0).map( _ => chooseList[Math.floor(Math.random() * 1000)]);
+	const wordList = Array(wordCount)
+		.fill(0)
+		.map((_) => chooseList[Math.floor(Math.random() * 1000)]);
 	return wordList.join(' ');
 };
 
-const TimeGame = ({ typed, setTyped, ready, setReady}) => {
+const TimeGame = ({ typed, setTyped, ready, setReady }) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
-	const passage = useMemo(() => generatePassage(mode === 'custom' ? 100 : mode*150), [mode]);
+	const passage = useMemo(
+		() => generatePassage(mode === 'custom' ? 100 : mode * 150),
+		[mode]
+	);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
@@ -24,7 +30,6 @@ const TimeGame = ({ typed, setTyped, ready, setReady}) => {
 			setMode(parseInt(customTime));
 		else setMode(60);
 	};
-
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
