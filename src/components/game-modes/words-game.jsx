@@ -3,7 +3,7 @@ import Button from '../button/button';
 import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
-import { generateRandomPassage } from './PassageGeneration';
+import { generateRandomPassage } from './passage-generation';
 
 const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
