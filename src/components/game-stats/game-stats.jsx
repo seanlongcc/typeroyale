@@ -2,6 +2,7 @@ const GameStats = ({ gameTime, typed, passage }) => {
 	const wpm = ((typed.val.length / gameTime / 5) * 60).toFixed(2);
 	const cps = (typed.val.length / gameTime).toFixed(2);
 	const acc = () => {
+		console.log(passage, typed)
 		let ptr = 0;
 		let correct = 0;
 		let total = 0;
