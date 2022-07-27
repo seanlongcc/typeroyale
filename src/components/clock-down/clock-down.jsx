@@ -1,26 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
-	const [time, setTime] = useState(gameTime);
+  const [time, setTime] = useState(gameTime);
 
-	useEffect(() => {
-		if (ready) {
-			setTimeout(() => {
-				if (time > 0) {
-					setTime(time - 1);
-				} else {
-					setTyped({ ...typed, done: true });
-					setReady(false);
-				}
-			}, 1000);
-		}
-	}, [ready, setReady, setTyped, time, typed]);
+  useEffect(() => {
+    if (time <= 0 && ready) {
+      setTyped((t) => ({ ...t, done: true }));
+    }
+  }, [time, ready, setTyped]);
 
-	useEffect(() => {
-		setTime(gameTime);
-	}, [gameTime]);
+  useEffect(() => {
+    if (!ready) setTime(gameTime);
+    else {
+      const timer = setInterval(() => setTime((t) => t - 1), 1000);
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [ready, setReady, gameTime, setTime]);
 
-	return <div className='text-9xl'>{ready ? time : gameTime || 'custom'}</div>;
+  useEffect(() => {
+    setTime(gameTime);
+  }, [gameTime]);
+
+  return <div className='text-9xl'>{ready ? time : gameTime || "custom"}</div>;
 };
 
 export default ClockDown;

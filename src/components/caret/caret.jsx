@@ -1,5 +1,5 @@
 const Caret = () => {
-	return <span className='animate-blink absolute -mx-1'>|</span>;
+  return <span className='text-black animate-blink -mx-1'>|</span>;
 };
 
 export default Caret;

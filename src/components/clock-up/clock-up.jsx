@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const ClockUp = () => {
-	const [time, setTime] = useState(0);
-
+const ClockUp3 = ({ ready, setReady, time, setTime }) => {
 	useEffect(() => {
-		setTimeout(() => {
-			setTime(time + 1);
-		}, 1000);
-	});
+		if (!ready) {
+			setTime(0);
+		} else {
+			const startTime = Date.now();
+			const timer = setInterval(
+				() => setTime((t) => ((Date.now() + 1 - startTime) / 1000).toFixed(0)),
+				10
+			);
+			return () => {
+				clearInterval(timer);
+			};
+		}
+	}, [ready, setReady, setTime]);
 
-	return <div>{time}</div>;
+	return <div className='text-9xl'>{ready ? time : 0}</div>;
 };
 
-export default ClockUp;
+export default ClockUp3;
