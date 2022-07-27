@@ -12,7 +12,6 @@ const PracticeModes = () => {
   const [ready, setReady] = useState(false);
   const [typed, setTyped] = useState({ val: "", keysPressed: [], done: false });
   const [caps, setCaps] = useState(false);
-  const [reset, setReset] = useState(true);
 
   // time is default since state starts as time
   const renderMode = () => {
@@ -24,8 +23,6 @@ const PracticeModes = () => {
             setReady={setReady}
             typed={typed}
             setTyped={setTyped}
-            reset={reset}
-            setReset={setReset}
           />
         );
       case "time":
@@ -35,8 +32,6 @@ const PracticeModes = () => {
             setReady={setReady}
             typed={typed}
             setTyped={setTyped}
-            reset={reset}
-            setReset={setReset}
           />
         );
       case "passage":
@@ -58,9 +53,9 @@ const PracticeModes = () => {
   };
 
   const nextGame = async () => {
-    setReset(true);
     setReady(false);
     setTyped({ val: "", keysPressed: [], done: false });
+    setMode((m) => m);
     await waitFor(() => document.querySelector("text-box"));
     document.getElementById("text-box").focus();
   };
@@ -73,7 +68,7 @@ const PracticeModes = () => {
       <span tabIndex={0} className='outline-none'>
         {renderMode()}
       </span>
-      <div className='grid grid-cols-4 gap-2 text-lg h-7'>
+      <div className='grid grid-cols-4 gap-1 text-lg h-7'>
         {["time", "words", "passage", "custom"].map((label, i) => (
           <Button
             key={i}
@@ -99,7 +94,6 @@ const PracticeModes = () => {
         <button
           className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse mt-5'
           onClick={() => {
-            setReset(true);
             setReady(false);
             setTyped({ ...typed, done: false });
             setTyped({ val: "", keysPressed: [], done: false });

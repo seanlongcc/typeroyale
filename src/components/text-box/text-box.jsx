@@ -1,7 +1,6 @@
 import Caret from "../caret/caret";
 import { useState, useEffect, useCallback } from "react";
 
-const MAX_CHARS = 150;
 const validChars =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/'\"!?@#$%^&*()_+-=<>\\|`~[]{};: ";
 const validCharSet = new Set(validChars.split(""));
@@ -12,9 +11,18 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 
   const updatePtr = useCallback(
     (end) => {
-      let ptr = end + MAX_CHARS;
-      while (passage[ptr] !== " " && ptr < passage.length) ptr++;
-      return { start: end, end: ptr };
+      let ptr = end;
+      let newLines = 0;
+      let turnPt = 0;
+
+      while (newLines !== 3 && ptr < passage.display.length) {
+        if (passage.display[ptr++] === "\n") {
+          newLines += 1;
+          turnPt = newLines === 2 ? ptr : turnPt;
+        }
+      }
+
+      return { start: end, turnPt: turnPt, end: ptr };
     },
     [passage]
   );
@@ -32,24 +40,28 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
         keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
         done: false,
       });
-    } else if (validCharSet.has(e.key) && typed.val.length < passage.length) {
+    } else if (
+      validCharSet.has(e.key) &&
+      typed.val.length < passage.raw.length
+    ) {
       if (typed.val.length === 0) {
         setReady(true);
       }
 
       setTyped((t) => {
+        console.log(t.val + e.key === passage.raw);
         return {
           val: t.val + e.key,
           keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
-          done: t.val + e.key === passage,
+          done: t.val + e.key === passage.raw,
         };
       });
 
       if (
-        typed.val.length + 1 === passagePtr.end &&
+        typed.val.length + 1 === passagePtr.turnPt &&
         typed.val.length !== passagePtr.start
       )
-        setPassagePtr(updatePtr(passagePtr.end));
+        setPassagePtr(updatePtr(passagePtr.turnPt));
     }
   };
 
@@ -59,28 +71,23 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
   };
 
   useEffect(() => {
-    // functon to check if text-box is focused
-    const isFocused = () => {
-      if (document.getElementById("text-box") === document.activeElement) {
-        setTextFocused(true);
-        setClick(false);
-      } else {
-        setTextFocused(false);
-      }
-    };
-    isFocused();
+    if (document.getElementById("text-box") === document.activeElement) {
+      setTextFocused(true);
+      setClick(false);
+    } else {
+      setTextFocused(false);
+    }
   }, [textFocused, click, typed]);
 
   return (
     <div
       id='text-box'
-      className='outline-none text-3xl box-content max-w-screen-md h-28 m-10'
+      className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
       <span>
-        {/* splits passage into array of single characters and maps each character to an index */}
-        {passage
+        {passage.display
           .slice(passagePtr.start, passagePtr.end)
           .split("")
           .map((c, i) => {

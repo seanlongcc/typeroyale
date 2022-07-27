@@ -3,29 +3,15 @@ import Button from "../button/button";
 import ClockUp from "../clock-up/clock-up";
 import GameStats from "../game-stats/game-stats";
 import TextBox from "../text-box/text-box";
+import { generateRandomPassage } from "./PassageGeneration";
 
-import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
-
-const generatePassage = (wordCount) => {
-  const chooseList = ENGLISH_1k.words;
-  const wordList = Array(wordCount)
-    .fill(0)
-    .map((_) => chooseList[Math.floor(Math.random() * 1000)]);
-  return wordList.join(" ");
-};
-
-const WordsGame = ({ typed, setTyped, ready, setReady, reset, setReset }) => {
+const WordsGame = ({ typed, setTyped, ready, setReady }) => {
   const [mode, setMode] = useState(60);
   const [time, setTime] = useState(0);
   const [customLimit, setCustomLimit] = useState("");
-
   const passage = useMemo(
-    () =>
-      generatePassage(
-        mode === "custom" && reset === true ? 100 : mode,
-        setReset(false)
-      ),
-    [mode, reset, setReset]
+    () => generateRandomPassage(mode === "custom" ? 100 : mode, typed.done),
+    [mode, typed.done]
   );
 
   const handleEnter = (e, type) => {
