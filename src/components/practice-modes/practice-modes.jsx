@@ -5,7 +5,7 @@ import Button from '../button/button';
 import TimeGame from '../game-modes/time-game';
 import WordsGame from '../game-modes/words-game';
 import PassageGame from '../game-modes/passage-game';
-import CustomGame from '../game-modes/custom-game.jsx';
+import GibberishGame from '../game-modes/gibberish-game.jsx';
 
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
@@ -38,9 +38,25 @@ const PracticeModes = () => {
 					/>
 				);
 			case 'passage':
-				return <PassageGame />;
-			case 'custom':
-				return <CustomGame />;
+				return (
+					<PassageGame
+						reset={reset}
+						ready={ready}
+						setReady={setReady}
+						typed={typed}
+						setTyped={setTyped}
+					/>
+				);
+			case 'gibberish':
+				return (
+					<GibberishGame
+						reset={reset}
+						ready={ready}
+						setReady={setReady}
+						typed={typed}
+						setTyped={setTyped}
+					/>
+				);
 			default:
 				return <div />;
 		}
@@ -72,7 +88,7 @@ const PracticeModes = () => {
 				{renderMode()}
 			</span>
 			<div className='grid grid-cols-4 gap-1 text-lg h-7'>
-				{['time', 'words', 'passage', 'custom'].map((label, i) => (
+				{['time', 'words', 'passage', 'gibberish'].map((label, i) => (
 					<Button
 						key={i}
 						label={label}

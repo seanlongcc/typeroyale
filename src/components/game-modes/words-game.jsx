@@ -3,7 +3,7 @@ import Button from '../button/button';
 import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
-import { generateRandomPassage } from './passage-generation';
+import { generateRandomPassage } from '../passage/passage-generation';
 
 const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
@@ -21,13 +21,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 			setMode(parseInt(customLimit));
 		else setMode(60);
 	};
-
-	// ensures text box is focused after mode change
-	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== 'custom') {
-			document.getElementById('text-box').focus();
-		}
-	}, [mode]);
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
