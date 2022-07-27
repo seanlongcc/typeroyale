@@ -5,10 +5,10 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from './PassageGeneration';
 
-const TimeGame = ({ typed, setTyped, ready, setReady}) => {
+const TimeGame = ({ typed, setTyped, ready, setReady, reset}) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
-	const passage = useMemo(() => generateRandomPassage(mode === 'custom' ? 100 : mode*150), [mode]);
+	const passage = useMemo(() => generateRandomPassage(mode === 'custom' ? 100 : mode*150, reset), [mode, restet]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
