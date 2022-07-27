@@ -1,5 +1,5 @@
 import Caret from '../caret/caret';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
@@ -8,6 +8,7 @@ const validCharSet = new Set(validChars.split(''));
 const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
+	let incorrect = useRef(0);
 
 	const updatePtr = useCallback(
 		(start) => {
@@ -31,33 +32,38 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	}, [ready, setPassagePtr, updatePtr]);
 
 	const handleKeyDown = (e) => {
-		if (e.key === 'Backspace' && typed.val.length > 0) {
+		const [val, p_raw] = [typed.val, passage.raw];
+
+			if (e.key === 'Backspace' && val.length > 0) {
 			setTyped({
-				val: typed.val.slice(0, -1),
+				val: val.slice(0, -1),
 				keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 				done: false,
 			});
-		} else if (
-			validCharSet.has(e.key) &&
-			typed.val.length < passage.raw.length
-		) {
-			if (typed.val.length === 0) {
-				setReady(true);
-			}
 
-			setTyped((t) => {
-				return {
-					val: t.val + e.key,
-					keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
-					done: t.val + e.key === passage.raw,
-				};
-			});
+			if(incorrect.current > 0 && val[val.length-1] !== p_raw[val.length-1])
+				incorrect.current--;
 
-			if (
-				typed.val.length + 1 === passagePtr.lb2 &&
-				typed.val.length !== passagePtr.start
-			)
-				setPassagePtr(updatePtr(passagePtr.lb1));
+		} else if (p_raw[val.length] === ' ' && incorrect.current !== 0) {
+			return;
+		} else if (validCharSet.has(e.key) && val.length < p_raw.length) {
+			
+				if (val.length === 0)
+					setReady(true);
+
+				setTyped((t) => {
+					return {
+						val: t.val + e.key,
+						keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
+						done: t.val + e.key === p_raw,
+					};
+				});
+
+				if(e.key !== p_raw[val.length])
+					incorrect.current++;
+
+				if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
+					setPassagePtr(updatePtr(passagePtr.lb1));
 		}
 	};
 
