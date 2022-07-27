@@ -2,7 +2,6 @@ const GameStats = ({ gameTime, typed, passage }) => {
 	const wpm = ((typed.val.length / gameTime / 5) * 60).toFixed(2);
 	const cps = (typed.val.length / gameTime).toFixed(2);
 	const acc = () => {
-		console.log(passage, typed)
 		let ptr = 0;
 		let correct = 0;
 		let total = 0;
@@ -23,7 +22,7 @@ const GameStats = ({ gameTime, typed, passage }) => {
 	};
 
 	return (
-		<div className='text-6xl grid grid-rows-3 py-2 border-2 border-blue-500'>
+		<div className='text-6xl grid grid-rows-3 py-2'>
 			<span>wpm: {wpm}</span>
 			<span>cps: {cps}</span>
 			<span>chars typed: {acc()[1]}</span>
