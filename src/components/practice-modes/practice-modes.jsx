@@ -12,7 +12,7 @@ const PracticeModes = () => {
   const [ready, setReady] = useState(false);
   const [typed, setTyped] = useState({ val: "", keysPressed: [], done: false });
   const [caps, setCaps] = useState(false);
-  const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState(true);
 
   // time is default since state starts as time
   const renderMode = () => {
@@ -58,6 +58,7 @@ const PracticeModes = () => {
   };
 
   const nextGame = async () => {
+    setReset(true);
     setReady(false);
     setTyped({ val: "", keysPressed: [], done: false });
     await waitFor(() => document.querySelector("text-box"));
