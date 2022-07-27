@@ -3,7 +3,6 @@ import Button from "../button/button";
 import ClockDown from "../clock-down/clock-down";
 import GameStats from "../game-stats/game-stats";
 import TextBox from "../text-box/text-box";
-import ClockDown2 from "../clock-down/clock-down2";
 
 import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
 
