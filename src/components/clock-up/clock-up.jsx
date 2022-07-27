@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const ClockUp = ({ ready, setReady, time, setTime }) => {
+const ClockUp = ({ ready, time, setTime }) => {
 
 	useEffect(() => {
 		if (!ready) setTime(0);
@@ -10,7 +10,7 @@ const ClockUp = ({ ready, setReady, time, setTime }) => {
 				clearInterval(timer);
 			};
 		}
-	}, [ready, setReady, setTime]);
+	}, [ready, setTime]);
 
 	return <div className='text-9xl'>{ready ? time : 0}</div>;
 };

@@ -5,12 +5,14 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from './PassageGeneration';
 
-const WordsGame = ({ typed, setTyped, ready, setReady }) => {
+const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
-	const passage = useMemo(() => generateRandomPassage(mode === 'custom' ? 100 : mode, typed.done), [mode, typed.done]);
 
+	var passage = useMemo(() => { 
+		return generateRandomPassage(mode === 'custom' ? 100 : mode, reset)
+	}, [mode, reset]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
@@ -36,7 +38,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady }) => {
 						typed={typed}
 						setTyped={setTyped}
 						ready={ready}
-						setReady={setReady}
 						time={time}
 						setTime={setTime}
 					/>

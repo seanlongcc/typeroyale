@@ -12,6 +12,7 @@ const PracticeModes = () => {
 	const [ready, setReady] = useState(false);
 	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
 	const [caps, setCaps] = useState(false);
+	const [reset, setReset] = useState(0);
 
 	// time is default since state starts as time
 	const renderMode = () => {
@@ -19,6 +20,7 @@ const PracticeModes = () => {
 			case 'words':
 				return (
 					<WordsGame
+						reset={reset}
 						ready={ready}
 						setReady={setReady}
 						typed={typed}
@@ -28,6 +30,7 @@ const PracticeModes = () => {
 			case 'time':
 				return (
 					<TimeGame
+						reset={reset}
 						ready={ready}
 						setReady={setReady}
 						typed={typed}
@@ -54,9 +57,9 @@ const PracticeModes = () => {
 
 	const nextGame = async () => {
 		setReady(false);
-		setTyped({ val: '', keysPressed: [], done: false });
-		setMode(m => m);
+		setTyped({ val: '', keysPressed: [], done: false});
 		await waitFor(() => document.querySelector('text-box'));
+		setReset(r => r+1);
 		document.getElementById('text-box').focus();
 	};
 
@@ -80,31 +83,16 @@ const PracticeModes = () => {
 					/>
 				))}
 			</div>
-			<span className={typed.done ? 'flex flex-col items-center' : 'hidden'}>
-				<button
-					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse'
-					onClick={() => {
-						nextGame();
-					}}
-				>
-					tab + enter - next test
-				</button>
-			</span>
-			<span className={!typed.done ? 'flex flex-col items-center' : 'hidden'}>
+			<span className={'flex flex-col items-center'}>
 				<button
 					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse mt-5'
-					onClick={() => {
-						setReady(false);
-						setTyped({ ...typed, done: false });
-						setTyped({ val: '', keysPressed: [], done: false });
-						document.getElementById('text-box').focus();
-					}}
+					onClick={nextGame}
 				>
-					tab + enter - restart test
+					tab + enter - {typed.done ? "next test" : "restart test"}
 				</button>
 			</span>
 		</div>
 	);
-	};
+};
 
 export default PracticeModes;

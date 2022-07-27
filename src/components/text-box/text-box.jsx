@@ -10,21 +10,17 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [click, setClick] = useState(false);
 
 	const updatePtr = useCallback(
-		(end) => {
-			let ptr = end;
-			let newLines = 0;
-			let turnPt = 0;
-
+		(start) => {
+			var [ptr, newLines, lb1, lb2] = [start, 0, 0, 0];
 			while(newLines !== 3 && ptr < passage.display.length) {
 				if(passage.display[ptr++] === "\n") {
 					newLines += 1;
-					turnPt = (newLines === 2) ? ptr : turnPt;
+					lb1 = (newLines === 1) ? ptr : lb1;
+					lb2 = (newLines === 2) ? ptr : lb2;
 				}
 			}
-
-			return { start: end, turnPt: turnPt, end: ptr };
-		},
-		[passage]
+			return {start: start, lb1: lb1, lb2: lb2, end: ptr};
+		},[passage]
 	);
 
 	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
@@ -46,7 +42,6 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 			}
 
 			setTyped((t) => {
-				console.log(t.val + e.key === passage.raw)
 				return {
 					val: t.val + e.key,
 					keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
@@ -54,8 +49,8 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 				};
 			});
 
-			if (typed.val.length + 1 === passagePtr.turnPt && typed.val.length !== passagePtr.start)
-				setPassagePtr(updatePtr(passagePtr.turnPt));
+			if (typed.val.length + 1 === passagePtr.lb2 && typed.val.length !== passagePtr.start)
+				setPassagePtr(updatePtr(passagePtr.lb1));
 		}
 	};
 
