@@ -1,7 +1,7 @@
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};:';
 
-export const generateString = (wordCount) => {
+const generateString = (wordCount) => {
 	let wordArray = [];
 
 	for (let i = 0; i < wordCount; i++) {
