@@ -38,15 +38,7 @@ const PracticeModes = () => {
 					/>
 				);
 			case 'passage':
-				return (
-					<PassageGame
-						reset={reset}
-						ready={ready}
-						setReady={setReady}
-						typed={typed}
-						setTyped={setTyped}
-					/>
-				);
+				return <PassageGame />;
 			case 'gibberish':
 				return (
 					<GibberishGame
