@@ -7,13 +7,11 @@ export const generateString = (wordCount) => {
 	for (let i = 0; i < wordCount; i++) {
 		let str = '';
 		let gibLength = Math.floor(Math.random() * 10) + 1;
-		console.log(gibLength);
 		for (let j = 0; j < gibLength; j++) {
 			str += validChars.charAt(Math.floor(Math.random() * validChars.length));
 		}
 		wordArray.push(str);
 	}
-	console.log(wordArray);
 	return wordArray;
 };
 
