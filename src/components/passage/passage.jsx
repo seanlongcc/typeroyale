@@ -1,5 +1,4 @@
 import ENGLISH_200 from "../../assets/word-lists/english-200.json";
-import ENGLISH_1k from "../../assets/word-lists/english-1000.json";
 
 const Passage = ({ wordCount, chooseList }) => {
   //temp

@@ -3,14 +3,14 @@ import Button from "../button/button";
 import ClockDown from "../clock-down/clock-down";
 import GameStats from "../game-stats/game-stats";
 import TextBox from "../text-box/text-box";
-import { generateRandomPassage } from "./PassageGeneration";
+import { generateRandomPassage } from "../passage/passage-generation";
 
-const TimeGame = ({ typed, setTyped, ready, setReady }) => {
+const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
   const [mode, setMode] = useState(60);
   const [customTime, setCustomTime] = useState("");
   const passage = useMemo(
-    () => generateRandomPassage(mode === "custom" ? 100 : mode * 150),
-    [mode]
+    () => generateRandomPassage(mode === "custom" ? 100 : mode * 300, reset),
+    [mode, reset]
   );
 
   const handleEnter = (e, type) => {
@@ -40,7 +40,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady }) => {
             setReady={setReady}
           />
         ) : (
-          <GameStats typed={typed} gameTime={mode} passage={passage} />
+          <GameStats typed={typed} gameTime={mode} passage={passage.raw} />
         )}
       </span>
       <span>
