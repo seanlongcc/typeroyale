@@ -1,23 +1,24 @@
 import { useState, useEffect, useMemo } from 'react';
 import Button from '../button/button';
-import ClockDown from '../clock-down/clock-down';
+import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
-import { generateRandomPassage } from '../passage/passage-generation';
+import { generateGibberish } from '../passage/gibberish-generation';
 
-const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
+const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
-	const [customTime, setCustomTime] = useState('');
-	const passage = useMemo(
-		() => generateRandomPassage(mode === 'custom' ? 100 : mode * 300, reset),
-		[mode, reset]
-	);
+	const [time, setTime] = useState(0);
+	const [customLimit, setCustomLimit] = useState('');
+
+	var passage = useMemo(() => {
+		return generateGibberish(mode === 'custom' ? 100 : mode, reset);
+	}, [mode, reset]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
 
-		if (parseInt(customTime) <= 604800 && parseInt(customTime) > 0)
-			setMode(parseInt(customTime));
+		if (parseInt(customLimit) <= 604800 && parseInt(customLimit) > 0)
+			setMode(parseInt(customLimit));
 		else setMode(60);
 	};
 
@@ -29,18 +30,18 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	}, [mode]);
 
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center w-screen'>
 			<span className='flex flex-col items-center'>
 				{!typed.done ? (
-					<ClockDown
+					<ClockUp
 						typed={typed}
 						setTyped={setTyped}
-						gameTime={mode === 'custom' ? customTime : mode}
 						ready={ready}
-						setReady={setReady}
+						time={time}
+						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={mode} passage={passage.raw} />
+					<GameStats typed={typed} gameTime={time} passage={passage.raw} />
 				)}
 			</span>
 			<span>
@@ -60,6 +61,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 			<span className='grid grid-cols-5 h-7 w-72 absolute-center text-lg'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
+						className='max-width-14'
 						key={i}
 						label={time}
 						mode={mode}
@@ -80,8 +82,8 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					<input
 						className='outline-none'
 						type='number'
-						value={customTime}
-						onChange={(e) => setCustomTime(e.target.value)}
+						value={customLimit}
+						onChange={(e) => setCustomLimit(e.target.value)}
 						onKeyDown={(e) => handleEnter(e, 'enter')}
 						onBlur={(e) => handleEnter(e, 'blur')}
 						autoFocus
@@ -92,4 +94,4 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	);
 };
 
-export default TimeGame;
+export default GibberishGame;

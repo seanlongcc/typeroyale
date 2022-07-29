@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from '../button/button';
 
-const PassageGame = (ready, setReady, typed, setTyped) => {
+const PassageGame = () => {
 	const [mode, setMode] = useState('medium');
 	return (
 		<div className='grid grid-cols-5'>
