@@ -114,7 +114,7 @@ const PracticeModes = () => {
 			<div className='fixed bottom-24'>
 				<button className='btn btn-xs no-animation'>tab</button> +{' '}
 				<button className='btn btn-xs no-animation'>enter</button> -{' '}
-				{typed.done ? 'next test' : 'restart test'}
+				{typed.done ? 'next' : 'restart'}
 			</div>
 		</div>
 	);

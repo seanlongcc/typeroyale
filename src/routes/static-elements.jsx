@@ -11,11 +11,11 @@ const StaticElements = () => {
 			>
 				TypeRoyale
 			</Link>
-			<button className='fixed bottom-0 p-10 hover:animate-pulse'>
+			<button className='fixed bottom-0 p-10 hover:animate-spin'>
 				<RiSettings3Line className='w-5 h-5' />
 			</button>
 			<a
-				className='fixed bottom-0 right-0 p-10 hover:animate-pulse'
+				className='fixed bottom-0 right-0 p-10 hover:animate-wiggle'
 				href='https://github.com/seanlongcc/typeroyale'
 				rel='noopener noreferrer'
 				target='_blank'

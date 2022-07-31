@@ -5,11 +5,14 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from '../passage/passage-generation';
 
+import { RiToolsFill } from 'react-icons/ri';
+const custom = <RiToolsFill />;
+
 const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
 	const passage = useMemo(
-		() => generateRandomPassage(mode === 'custom' ? 100 : mode * 300, reset),
+		() => generateRandomPassage(mode === custom ? 100 : mode * 300, reset),
 		[mode, reset]
 	);
 
@@ -23,7 +26,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== 'custom') {
+		if (document.getElementById('text-box') && mode !== custom) {
 			document.getElementById('text-box').focus();
 		}
 	}, [mode]);
@@ -35,7 +38,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					<ClockDown
 						typed={typed}
 						setTyped={setTyped}
-						gameTime={mode === 'custom' ? customTime : mode}
+						gameTime={mode === custom ? customTime : mode}
 						ready={ready}
 						setReady={setReady}
 					/>
@@ -68,9 +71,9 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 					/>
 				))}
-				{mode !== 'custom' ? (
+				{mode !== custom ? (
 					<Button
-						label={'custom'}
+						label={custom}
 						mode={mode}
 						setMode={setMode}
 						setReady={setReady}

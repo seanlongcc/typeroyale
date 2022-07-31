@@ -5,13 +5,16 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from '../passage/passage-generation';
 
+import { RiToolsFill } from 'react-icons/ri';
+const custom = <RiToolsFill />;
+
 const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
 
 	var passage = useMemo(() => {
-		return generateRandomPassage(mode === 'custom' ? 100 : mode, reset);
+		return generateRandomPassage(mode === custom ? 100 : mode, reset);
 	}, [mode, reset]);
 
 	const handleEnter = (e, type) => {
@@ -24,7 +27,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== 'custom') {
+		if (document.getElementById('text-box') && mode !== custom) {
 			document.getElementById('text-box').focus();
 		}
 	}, [mode]);
@@ -70,9 +73,9 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 					/>
 				))}
-				{mode !== 'custom' ? (
+				{mode !== custom ? (
 					<Button
-						label={'custom'}
+						label={custom}
 						mode={mode}
 						setMode={setMode}
 						setReady={setReady}

@@ -23,7 +23,7 @@ module.exports = {
 	// daisyUI config (optional)
 	daisyui: {
 		styled: true,
-		themes: true,
+		themes: ['bumblebee', 'dracula'],
 		base: true,
 		utils: true,
 		logs: true,
