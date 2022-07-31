@@ -83,8 +83,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	return (
 		<div
 			id='text-box'
-			className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed 
-      text-neutral-content'
+			className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>

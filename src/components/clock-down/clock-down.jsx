@@ -24,7 +24,7 @@ const ClockDown = ({ gameTime, typed, setTyped, ready, setReady }) => {
 	}, [gameTime]);
 
 	return (
-		<div className='text-9xl text-base-content'>
+		<div className='text-9xl text-primary'>
 			{ready ? time : gameTime || 'custom'}
 		</div>
 	);
