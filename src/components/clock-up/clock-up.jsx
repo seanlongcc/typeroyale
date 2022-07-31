@@ -22,7 +22,9 @@ const ClockUp = ({ ready, time, setTime }) => {
 		}
 	}, [ready, setTime]);
 
-	return <div className='text-9xl'>{ready ? fakeTime : 0}</div>;
+	return (
+		<div className='text-9xl text-base-content'>{ready ? fakeTime : 0}</div>
+	);
 };
 
 export default ClockUp;
