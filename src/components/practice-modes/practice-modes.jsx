@@ -111,7 +111,7 @@ const PracticeModes = () => {
 					{typed.done ? <FaChevronRight /> : <FaRedo />}
 				</button>
 			</div>
-			<div className='fixed bottom-24'>
+			<div className='absolute bottom-24'>
 				<button className='btn btn-xs no-animation'>tab</button> +{' '}
 				<button className='btn btn-xs no-animation'>enter</button> -{' '}
 				{typed.done ? 'next' : 'restart'}
