@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom';
-import { RiSettings3Line, RiGithubLine, RiLoginBoxLine } from 'react-icons/ri';
+import { RiSettings3Line, RiGithubLine, RiUser3Line } from 'react-icons/ri';
 
 // TODO: FIX LOGIN PADDING
 const StaticElements = () => {
@@ -23,7 +23,7 @@ const StaticElements = () => {
 				<RiGithubLine className='w-5 h-5' />
 			</a>
 			<button className='fixed right-0 pr-10 pt-14 hover:animate-pulse'>
-				<RiLoginBoxLine className='w-5 h-5' />
+				<RiUser3Line className='w-5 h-5' />
 			</button>
 			<Outlet />
 		</div>
