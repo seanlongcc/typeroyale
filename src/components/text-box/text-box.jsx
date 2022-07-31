@@ -108,7 +108,7 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 								typed.val[i] !== passage.display[i]
 							) {
 								return (
-									<span key={i} className='bg-primary'>
+									<span key={i} className='bg-error'>
 										{c}
 										{textFocused && i === typed.val.length - 1 && <Caret />}
 									</span>

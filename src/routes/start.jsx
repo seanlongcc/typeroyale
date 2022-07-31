@@ -6,13 +6,10 @@ const Start = () => {
 			className='text-2xl flex flex-col items-center justify-center h-screen 
 		gap-y-10'
 		>
-			<Link className='hover:text-gray-400 hover:animate-pulse' to='/practice '>
+			<Link className='btn btn-wide btn-primary' to='/practice '>
 				Practice
 			</Link>
-			<Link
-				className='hover:text-gray-400 hover:animate-pulse'
-				to='/multiplayer'
-			>
+			<Link className='btn btn-wide btn-primary' to='/multiplayer'>
 				Multiplayer
 			</Link>
 			<Outlet />

@@ -7,6 +7,8 @@ import WordsGame from '../game-modes/words-game';
 import QuoteGame from '../game-modes/quote-game';
 import GibberishGame from '../game-modes/gibberish-game.jsx';
 
+import { FaRedo, FaChevronRight } from 'react-icons/fa';
+
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
@@ -81,14 +83,14 @@ const PracticeModes = () => {
 
 	return (
 		<div className='flex flex-col items-center'>
-			<span className='text-5xl animate-bounce'>
+			<span className='text-5xl animate-bounce text-primary'>
 				{caps && <span>Caps Lock</span>}
 			</span>
 			<span tabIndex={0} className='outline-none'>
 				{renderMode()}
 			</span>
 
-			<div className='grid grid-cols-4 btn-group'>
+			<div className='btn-group mt-2'>
 				{['time', 'words', 'quotes', 'gibberish'].map((label, i) => (
 					<Button
 						key={i}
@@ -101,13 +103,18 @@ const PracticeModes = () => {
 				))}
 			</div>
 
-			<div className={'flex flex-col items-center'}>
+			<div className='flex flex-col items-center'>
 				<button
-					className='text-2xl font-bold hover:text-gray-400 hover:animate-pulse mt-5'
+					className='text-xl hover:animate-pulse mt-2 btn btn-ghost'
 					onClick={nextGame}
 				>
-					tab + enter - {typed.done ? 'next test' : 'restart test'}
+					{typed.done ? <FaChevronRight /> : <FaRedo />}
 				</button>
+			</div>
+			<div className='fixed bottom-24'>
+				<button className='btn btn-xs no-animation'>tab</button> +{' '}
+				<button className='btn btn-xs no-animation'>enter</button> -{' '}
+				{typed.done ? 'next test' : 'restart test'}
 			</div>
 		</div>
 	);

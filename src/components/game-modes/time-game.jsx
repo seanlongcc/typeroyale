@@ -30,7 +30,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	return (
 		<div className='flex flex-col items-center'>
-			<span className='flex flex-col items-center'>
+			<span className='flex flex-col items-center '>
 				{!typed.done ? (
 					<ClockDown
 						typed={typed}
@@ -57,7 +57,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					<span />
 				)}
 			</span>
-			<span className='grid grid-cols-5 h-7 w-72 absolute-center btn-group'>
+			<span className='btn-group absolute-center'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
 						key={i}
@@ -78,7 +78,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					/>
 				) : (
 					<input
-						className='btn'
+						className='btn btn-sm'
 						type='text'
 						value={customTime}
 						onChange={(e) => setCustomTime(e.target.value)}
