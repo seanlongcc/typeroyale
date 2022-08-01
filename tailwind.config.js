@@ -18,12 +18,21 @@ module.exports = {
 			},
 		},
 	},
+
 	plugins: [require('daisyui')],
 
 	// daisyUI config (optional)
 	daisyui: {
 		styled: true,
 		themes: [
+			{
+				typeroyale: {
+					primary: '#663399', //accents and title, bright
+					secondary: '#4C4452', //typed text, should be dark
+					'base-100': '#111111ff', //background, dark
+					'base-content': '#E8D5B5', //text color, bright
+				},
+			},
 			'acid',
 			'aqua',
 			'autumn',
