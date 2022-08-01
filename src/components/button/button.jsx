@@ -2,8 +2,8 @@ const Button = ({ label, size, border, mode, setMode, setReady, setTyped }) => {
 	const styling =
 		//if mode is equivalent to label, set bg to gray
 		mode === label
-			? `hover:animate-pulse btn btn-sm text-primary ${size} ${border}`
-			: `hover:animate-pulse btn btn-sm text-neutral-content ${size} ${border}`;
+			? `btn btn-sm text-primary btn-outline btn-primary${size} ${border}`
+			: `btn btn-ghost btn-sm ${size} ${border}`;
 
 	return (
 		//on click, set the mode to current label of button, styling is run after

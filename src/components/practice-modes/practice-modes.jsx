@@ -112,9 +112,14 @@ const PracticeModes = () => {
 				</button>
 			</div>
 			<div className='absolute bottom-24'>
-				<button className='btn btn-xs no-animation'>tab</button> +{' '}
-				<button className='btn btn-xs no-animation'>enter</button> -{' '}
-				{typed.done ? 'next' : 'restart'}
+				<button className='btn btn-xs no-animation btn-outline btn-primary'>
+					tab
+				</button>{' '}
+				+{' '}
+				<button className='btn btn-xs no-animation btn-outline btn-primary'>
+					enter
+				</button>{' '}
+				- {typed.done ? 'next' : 'restart'}
 			</div>
 		</div>
 	);
