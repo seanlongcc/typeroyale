@@ -13,7 +13,7 @@ const ThemePicker = () => {
 					<option value='corporate'>corporate</option>
 					<option value='cupcake'>cupcake</option>
 					<option value='cyberpunk'>cyberpunk</option>
-					<option value='cymk'>cymk</option>
+					<option value='cmyk'>cmyk</option>
 					<option value='dark'>dark</option>
 					<option value='dracula'>dracula</option>
 					<option value='emerald'>emerald</option>

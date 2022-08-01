@@ -34,7 +34,7 @@ module.exports = {
 			'corporate',
 			'cupcake',
 			'cyberpunk',
-			'cymk',
+			'cmyk',
 			'dark',
 			'dracula',
 			'emerald',
