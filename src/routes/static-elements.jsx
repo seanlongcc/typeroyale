@@ -26,14 +26,14 @@ const StaticElements = () => {
 			<button className='absolute bottom-0 p-10 text-neutral-content'>
 				<label class='swap swap-rotate'>
 					<input type='checkbox' />
-					<RiMoonLine
+					<RiSunLine
 						class='swap-on fill-current w-5 h-5'
-						data-set-theme='night'
+						data-set-theme='bumblebee'
 						data-act-class='ACTIVECLASS'
 					/>
-					<RiSunLine
+					<RiMoonLine
 						class='swap-off fill-current w-5 h-5'
-						data-set-theme='bumblebee'
+						data-set-theme='night'
 						data-act-class='ACTIVECLASS'
 					/>
 				</label>
