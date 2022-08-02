@@ -22,7 +22,7 @@ const StaticElements = () => {
 			<ThemePicker />
 			{/* github link */}
 			<a
-				className='absolute bottom-0 right-0 p-10 hover:animate-wiggle'
+				className='absolute bottom-0 right-0 p-10 hover:animate-pulse'
 				href='https://github.com/seanlongcc/typeroyale'
 				rel='noopener noreferrer'
 				target='_blank'
