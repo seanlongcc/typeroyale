@@ -3,12 +3,12 @@ import { RiGithubLine, RiUser3Line } from 'react-icons/ri';
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
 import ThemePicker from '../components/theme-picker/theme-picker';
-// TODO: FIX LOGIN PADDING
+
 const StaticElements = () => {
 	useEffect(() => {
 		themeChange(false);
-		// 👆 false parameter is required for react project
 	}, []);
+
 	return (
 		<div className='relative'>
 			{/* title */}
@@ -30,9 +30,12 @@ const StaticElements = () => {
 				<RiGithubLine className='w-5 h-5' />
 			</a>
 			{/* user login */}
-			<button className='absolute right-0 pr-10 pt-14 hover:animate-pulse'>
-				<RiUser3Line className='w-5 h-5' />
-			</button>
+			<Link to='/login'>
+				<button className='absolute right-0 pr-10 pt-14 hover:animate-pulse'>
+					<RiUser3Line className='w-5 h-5' />
+				</button>
+			</Link>
+
 			<Outlet />
 		</div>
 	);
