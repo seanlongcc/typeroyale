@@ -31,6 +31,9 @@ module.exports = {
 					secondary: '#4C4452', //typed text, should be dark
 					'base-100': '#111111ff', //background, dark
 					'base-content': '#E8D5B5', //text color, bright
+					'--rounded-box': '0rem',
+					'--rounded-btn': '0rem',
+					'--rounded-badge': '0rem',
 				},
 			},
 			'acid',
