@@ -28,7 +28,10 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
 
 	useEffect(() => {
-		if (!ready) setPassagePtr(updatePtr(0));
+		if (!ready) {
+			setPassagePtr(updatePtr(0));
+			incorrect.current = 0;
+		}
 	}, [ready, setPassagePtr, updatePtr]);
 
 	const handleKeyDown = (e) => {

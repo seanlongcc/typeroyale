@@ -33,7 +33,7 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	return (
 		<div className='flex flex-col items-center'>
-			<span className='flex flex-col items-center '>
+			<span className='flex flex-col items-center'>
 				{!typed.done ? (
 					<ClockDown
 						typed={typed}
