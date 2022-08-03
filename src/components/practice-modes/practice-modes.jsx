@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { waitFor } from '@testing-library/react';
 
 import Button from '../button/button';
@@ -15,6 +15,12 @@ const PracticeModes = () => {
 	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
 	const [caps, setCaps] = useState(false);
 	const [reset, setReset] = useState(0);
+
+	useEffect(() => {
+		console.log("hello");
+		setTyped({ val: '', keysPressed: [], done: false });
+		setReady(false);
+	}, [mode]);
 
 	// time is default since state starts as time
 	const renderMode = () => {

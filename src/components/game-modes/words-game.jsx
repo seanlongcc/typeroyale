@@ -25,12 +25,12 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 		else setMode(60);
 	};
 
-	// ensures text box is focused after mode change
 	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== custom) {
+		setReady(false);
+		setTyped({ val: '', keysPressed: [], done: false });
+		if (document.getElementById('text-box') && mode !== custom)
 			document.getElementById('text-box').focus();
-		}
-	}, [mode]);
+	}, [mode, setReady, setTyped]);
 
 	return (
 		<div className='flex flex-col items-center w-screen'>
@@ -69,8 +69,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						label={time}
 						mode={mode}
 						setMode={setMode}
-						setReady={setReady}
-						setTyped={setTyped}
 					/>
 				))}
 				{mode !== custom ? (
@@ -78,8 +76,6 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						label={custom}
 						mode={mode}
 						setMode={setMode}
-						setReady={setReady}
-						setTyped={setTyped}
 					/>
 				) : (
 					<input

@@ -15,10 +15,12 @@ const QuoteGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
+		setReady(false);
+		setTyped({ val: '', keysPressed: [], done: false });
 		if (document.getElementById('text-box')) {
 			document.getElementById('text-box').focus();
 		}
-	}, [mode]);
+	}, [mode, setReady, setTyped]);
 
 	return (
 		<div className='flex flex-col items-center w-screen'>
@@ -57,8 +59,6 @@ const QuoteGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						label={time}
 						mode={mode}
 						setMode={setMode}
-						setReady={setReady}
-						setTyped={setTyped}
 					/>
 				))}
 			</span>

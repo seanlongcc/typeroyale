@@ -11,6 +11,7 @@ const custom = <RiToolsFill />;
 const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
+
 	const passage = useMemo(
 		() => generateRandomPassage(mode === custom ? 100 : mode * 300, reset),
 		[mode, reset]
@@ -24,12 +25,12 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 		else setMode(1000);
 	};
 
-	// ensures text box is focused after mode change
 	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== custom) {
+		setReady(false);
+		setTyped({ val: '', keysPressed: [], done: false });
+		if (document.getElementById('text-box') && mode !== custom)
 			document.getElementById('text-box').focus();
-		}
-	}, [mode]);
+	}, [mode, setReady, setTyped]);
 
 	return (
 		<div className='flex flex-col items-center'>
@@ -67,8 +68,6 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						label={time}
 						mode={mode}
 						setMode={setMode}
-						setReady={setReady}
-						setTyped={setTyped}
 					/>
 				))}
 				{mode !== custom ? (
@@ -76,8 +75,6 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						label={custom}
 						mode={mode}
 						setMode={setMode}
-						setReady={setReady}
-						setTyped={setTyped}
 					/>
 				) : (
 					<input

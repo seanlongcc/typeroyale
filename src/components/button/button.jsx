@@ -1,4 +1,4 @@
-const Button = ({ label, size, border, mode, setMode, setReady, setTyped }) => {
+const Button = ({ label, size, border, mode, setMode }) => {
 	const styling =
 		//if mode is equivalent to label, set bg to gray
 		mode === label
@@ -6,16 +6,10 @@ const Button = ({ label, size, border, mode, setMode, setReady, setTyped }) => {
 			: `btn btn-ghost btn-sm ${size} ${border}`;
 
 	return (
-		//on click, set the mode to current label of button, styling is run after
 		<button
 			className={styling}
-			onClick={() => {
-				setMode(label);
-				setReady(false);
-				setTyped({ val: '', keysPressed: [], done: false });
-			}}
-			//makes the buttons not tabbable
-			tabIndex={-1}
+			onClick={() => setMode(label)}
+			tabIndex={-1} //makes the buttons not tabbable
 		>
 			{label}
 		</button>
