@@ -18,5 +18,68 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+
+	plugins: [require('daisyui')],
+
+	// daisyUI config (optional)
+	daisyui: {
+		styled: true,
+		themes: [
+			{
+				typeroyale: {
+					primary: '#663399', //accents and title, bright
+					secondary: '#4C4452', //typed text, should be dark
+					'base-100': '#111111ff', //background, dark
+					'base-content': '#E8D5B5', //text color, bright
+					'--rounded-box': '0rem',
+					'--rounded-btn': '0rem',
+					'--rounded-badge': '0rem',
+				},
+			},
+			{
+				rin: {
+					primary: '#ca9ff5', //accents and title, bright
+					secondary: '#f5cee4', //typed text, should be dark
+					'base-100': '#ffeede', //background, dark
+					'base-content': '#ADD3FF', //text color, bright
+				},
+			},
+
+			'acid',
+			'aqua',
+			'autumn',
+			'bumblebee',
+			'black',
+			'business',
+			'coffee',
+			'corporate',
+			'cupcake',
+			'cyberpunk',
+			'cmyk',
+			'dark',
+			'dracula',
+			'emerald',
+			'fantasy',
+			'forest',
+			'garden',
+			'halloween',
+			'lemonade',
+			'light',
+			'lofi',
+			'luxury',
+			'night',
+			'pastel',
+			'retro',
+			'synthwave',
+			'valentine',
+			'winter',
+			'wireframe',
+		],
+		base: true,
+		utils: true,
+		logs: true,
+		rtl: false,
+		prefix: '',
+		darkTheme: 'typeroyale',
+	},
 };

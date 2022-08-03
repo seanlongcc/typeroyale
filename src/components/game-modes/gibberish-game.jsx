@@ -5,26 +5,29 @@ import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateGibberish } from '../passage/gibberish-generation';
 
+import { RiToolsFill } from 'react-icons/ri';
+const custom = <RiToolsFill />;
+
 const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
 
 	var passage = useMemo(() => {
-		return generateGibberish(mode === 'custom' ? 100 : mode, reset);
+		return generateGibberish(mode === custom ? 100 : mode, reset);
 	}, [mode, reset]);
 
 	const handleEnter = (e, type) => {
 		if (type === 'enter' && e.key !== 'Enter') return;
 
-		if (parseInt(customLimit) <= 604800 && parseInt(customLimit) > 0)
+		if (parseInt(customLimit) <= 100000 && parseInt(customLimit) > 0)
 			setMode(parseInt(customLimit));
 		else setMode(60);
 	};
 
 	// ensures text box is focused after mode change
 	useEffect(() => {
-		if (document.getElementById('text-box') && mode !== 'custom') {
+		if (document.getElementById('text-box') && mode !== custom) {
 			document.getElementById('text-box').focus();
 		}
 	}, [mode]);
@@ -58,7 +61,7 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					<span />
 				)}
 			</span>
-			<span className='grid grid-cols-5 h-7 w-72 absolute-center text-lg'>
+			<span className='btn-group absolute-center'>
 				{[15, 30, 60, 120].map((time, i) => (
 					<Button
 						className='max-width-14'
@@ -70,9 +73,9 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 					/>
 				))}
-				{mode !== 'custom' ? (
+				{mode !== custom ? (
 					<Button
-						label={'custom'}
+						label={custom}
 						mode={mode}
 						setMode={setMode}
 						setReady={setReady}
@@ -80,8 +83,8 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					/>
 				) : (
 					<input
-						className='outline-none'
-						type='number'
+						className='btn btn-sm'
+						type='text'
 						value={customLimit}
 						onChange={(e) => setCustomLimit(e.target.value)}
 						onKeyDown={(e) => handleEnter(e, 'enter')}
