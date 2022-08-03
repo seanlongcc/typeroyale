@@ -36,6 +36,15 @@ module.exports = {
 					'--rounded-badge': '0rem',
 				},
 			},
+			{
+				rin: {
+					primary: '#ca9ff5', //accents and title, bright
+					secondary: '#f5cee4', //typed text, should be dark
+					'base-100': '#ffeede', //background, dark
+					'base-content': '#ADD3FF', //text color, bright
+				},
+			},
+
 			'acid',
 			'aqua',
 			'autumn',
