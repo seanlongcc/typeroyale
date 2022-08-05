@@ -12,7 +12,7 @@ import { FaRedo, FaChevronRight } from 'react-icons/fa';
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false});
+	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
 	const [caps, setCaps] = useState(false);
 	const [reset, setReset] = useState(0);
 

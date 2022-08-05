@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { RiPulseLine, RiFontSize, RiMedalLine } from 'react-icons/ri';
-import { updateStats } from '../../firebase';
+import { updateStats } from '../../firebase/firebase';
 
 const GameStats = ({ gameTime, typed, passage, mode }) => {
-
 	const acc = () => {
 		let ptr = 0;
 		let correct = 0;
@@ -32,10 +31,8 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 	const wrongChars = total - correct;
 
 	useEffect(() => {
-		if(typed.done)
-			updateStats(mode, total, correct, gameTime);
+		if (typed.done) updateStats(mode, total, correct, gameTime);
 	}, [typed, mode, total, correct, gameTime]);
-
 
 	return (
 		<div className='flex flex-row mb-16'>
@@ -65,21 +62,18 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>words per minute</div>
 					<div className='stat-value'>{wpm}</div>
-					<div className='stat-desc'></div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>total characters</div>
 					<div className='stat-value'>{charsTyped}</div>
-					<div className='stat-desc'></div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>time</div>
 					<div className='stat-value'>{gameTime}s</div>
-					<div className='stat-desc'></div>
 				</div>
 			</div>
 			{/* right */}
@@ -88,20 +82,17 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>characters per second</div>
 					<div className='stat-value'>{cps}</div>
-					<div className='stat-desc'></div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>incorrect characters</div>
 					<div className='stat-value'>{wrongChars}</div>
-					<div className='stat-desc'></div>
 				</div>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>accuracy</div>
 					<div className='stat-value'>{accuracy}%</div>
-					<div className='stat-desc'></div>
 				</div>
 			</div>
 		</div>

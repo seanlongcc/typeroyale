@@ -1,6 +1,6 @@
 import Caret from '../caret/caret';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { updateGamesStarted } from '../../firebase';
+import { updateGamesStarted } from '../../firebase/firebase';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
@@ -45,7 +45,10 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady, mode }) => {
 				done: false,
 			});
 
-			if (incorrect.current > 0 && val[val.length - 1] !== p_raw[val.length - 1])
+			if (
+				incorrect.current > 0 &&
+				val[val.length - 1] !== p_raw[val.length - 1]
+			)
 				incorrect.current--;
 		} else if (p_raw[val.length] === ' ' && incorrect.current !== 0) {
 			return;
