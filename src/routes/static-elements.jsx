@@ -1,10 +1,11 @@
 import { Outlet, Link } from 'react-router-dom';
-import { RiGithubLine, RiUser3Line } from 'react-icons/ri';
+import { RiGithubLine, RiUser3Line, RiLogoutBoxLine, RiBarChart2Line } from 'react-icons/ri';
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
 import ThemePicker from '../components/theme-picker/theme-picker';
+import { logout } from '../firebase';
 
-const StaticElements = () => {
+const StaticElements = ({user}) => {
 	useEffect(() => {
 		themeChange(false);
 	}, []);
@@ -29,13 +30,36 @@ const StaticElements = () => {
 			>
 				<RiGithubLine className='w-5 h-5' />
 			</a>
-			{/* user login */}
-			<Link to='/login'>
-				<button className='absolute right-0 pr-10 pt-14 hover:animate-pulse'>
-					<RiUser3Line className='w-5 h-5' />
-				</button>
-			</Link>
 
+			{
+				user
+				? <div className="absolute right-0 pr-10 pt-14">
+						<div className="dropdown dropdown-hover dropdown-bottom dropdown-end">
+							<button tabIndex="0">
+								<RiUser3Line className='w-5 h-5' />
+							</button>
+							<ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-primary rounded-box w-32">
+								<li>
+									<Link to="/account">
+										<RiBarChart2Line className='w-5 h-5'/>
+										stats
+									</Link>
+								</li>
+								<li>
+									<button onClick={logout}>
+										<RiLogoutBoxLine className='w-5 h-5'/>
+										logout
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				: <Link to="/login">
+						<button className="absolute right-0 pr-10 pt-14 hover:animate-pulse">
+							<RiUser3Line className='w-5 h-5' />
+						</button>
+					</Link>
+			}
 			<Outlet />
 		</div>
 	);

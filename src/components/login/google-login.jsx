@@ -1,18 +1,20 @@
 import { RiGoogleFill } from 'react-icons/ri';
 import { Link, Outlet } from 'react-router-dom';
-//add forgot password
+import { signInWithGoogle } from '../../firebase';
+
 const GoogleLogIn = () => {
+
 	return (
 		<div className='flex flex-col'>
 			<div>
-				<Link className='btn btn-wide btn-primary' to='/account '>
-					<button type='submit' className='btn btn-wide btn-primary'>
+				<button type='submit' 
+						className='btn btn-wide btn-primary'
+						onClick={signInWithGoogle}
+					>
 						<RiGoogleFill className='w-5 h-5' />
 						&nbsp; google sign in
-					</button>
-				</Link>
+				</button>
 			</div>
-			<Outlet />
 		</div>
 	);
 };

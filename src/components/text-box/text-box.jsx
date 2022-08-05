@@ -1,11 +1,12 @@
 import Caret from '../caret/caret';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { updateGamesStarted } from '../../firebase';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
 const validCharSet = new Set(validChars.split(''));
 
-const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
+const TextBox = ({ passage, typed, setTyped, ready, setReady, mode }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
 	let incorrect = useRef(0);
@@ -44,15 +45,15 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady }) => {
 				done: false,
 			});
 
-			if (
-				incorrect.current > 0 &&
-				val[val.length - 1] !== p_raw[val.length - 1]
-			)
+			if (incorrect.current > 0 && val[val.length - 1] !== p_raw[val.length - 1])
 				incorrect.current--;
 		} else if (p_raw[val.length] === ' ' && incorrect.current !== 0) {
 			return;
 		} else if (validCharSet.has(e.key) && val.length < p_raw.length) {
-			if (val.length === 0) setReady(true);
+			if (val.length === 0) {
+				setReady(true);
+				updateGamesStarted(mode);
+			}
 
 			setTyped((t) => {
 				return {

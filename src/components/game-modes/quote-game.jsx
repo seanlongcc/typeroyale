@@ -34,7 +34,7 @@ const QuoteGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={time} passage={passage.raw} />
+					<GameStats typed={typed} gameTime={time} passage={passage.raw} mode="quote"/>
 				)}
 			</span>
 			<span>
@@ -45,7 +45,7 @@ const QuoteGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 						setReady={setReady}
 						ready={ready}
-						mode={mode}
+						mode="quote"
 					/>
 				) : (
 					<span />

@@ -12,12 +12,11 @@ import { FaRedo, FaChevronRight } from 'react-icons/fa';
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
 	const [ready, setReady] = useState(false);
-	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
+	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false});
 	const [caps, setCaps] = useState(false);
 	const [reset, setReset] = useState(0);
 
 	useEffect(() => {
-		console.log("hello");
 		setTyped({ val: '', keysPressed: [], done: false });
 		setReady(false);
 	}, [mode]);
@@ -45,7 +44,7 @@ const PracticeModes = () => {
 						setTyped={setTyped}
 					/>
 				);
-			case 'quotes':
+			case 'quote':
 				return (
 					<QuoteGame
 						reset={reset}
@@ -97,7 +96,7 @@ const PracticeModes = () => {
 			</span>
 
 			<div className='btn-group mt-2'>
-				{['time', 'words', 'quotes', 'gibberish'].map((label, i) => (
+				{['time', 'words', 'quote', 'gibberish'].map((label, i) => (
 					<Button
 						key={i}
 						label={label}

@@ -46,7 +46,7 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={time} passage={passage.raw} />
+					<GameStats typed={typed} gameTime={time} passage={passage.raw} mode="gibberish" />
 				)}
 			</span>
 			<span>
@@ -57,7 +57,7 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 						setReady={setReady}
 						ready={ready}
-						mode={mode}
+						mode="gibberish"
 					/>
 				) : (
 					<span />

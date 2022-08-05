@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { RiPulseLine, RiFontSize, RiMedalLine } from 'react-icons/ri';
+import { updateStats } from '../../firebase';
 
-const GameStats = ({ gameTime, typed, passage }) => {
-	const wpm = ((typed.val.length / gameTime / 5) * 60).toFixed(2);
-	const cps = (typed.val.length / gameTime).toFixed(2);
+const GameStats = ({ gameTime, typed, passage, mode }) => {
+
 	const acc = () => {
 		let ptr = 0;
 		let correct = 0;
@@ -22,9 +23,19 @@ const GameStats = ({ gameTime, typed, passage }) => {
 
 		return [correct, total];
 	};
-	const accuracy = ((acc()[0] / acc()[1]) * 100).toFixed(2);
-	const charsTyped = acc()[1];
-	const wrongChars = acc()[1] - acc()[0];
+
+	const [correct, total] = acc();
+	const wpm = ((correct / gameTime / 5) * 60).toFixed(2);
+	const cps = (correct / gameTime).toFixed(2);
+	const accuracy = ((correct / total) * 100).toFixed(2);
+	const charsTyped = total;
+	const wrongChars = total - correct;
+
+	useEffect(() => {
+		if(typed.done)
+			updateStats(mode, total, correct, gameTime);
+	}, [typed, mode, total, correct, gameTime]);
+
 
 	return (
 		<div className='flex flex-row mb-16'>
