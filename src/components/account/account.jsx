@@ -1,69 +1,141 @@
 import { Navigate } from 'react-router-dom';
-import { getStats, db } from '../../firebase/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { getStats } from '../../firebase/firebase';
+import { useState, useEffect } from 'react';
 import AccountGameStats from './account-gamestats';
 import AccountTotalStats from './account-totalstats';
-import { useState } from 'react';
+import Button from '../button/button';
 
 const Account = ({ user }) => {
 	const [mode, setMode] = useState('total');
-	// getDoc(doc(db, 'users', user.uid)).then((docSnap) => {
-	// 	if (docSnap.exists()) {
-	// 		console.log('Document data:', docSnap.data().practice);
-	// 	} else {
-	// 		console.log('No such document!');
-	// 	}
-	// });
+	const [stats, setStats] = useState({});
+
+	useEffect(() => {
+		async function fetchData() {
+			setStats(await getStats());
+		}
+		fetchData();
+	}, [setStats]);
 	const renderMode = () => {
 		switch (mode) {
 			case 'total':
 				return (
 					<AccountTotalStats
-						mode='total'
-						complete='0'
+						// complete={
+						// 	stats.time_game.completed +
+						// 	stats.words_game.completed +
+						// 	stats.quote_game.completed +
+						// 	stats.time_game.completed
+						// }
+						// started={
+						// 	stats.time_game.started +
+						// 	stats.words_game.started +
+						// 	stats.quote_game.started +
+						// 	stats.time_game.started
+						// }
+						// totChar={
+						// 	stats.time_game.total_chars +
+						// 	stats.words_game.total_chars +
+						// 	stats.quote_game.total_chars +
+						// 	stats.time_game.total_chars
+						// }
+						// corChar={
+						// 	stats.time_game.total_correct_chars +
+						// 	stats.words_game.total_correct_chars +
+						// 	stats.quote_game.total_correct_chars +
+						// 	stats.time_game.total_correct_chars
+						// }
+						// totTime={
+						// 	stats.time_game.total_time +
+						// 	stats.words_game.total_time +
+						// 	stats.quote_game.total_time +
+						// 	stats.time_game.total_time
+						// }
 						avgWPM='0'
+						avgCPS='0'
+						avgACC='0'
 						tenWPM='0'
+						tenCPS='0'
+						tenACC='0'
 						bestWPM='0'
+						bestCPS='0'
+						bestACC='0'
+					/>
+				);
+
+			case 'time':
+				return (
+					<AccountGameStats
+						complete={stats.time_game.completed}
+						started={stats.time_game.started}
+						totChar={stats.time_game.total_chars}
+						corChar={stats.time_game.total_correct_chars}
+						totTime={stats.time_game.total_time}
+						avgWPM='0'
+						avgCPS='0'
+						avgACC='0'
+						tenWPM='0'
+						tenCPS='0'
+						tenACC='0'
+						bestWPM='0'
+						bestCPS='0'
+						bestACC='0'
 					/>
 				);
 			case 'words':
 				return (
 					<AccountGameStats
-						mode='words'
-						complete='1'
-						avgWPM='1'
-						tenWPM='1'
-						bestWPM='1'
-					/>
-				);
-			case 'time':
-				return (
-					<AccountGameStats
-						mode='time'
-						complete='2'
-						avgWPM='2'
-						tenWPM='2'
-						bestWPM='2'
+						complete={stats.words_game.completed}
+						started={stats.words_game.started}
+						totChar={stats.words_game.total_chars}
+						corChar={stats.words_game.total_correct_chars}
+						totTime={stats.words_game.total_time}
+						avgWPM='0'
+						avgCPS='0'
+						avgACC='0'
+						tenWPM='0'
+						tenCPS='0'
+						tenACC='0'
+						bestWPM='0'
+						bestCPS='0'
+						bestACC='0'
 					/>
 				);
 			case 'quote':
 				return (
 					<AccountGameStats
-						mode='quote'
-						complete='3'
-						avgWPM='3'
-						tenWPM='3'
-						bestWPM='3'
+						complete={stats.quote_game.completed}
+						started={stats.quote_game.started}
+						totChar={stats.quote_game.total_chars}
+						corChar={stats.quote_game.total_correct_chars}
+						totTime={stats.quote_game.total_time}
+						avgWPM='0'
+						avgCPS='0'
+						avgACC='0'
+						tenWPM='0'
+						tenCPS='0'
+						tenACC='0'
+						bestWPM='0'
+						bestCPS='0'
+						bestACC='0'
 					/>
 				);
 			case 'gibberish':
 				return (
 					<AccountGameStats
-						mode='gibberish'
-						complete='4'
-						avgWPM='4'
-						tenWPM='4'
-						bestWPM='4'
+						complete={stats.time_game.completed}
+						started={stats.time_game.started}
+						totChar={stats.time_game.total_chars}
+						corChar={stats.time_game.total_correct_chars}
+						totTime={stats.time_game.total_time}
+						avgWPM='0'
+						avgCPS='0'
+						avgACC='0'
+						tenWPM='0'
+						tenCPS='0'
+						tenACC='0'
+						bestWPM='0'
+						bestCPS='0'
+						bestACC='0'
 					/>
 				);
 			default:
@@ -71,32 +143,36 @@ const Account = ({ user }) => {
 		}
 	};
 
-	const handleChange = (e) => {
-		setMode(e.target.value);
-	};
+	// const handleChange = (e) => {
+	// 	setMode(e.target.value);
+	// };
 
 	return user ? (
 		<div className='flex flex-col items-center h-screen justify-center'>
 			<div className='avatar mb-4'>
 				<div className='flex flex-col w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-					<img className='mask mask-circle' src={user.photoURL} alt='' />
+					<img className='mask mask-circle ' src={user.photoURL} alt='' />
 				</div>
 			</div>
 			<span className='flex justify-center text-4xl mb-4'>
 				{user.displayName}
 			</span>
-
-			<select
-				class='select select-primary w-full max-w-xs'
+			<div className='btn-group'>
+				{['total', 'time', 'words', 'quote', 'gibberish'].map((label, i) => (
+					<Button key={i} label={label} mode={mode} setMode={setMode} />
+				))}
+			</div>
+			{/* <select
+				className='select select-primary w-full max-w-xs'
 				value={mode}
 				onChange={handleChange}
 			>
 				<option value='total'>TOTAL</option>
-				<option value='time'>TIME</option>
+				<option value='time_game'>TIME</option>
 				<option value='words'>WORDS</option>
 				<option value='quote'>QUOTE</option>
 				<option value='gibberish'>GIBBERISH</option>
-			</select>
+			</select> */}
 			<span tabIndex={0} className='outline-none'>
 				{renderMode()}
 			</span>

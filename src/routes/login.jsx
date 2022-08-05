@@ -1,9 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import GoogleLogIn from '../components/login/google-login';
-
-const Spinner = () => {
-	return <div className='flex justify-center items-center'>Loading...</div>;
-};
+import Spinner from '../components/spinner/spinner';
 
 const Login = ({ user, loading, error }) => {
 	return (

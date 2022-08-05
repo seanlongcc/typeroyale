@@ -1,5 +1,4 @@
 const AccountGameStats = ({
-	mode,
 	complete,
 	started,
 	totChar,
@@ -45,7 +44,7 @@ const AccountGameStats = ({
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>time typing</div>
-					<div className='stat-value'>{totTime}</div>
+					<div className='stat-value'>{totTime}s</div>
 				</div>
 			</div>
 			<div className='divider'></div>
@@ -92,8 +91,8 @@ const AccountGameStats = ({
 					<div className='stat-value'>{tenACC}</div>
 				</div>
 			</div>
-			<div class='divider'></div>
-			{/* last 10 games */}
+			<div className='divider'></div>
+			{/* bests */}
 			<span className='text-4xl mb-4'>Personal Bests</span>
 			<div className='stats'>
 				<div className='stat'>

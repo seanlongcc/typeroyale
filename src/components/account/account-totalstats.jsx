@@ -1,5 +1,4 @@
 const AccountTotalStats = ({
-	mode,
 	complete,
 	started,
 	totChar,
@@ -42,7 +41,7 @@ const AccountTotalStats = ({
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>total time</div>
-					<div className='stat-value'>{totTime}</div>
+					<div className='stat-value'>{totTime}s</div>
 				</div>
 			</div>
 			<div className='divider'></div>
@@ -67,29 +66,30 @@ const AccountTotalStats = ({
 					<div className='stat-value'>{avgACC}</div>
 				</div>
 			</div>
+
 			<div className='divider'></div>
-			{/* last 10 games */}
+			{/* bests */}
 			<span className='text-4xl mb-4'>Personal Bests</span>
 			<div className='stats'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest words per minute</div>
 					<div className='stat-value'>{bestWPM}</div>
-					<div class='stat-desc'>mode it happened in</div>
+					<div className='stat-desc'>mode it happened in</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest characters per second</div>
 					<div className='stat-value'>{bestCPS}</div>
-					<div class='stat-desc'>mode it happened in</div>
+					<div className='stat-desc'>mode it happened in</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest average accuracy</div>
 					<div className='stat-value'>{bestACC}</div>
-					<div class='stat-desc'>mode it happened in</div>
+					<div className='stat-desc'>mode it happened in</div>
 				</div>
 			</div>
 		</div>
