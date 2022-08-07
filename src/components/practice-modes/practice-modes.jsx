@@ -7,7 +7,6 @@ import WordsGame from "../game-modes/words-game";
 import QuoteGame from "../game-modes/quote-game";
 import GibberishGame from "../game-modes/gibberish-game.jsx";
 
-import { FaRedo, FaChevronRight } from "react-icons/fa";
 import { RiRefreshLine, RiArrowRightSLine } from "react-icons/ri";
 
 const PracticeModes = () => {
@@ -16,7 +15,7 @@ const PracticeModes = () => {
   const [typed, setTyped] = useState({ val: "", keysPressed: [], done: false });
   const [caps, setCaps] = useState(false);
   const [reset, setReset] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0); // stores user word count
 
   useEffect(() => {
     setTyped({ val: "", keysPressed: [], done: false });

@@ -46,6 +46,8 @@ const TextBox = ({
 
   const handleKeyDown = (e) => {
     const [val, p_raw] = [typed.val, passage.raw];
+
+    // adds to current word count when registering a correct spacebar input
     if (p_raw[val.length] === " " && e.key === " ") {
       setProgress((progress) => progress + 1);
     }
