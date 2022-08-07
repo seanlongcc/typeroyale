@@ -31,8 +31,9 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 	const wrongChars = total - correct;
 
 	useEffect(() => {
-		if (typed.done) updateStats(mode, total, correct, gameTime);
-	}, [typed, mode, total, correct, gameTime]);
+		console.log("HUHUHU")
+		updateStats(mode, total, correct, gameTime);
+	}, [mode, total, correct, gameTime]);
 
 	return (
 		<div className='flex flex-row mb-16'>

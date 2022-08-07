@@ -1,28 +1,18 @@
-const AccountGameStats = ({
-	complete,
-	started,
-	totChar,
-	corChar,
-	totTime,
-	avgWPM,
-	avgCPS,
-	avgACC,
-	tenWPM,
-	tenCPS,
-	tenACC,
-	bestWPM,
-	bestCPS,
-	bestACC,
-}) => {
+const AccountGameStats = ({mode, stats}) => {
+	const {completed, started, total_chars, correct_chars, time} = stats.totals;
+	const [avg_all, avg_ten, bests] = [stats.avg_all, stats.avg_ten, stats.bests];
+
 	return (
 		<div className='flex flex-col items-center justify-center'>
 			{/* general stats */}
-			<span className='text-4xl m-4'>Totals</span>
+			{/* <span className='text-4xl m-4'>Totals</span> */}
+			<div className='divider'></div>
+
 			<div className='stats'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>completed games</div>
-					<div className='stat-value'>{complete}</div>
+					<div className='stat-value'>{completed}</div>
 				</div>
 
 				<div className='stat'>
@@ -34,85 +24,63 @@ const AccountGameStats = ({
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>characters typed</div>
-					<div className='stat-value'>{totChar}</div>
+					<div className='stat-value'>{total_chars}</div>
 				</div>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>correct characters typed</div>
-					<div className='stat-value'>{corChar}</div>
+					<div className='stat-value'>{correct_chars}</div>
 				</div>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>time typing</div>
-					<div className='stat-value'>{totTime}s</div>
+					<div className='stat-value'>{time}s</div>
 				</div>
 			</div>
-			<div className='divider'></div>
+			{/* <div className='divider'></div> */}
 			{/* averages */}
-			<span className='text-4xl mb-4'>Overall Averages</span>
-			<div className='stats'>
+			{/* <span className='text-4xl mb-4'>Averages (Overall | Last 10)</span> */}
+			<div className='stats mt-10'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average words per minute</div>
-					<div className='stat-value'>{avgWPM}</div>
+					<div className='stat-title'>words per minute</div>
+					<div className='stat-value'>{avg_all.wpm}</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average characters per second</div>
-					<div className='stat-value'>{avgCPS}</div>
+					<div className='stat-title'>characters per second</div>
+					<div className='stat-value'>{avg_all.cps}</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average accuracy</div>
-					<div className='stat-value'>{avgACC}</div>
+					<div className='stat-title'> accuracy</div>
+					<div className='stat-value'>{avg_all.acc}%</div>
 				</div>
 			</div>
-			<div className='divider'></div>
-			{/* last 10 games */}
-			<span className='text-4xl mb-4'>Last 10 Game Averages</span>
-			<div className='stats'>
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average words per minute</div>
-					<div className='stat-value'>{tenWPM}</div>
-				</div>
-
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average characters per second</div>
-					<div className='stat-value'>{tenCPS}</div>
-				</div>
-
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>average accuracy</div>
-					<div className='stat-value'>{tenACC}</div>
-				</div>
-			</div>
-			<div className='divider'></div>
+			{/* <div className='divider'></div> */}
 			{/* bests */}
-			<span className='text-4xl mb-4'>Personal Bests</span>
+			{/* <span className='text-4xl mb-4'>Personal Bests</span>
 			<div className='stats'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest words per minute</div>
-					<div className='stat-value'>{bestWPM}</div>
+					<div className='stat-value'>{bests.wpm}</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest characters per second</div>
-					<div className='stat-value'>{bestCPS}</div>
+					<div className='stat-value'>{bests.cps}</div>
 				</div>
 
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
 					<div className='stat-title'>highest average accuracy</div>
-					<div className='stat-value'>{bestACC}</div>
+					<div className='stat-value'>{bests.acc}</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

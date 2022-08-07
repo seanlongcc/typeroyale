@@ -1,4 +1,3 @@
-import { async } from '@firebase/util';
 import { initializeApp } from 'firebase/app';
 
 import {
@@ -15,6 +14,7 @@ import {
 	setDoc,
 	updateDoc,
 	increment,
+	arrayUnion,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -39,7 +39,7 @@ const FIELDS = {
 	total_chars: 0,
 	total_correct_chars: 0,
 	total_time: 0,
-	last_ten: [],
+	all_games: [],
 };
 
 const INITIAL_DOC = {
@@ -47,6 +47,7 @@ const INITIAL_DOC = {
 	words_game: FIELDS,
 	quote_game: FIELDS,
 	gibberish_game: FIELDS,
+	last_ten: []
 };
 
 ///////////////////////// AUTH /////////////////////////////////////
@@ -99,12 +100,13 @@ const updateStats = async (mode, total_chars, correct_chars, time) => {
 
 		const data = userDoc.data()['practice'][`${mode}_game`];
 		const newMaxChars = Math.max(data.max_chars, correct_chars);
-		const lastTen = data.last_ten;
 		const newGame = { total_chars, correct_chars, time };
-		const newTen =
+		let lastTen = userDoc.data()['practice'].last_ten;
+
+		const newTen = 
 			lastTen.length < 10
-				? [...lastTen, newGame]
-				: [...lastTen.slice(1), newGame];
+			? [...lastTen, newGame]
+			: [...lastTen.slice(1), newGame]; 
 
 		let base = `practice.${mode}_game`;
 
@@ -114,7 +116,8 @@ const updateStats = async (mode, total_chars, correct_chars, time) => {
 			[`${base}.total_correct_chars`]: increment(correct_chars),
 			[`${base}.total_time`]: increment(time),
 			[`${base}.max_chars`]: newMaxChars,
-			[`${base}.last_ten`]: newTen,
+			[`${base}.all_games`]: arrayUnion(newGame),
+			"practice.last_ten": newTen 
 		});
 	} catch (e) {
 		console.log('Transaction failed: ', e);
