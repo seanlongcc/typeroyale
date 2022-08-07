@@ -61,7 +61,7 @@ const WordsGame = ({
 					/>
 				)}
 			</span>
-			<span className={typed.done && 'hidden'}>
+			<span className={typed.done ? 'hidden' : ''}>
 				{progress} / {mode}
 			</span>
 			<span>

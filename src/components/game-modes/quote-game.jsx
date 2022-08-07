@@ -50,7 +50,7 @@ const QuoteGame = ({
 					/>
 				)}
 			</span>
-			<span className={typed.done && 'hidden'}>
+			<span className={typed.done ? 'hidden' : ''}>
 				{progress} / {passage.length}
 			</span>
 			<span>

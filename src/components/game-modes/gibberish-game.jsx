@@ -63,7 +63,7 @@ const GibberishGame = ({
 					/>
 				)}
 			</span>
-			<span className={typed.done && 'hidden'}>
+			<span className={typed.done ? 'hidden' : ''}>
 				{progress} / {mode}
 			</span>
 			<span className='font-sans'>

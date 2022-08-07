@@ -61,7 +61,7 @@ const TimeGame = ({
 					/>
 				)}
 			</span>
-			<span className={typed.done && 'hidden'}>{progress}</span>
+			<span className={typed.done ? 'hidden' : ''}>{progress}</span>
 			<span>
 				{!typed.done ? (
 					<TextBox

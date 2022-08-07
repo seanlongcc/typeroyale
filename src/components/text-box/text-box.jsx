@@ -1,160 +1,168 @@
-import Caret from "../caret/caret";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { updateGamesStarted } from "../../firebase/firebase";
+import Caret from '../caret/caret';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { updateGamesStarted } from '../../firebase/firebase';
 
 const validChars =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/'\"!?@#$%^&*()_+-=<>\\|`~[]{};: ";
-const validCharSet = new Set(validChars.split(""));
+	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
+const validCharSet = new Set(validChars.split(''));
 
 const TextBox = ({
-  passage,
-  typed,
-  setTyped,
-  ready,
-  setReady,
-  mode,
-  progress,
-  setProgress,
+	passage,
+	typed,
+	setTyped,
+	ready,
+	setReady,
+	mode,
+	progress,
+	setProgress,
 }) => {
-  const [textFocused, setTextFocused] = useState(false);
-  const [click, setClick] = useState(false);
-  let incorrect = useRef(0);
+	const [textFocused, setTextFocused] = useState(false);
+	const [click, setClick] = useState(false);
+	let incorrect = useRef(0);
 
-  const updatePtr = useCallback(
-    (start) => {
-      var [ptr, newLines, lb1, lb2] = [start, 0, 0, 0];
-      while (newLines !== 3 && ptr < passage.display.length) {
-        if (passage.display[ptr++] === "\n") {
-          newLines += 1;
-          lb1 = newLines === 1 ? ptr : lb1;
-          lb2 = newLines === 2 ? ptr : lb2;
-        }
-      }
-      return { start: start, lb1: lb1, lb2: lb2, end: ptr };
-    },
-    [passage]
-  );
+	const updatePtr = useCallback(
+		(start) => {
+			var [ptr, newLines, lb1, lb2] = [start, 0, 0, 0];
+			while (newLines !== 3 && ptr < passage.display.length) {
+				if (passage.display[ptr++] === '\n') {
+					newLines += 1;
+					lb1 = newLines === 1 ? ptr : lb1;
+					lb2 = newLines === 2 ? ptr : lb2;
+				}
+			}
+			return { start: start, lb1: lb1, lb2: lb2, end: ptr };
+		},
+		[passage]
+	);
 
-  const [passagePtr, setPassagePtr] = useState(updatePtr(0));
+	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
 
-  useEffect(() => {
-    if (!ready) {
-      setPassagePtr(updatePtr(0));
-      incorrect.current = 0;
-    }
-  }, [ready, setPassagePtr, updatePtr, setProgress]);
+	useEffect(() => {
+		if (!ready) {
+			setPassagePtr(updatePtr(0));
+			incorrect.current = 0;
+		}
+	}, [ready, setPassagePtr, updatePtr, setProgress]);
 
-  const handleKeyDown = (e) => {
-    const [val, p_raw] = [typed.val, passage.raw];
+	const handleKeyDown = (e) => {
+		const [val, p_raw] = [typed.val, passage.raw];
 
-    // adds to current word count when registering a correct spacebar input
-    if (p_raw[val.length] === " " && e.key === " ") {
-      setProgress((progress) => progress + 1);
-    }
+		if (e.key === 'Backspace' && val.length > 0) {
+			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
+			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
+				setTyped({
+					val: val.slice(0, -1),
+					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
+					done: false,
+				});
+			}
 
-    if (e.key === "Backspace" && val.length > 0) {
-      setTyped({
-        val: val.slice(0, -1),
-        keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
-        done: false,
-      });
-      if (
-        incorrect.current > 0 &&
-        val[val.length - 1] !== p_raw[val.length - 1]
-      )
-        incorrect.current--;
-    } else if (p_raw[val.length] === " " && incorrect.current !== 0) {
-      return;
-    } else if (validCharSet.has(e.key) && val.length < p_raw.length) {
-      if (val.length === 0) {
-        setReady(true);
-        updateGamesStarted(mode);
-      }
+			if (
+				incorrect.current > 0 &&
+				val[val.length - 1] !== p_raw[val.length - 1]
+			)
+				incorrect.current--;
+		} else if (p_raw[val.length] === ' ' && incorrect.current !== 0) {
+			return;
+		} else if (validCharSet.has(e.key) && val.length < p_raw.length) {
+			if (val.length === 0) {
+				setReady(true);
+				updateGamesStarted(mode);
+			}
 
-      setTyped((t) => {
-        return {
-          val: t.val + e.key,
-          keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
-          done: t.val + e.key === p_raw,
-        };
-      });
+			setTyped((t) => {
+				return {
+					val: t.val + e.key,
+					keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
+					done: t.val + e.key === p_raw,
+				};
+			});
 
-      if (e.key !== p_raw[val.length]) incorrect.current++;
+			if (e.key !== p_raw[val.length]) incorrect.current++;
 
-      if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
-        setPassagePtr(updatePtr(passagePtr.lb1));
-    }
-  };
+			if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
+				setPassagePtr(updatePtr(passagePtr.lb1));
 
-  //changes state when clicking mouse
-  onmouseup = (e) => {
-    setClick(!click);
-  };
+			// progress counter
+			if (
+				e.key === ' ' &&
+				passage.raw[val.length - 1] !== ' ' &&
+				incorrect.current === 0
+			) {
+				setProgress((progress) => progress + 1);
+			}
+		}
+	};
 
-  useEffect(() => {
-    if (document.getElementById("text-box") === document.activeElement) {
-      setTextFocused(true);
-      setClick(false);
-    } else {
-      setTextFocused(false);
-    }
-  }, [textFocused, click, typed]);
+	//changes state when clicking mouse
+	onmouseup = (e) => {
+		setClick(!click);
+	};
 
-  return (
-    <div
-      id='text-box'
-      className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
-      <span>
-        {passage.display
-          .slice(passagePtr.start, passagePtr.end)
-          .split("")
-          .map((c, i) => {
-            i += passagePtr.start;
-            if (typed.val[i] === c) {
-              return (
-                <span key={i} className='text-secondary'>
-                  {c}
-                  {textFocused && i === typed.val.length - 1 && <Caret />}
-                </span>
-              );
-            } else if (typed.val[i]) {
-              //if spacebar is wrong, highlight
-              if (
-                passage.display[i] === " " &&
-                typed.val[i] !== passage.display[i]
-              ) {
-                return (
-                  <span key={i} className='bg-primary bg-opacity-50'>
-                    {c}
-                    {textFocused && i === typed.val.length - 1 && <Caret />}
-                  </span>
-                );
-              } else {
-                return (
-                  <span key={i} className='text-primary'>
-                    {c}
-                    {textFocused && i === typed.val.length - 1 && <Caret />}
-                  </span>
-                );
-              }
-            } else {
-              //returns the passage if nothing is typed, renders all at once
-              return (
-                <span key={i}>
-                  {textFocused && typed.val.length === 0 && i === 0 && (
-                    <Caret />
-                  )}
-                  {c}
-                </span>
-              );
-            }
-          })}
-      </span>
-    </div>
-  );
+	useEffect(() => {
+		if (document.getElementById('text-box') === document.activeElement) {
+			setTextFocused(true);
+			setClick(false);
+		} else {
+			setTextFocused(false);
+		}
+	}, [textFocused, click, typed]);
+
+	return (
+		<div
+			id='text-box'
+			className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
+			tabIndex={0}
+			onKeyDown={handleKeyDown}
+		>
+			<span>
+				{passage.display
+					.slice(passagePtr.start, passagePtr.end)
+					.split('')
+					.map((c, i) => {
+						i += passagePtr.start;
+						if (typed.val[i] === c) {
+							return (
+								<span key={i} className='text-secondary'>
+									{c}
+									{textFocused && i === typed.val.length - 1 && <Caret />}
+								</span>
+							);
+						} else if (typed.val[i]) {
+							//if spacebar is wrong, highlight
+							if (
+								passage.display[i] === ' ' &&
+								typed.val[i] !== passage.display[i]
+							) {
+								return (
+									<span key={i} className='bg-primary bg-opacity-50'>
+										{c}
+										{textFocused && i === typed.val.length - 1 && <Caret />}
+									</span>
+								);
+							} else {
+								return (
+									<span key={i} className='text-primary'>
+										{c}
+										{textFocused && i === typed.val.length - 1 && <Caret />}
+									</span>
+								);
+							}
+						} else {
+							//returns the passage if nothing is typed, renders all at once
+							return (
+								<span key={i}>
+									{textFocused && typed.val.length === 0 && i === 0 && (
+										<Caret />
+									)}
+									{c}
+								</span>
+							);
+						}
+					})}
+			</span>
+		</div>
+	);
 };
 
 export default TextBox;
