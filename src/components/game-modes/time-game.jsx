@@ -6,7 +6,7 @@ import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from '../passage/passage-generation';
 import { RiToolsFill } from 'react-icons/ri';
 
-const custom = <RiToolsFill />;
+const custom = <RiToolsFill className='inline w-4 h-4' />;
 
 const TimeGame = ({
 	typed,
@@ -61,7 +61,7 @@ const TimeGame = ({
 					/>
 				)}
 			</span>
-			<span>{progress}</span>
+			<span className={typed.done && 'hidden'}>{progress}</span>
 			<span>
 				{!typed.done ? (
 					<TextBox

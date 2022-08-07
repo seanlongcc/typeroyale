@@ -6,7 +6,7 @@ import TextBox from '../text-box/text-box';
 import { generateGibberish } from '../passage/gibberish-generation';
 
 import { RiToolsFill } from 'react-icons/ri';
-const custom = <RiToolsFill />;
+const custom = <RiToolsFill className='inline w-4 h-4' />;
 
 const GibberishGame = ({
 	typed,
@@ -63,10 +63,10 @@ const GibberishGame = ({
 					/>
 				)}
 			</span>
-			<span>
+			<span className={typed.done && 'hidden'}>
 				{progress} / {mode}
 			</span>
-			<span>
+			<span className='font-sans'>
 				{!typed.done ? (
 					<TextBox
 						passage={passage}

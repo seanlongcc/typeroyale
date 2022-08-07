@@ -17,6 +17,10 @@ module.exports = {
 				blink: 'blink 1s ease-in-out infinite',
 			},
 		},
+
+		fontFamily: {
+			sans: ['IBM Plex Sans'],
+		},
 	},
 
 	plugins: [require('daisyui')],
