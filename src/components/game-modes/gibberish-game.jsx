@@ -8,7 +8,15 @@ import { generateGibberish } from '../passage/gibberish-generation';
 import { RiToolsFill } from 'react-icons/ri';
 const custom = <RiToolsFill />;
 
-const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
+const GibberishGame = ({
+	typed,
+	setTyped,
+	ready,
+	setReady,
+	reset,
+	progress,
+	setProgress,
+}) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
@@ -28,11 +36,12 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 	// ensures text box is focused after mode change
 	useEffect(() => {
 		setReady(false);
+		setProgress(0);
 		setTyped({ val: '', keysPressed: [], done: false });
 		if (document.getElementById('text-box') && mode !== custom) {
 			document.getElementById('text-box').focus();
 		}
-	}, [mode, setReady, setTyped]);
+	}, [mode, setReady, setTyped, setProgress]);
 
 	return (
 		<div className='flex flex-col items-center w-screen'>
@@ -46,8 +55,16 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={time} passage={passage.raw} mode="gibberish" />
+					<GameStats
+						typed={typed}
+						gameTime={time}
+						passage={passage.raw}
+						mode='gibberish'
+					/>
 				)}
+			</span>
+			<span>
+				{progress} / {mode}
 			</span>
 			<span>
 				{!typed.done ? (
@@ -57,7 +74,9 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 						setReady={setReady}
 						ready={ready}
-						mode="gibberish"
+						mode='gibberish'
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				) : (
 					<span />
@@ -74,11 +93,7 @@ const GibberishGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					/>
 				))}
 				{mode !== custom ? (
-					<Button
-						label={custom}
-						mode={mode}
-						setMode={setMode}
-					/>
+					<Button label={custom} mode={mode} setMode={setMode} />
 				) : (
 					<input
 						className='btn btn-sm'
