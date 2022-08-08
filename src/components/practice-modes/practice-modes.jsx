@@ -7,7 +7,7 @@ import WordsGame from '../game-modes/words-game';
 import QuoteGame from '../game-modes/quote-game';
 import GibberishGame from '../game-modes/gibberish-game.jsx';
 
-import { FaRedo, FaChevronRight } from 'react-icons/fa';
+import { RiRefreshLine, RiArrowRightSLine } from 'react-icons/ri';
 
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
@@ -15,6 +15,7 @@ const PracticeModes = () => {
 	const [typed, setTyped] = useState({ val: '', keysPressed: [], done: false });
 	const [caps, setCaps] = useState(false);
 	const [reset, setReset] = useState(0);
+	const [progress, setProgress] = useState(0); // stores user word count
 
 	useEffect(() => {
 		setTyped({ val: '', keysPressed: [], done: false });
@@ -32,6 +33,8 @@ const PracticeModes = () => {
 						setReady={setReady}
 						typed={typed}
 						setTyped={setTyped}
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				);
 			case 'time':
@@ -42,6 +45,8 @@ const PracticeModes = () => {
 						setReady={setReady}
 						typed={typed}
 						setTyped={setTyped}
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				);
 			case 'quote':
@@ -52,6 +57,8 @@ const PracticeModes = () => {
 						setReady={setReady}
 						typed={typed}
 						setTyped={setTyped}
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				);
 			case 'gibberish':
@@ -62,6 +69,8 @@ const PracticeModes = () => {
 						setReady={setReady}
 						typed={typed}
 						setTyped={setTyped}
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				);
 			default:
@@ -80,6 +89,7 @@ const PracticeModes = () => {
 
 	const nextGame = async () => {
 		setReady(false);
+		setProgress(0);
 		setTyped({ val: '', keysPressed: [], done: false });
 		await waitFor(() => document.querySelector('text-box'));
 		setReset((r) => r + 1);
@@ -107,13 +117,12 @@ const PracticeModes = () => {
 					/>
 				))}
 			</div>
-
 			<div className='flex flex-col items-center'>
 				<button
 					className='text-xl hover:animate-pulse mt-2 btn btn-ghost'
 					onClick={nextGame}
 				>
-					{typed.done ? <FaChevronRight /> : <FaRedo />}
+					{typed.done ? <RiArrowRightSLine /> : <RiRefreshLine />}
 				</button>
 			</div>
 			<div className='absolute bottom-24'>

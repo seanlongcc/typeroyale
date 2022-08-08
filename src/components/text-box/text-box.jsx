@@ -6,7 +6,16 @@ const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
 const validCharSet = new Set(validChars.split(''));
 
-const TextBox = ({ passage, typed, setTyped, ready, setReady, mode }) => {
+const TextBox = ({
+	passage,
+	typed,
+	setTyped,
+	ready,
+	setReady,
+	mode,
+	progress,
+	setProgress,
+}) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
 	let incorrect = useRef(0);
@@ -33,17 +42,20 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady, mode }) => {
 			setPassagePtr(updatePtr(0));
 			incorrect.current = 0;
 		}
-	}, [ready, setPassagePtr, updatePtr]);
+	}, [ready, setPassagePtr, updatePtr, setProgress]);
 
 	const handleKeyDown = (e) => {
 		const [val, p_raw] = [typed.val, passage.raw];
 
 		if (e.key === 'Backspace' && val.length > 0) {
-			setTyped({
-				val: val.slice(0, -1),
-				keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
-				done: false,
-			});
+			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
+			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
+				setTyped({
+					val: val.slice(0, -1),
+					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
+					done: false,
+				});
+			}
 
 			if (
 				incorrect.current > 0 &&
@@ -70,6 +82,15 @@ const TextBox = ({ passage, typed, setTyped, ready, setReady, mode }) => {
 
 			if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
 				setPassagePtr(updatePtr(passagePtr.lb1));
+
+			// progress counter
+			if (
+				e.key === ' ' &&
+				passage.raw[val.length - 1] !== ' ' &&
+				incorrect.current === 0
+			) {
+				setProgress((progress) => progress + 1);
+			}
 		}
 	};
 

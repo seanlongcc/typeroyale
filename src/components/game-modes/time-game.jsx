@@ -4,11 +4,19 @@ import ClockDown from '../clock-down/clock-down';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from '../passage/passage-generation';
-
 import { RiToolsFill } from 'react-icons/ri';
-const custom = <RiToolsFill />;
 
-const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
+const custom = <RiToolsFill className='inline w-4 h-4' />;
+
+const TimeGame = ({
+	typed,
+	setTyped,
+	ready,
+	setReady,
+	reset,
+	progress,
+	setProgress,
+}) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
 
@@ -27,10 +35,11 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	useEffect(() => {
 		setReady(false);
+		setProgress(0);
 		setTyped({ val: '', keysPressed: [], done: false });
 		if (document.getElementById('text-box') && mode !== custom)
 			document.getElementById('text-box').focus();
-	}, [mode, setReady, setTyped]);
+	}, [mode, setReady, setTyped, setProgress]);
 
 	return (
 		<div className='flex flex-col items-center'>
@@ -44,9 +53,15 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setReady={setReady}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={mode} passage={passage.raw} mode="time" />
+					<GameStats
+						typed={typed}
+						gameTime={mode}
+						passage={passage.raw}
+						mode='time'
+					/>
 				)}
 			</span>
+			<span className={typed.done ? 'hidden' : ''}>{progress}</span>
 			<span>
 				{!typed.done ? (
 					<TextBox
@@ -55,7 +70,9 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 						setReady={setReady}
 						ready={ready}
-						mode="time"
+						mode='time'
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				) : (
 					<span />
@@ -63,19 +80,10 @@ const TimeGame = ({ typed, setTyped, ready, setReady, reset }) => {
 			</span>
 			<span className='btn-group absolute-center'>
 				{[15, 30, 60, 120].map((time, i) => (
-					<Button
-						key={i}
-						label={time}
-						mode={mode}
-						setMode={setMode}
-					/>
+					<Button key={i} label={time} mode={mode} setMode={setMode} />
 				))}
 				{mode !== custom ? (
-					<Button
-						label={custom}
-						mode={mode}
-						setMode={setMode}
-					/>
+					<Button label={custom} mode={mode} setMode={setMode} />
 				) : (
 					<input
 						className='btn btn-sm'

@@ -4,11 +4,19 @@ import ClockUp from '../clock-up/clock-up';
 import GameStats from '../game-stats/game-stats';
 import TextBox from '../text-box/text-box';
 import { generateRandomPassage } from '../passage/passage-generation';
-
 import { RiToolsFill } from 'react-icons/ri';
-const custom = <RiToolsFill />;
 
-const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
+const custom = <RiToolsFill className='inline w-4 h-4' />;
+
+const WordsGame = ({
+	typed,
+	setTyped,
+	ready,
+	setReady,
+	reset,
+	progress,
+	setProgress,
+}) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
 	const [customLimit, setCustomLimit] = useState('');
@@ -27,10 +35,11 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 
 	useEffect(() => {
 		setReady(false);
+		setProgress(0);
 		setTyped({ val: '', keysPressed: [], done: false });
 		if (document.getElementById('text-box') && mode !== custom)
 			document.getElementById('text-box').focus();
-	}, [mode, setReady, setTyped]);
+	}, [mode, setReady, setTyped, setProgress]);
 
 	return (
 		<div className='flex flex-col items-center w-screen'>
@@ -44,8 +53,16 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTime={setTime}
 					/>
 				) : (
-					<GameStats typed={typed} gameTime={time} passage={passage.raw} mode="words"/>
+					<GameStats
+						typed={typed}
+						gameTime={time}
+						passage={passage.raw}
+						mode='words'
+					/>
 				)}
+			</span>
+			<span className={typed.done ? 'hidden' : ''}>
+				{progress} / {mode}
 			</span>
 			<span>
 				{!typed.done ? (
@@ -55,7 +72,9 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 						setTyped={setTyped}
 						setReady={setReady}
 						ready={ready}
-						mode="words"
+						mode='words'
+						progress={progress}
+						setProgress={setProgress}
 					/>
 				) : (
 					<span />
@@ -72,11 +91,7 @@ const WordsGame = ({ typed, setTyped, ready, setReady, reset }) => {
 					/>
 				))}
 				{mode !== custom ? (
-					<Button
-						label={custom}
-						mode={mode}
-						setMode={setMode}
-					/>
+					<Button label={custom} mode={mode} setMode={setMode} />
 				) : (
 					<input
 						className='btn btn-sm'
