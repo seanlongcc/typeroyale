@@ -3,6 +3,7 @@ import { getStats } from '../../firebase/firebase';
 import { useState, useEffect, useMemo } from 'react';
 import AccountGameStats from './account-gamestats';
 import Button from '../button/button';
+import { acc, sum, wpm, cps, getBests } from './statsHelpers';
 
 const Account = ({ user }) => {
 	const [mode, setMode] = useState('all');
@@ -16,57 +17,74 @@ const Account = ({ user }) => {
 		fetchData();
 	}, [setStats]);
 
-	const getTotals = (s, m) => {
-		const modes = 
-		m === "all"
-		? ["time_game", "words_game", "quote_game", "gibberish_game"]
-		: [`${m}_game`];
+	const stats_by_mode = useMemo(() => {
+		if(!stats) return {};
 
-		const sum = (prev, curr) => (prev + curr);
-		const wpm = (correct, time) => {
-			const res = ((correct / time / 5) * 60).toFixed(2);
-			return isNaN(res) ? 0 : res;
-		}
-		const cps = (correct, time) => {
-			const res = (correct / time).toFixed(2);
-			return isNaN(res) ? 0 : res;
-		}
-		const acc = (correct, total) => {
-			const res = ((correct / total)*100).toFixed(2);
-			return isNaN(res) ? 0 : res;
-		}
+		return Object.assign({}, ...["time_game", "words_game", "quote_game", "gibberish_game"].map((m) => {
+			const last_ten = () => {
+				const games = stats[m].all_games.slice(-10);
+				const total_chars = games[0] ? games.map(g => g.total_chars).reduce(sum): 0;
+				const correct_chars = games[0] ? games.map(g => g.correct_chars).reduce(sum): 0;
+				const time = games[0] ? games.map(g => parseInt(g.time)).reduce(sum): 0;
+				return {correct_chars, total_chars, time};
+			};
+			const lt = last_ten();
+			console.log(lt)	
+			return {
+				[m]: {
+					totals: stats[m],
+					avg_all: {
+						wpm: wpm(stats[m].total_correct_chars, stats[m].total_time),
+						cps: cps(stats[m].total_correct_chars, stats[m].total_time),
+						acc: acc(stats[m].total_correct_chars, stats[m].total_chars)
+					},
+					avg_ten: {
+						wpm: wpm(lt.correct_chars, lt.time),
+						cps: cps(lt.correct_chars, lt.time),
+						acc: acc(lt.correct_chars, lt.total_chars)
+					}				
+				}
+			}
+		}));
+	},[stats]);
 
+	const overall_stats = useMemo(() => {
+		if(!stats) return {};
+
+		const modes = ["time_game", "words_game", "quote_game", "gibberish_game"];
 		const agg = {
-			started: modes.map(m => s[m].started).reduce(sum),
-			completed: modes.map(m => s[m].completed).reduce(sum),
-			time: modes.map(m => s[m].total_time).reduce(sum),
-			total_chars: modes.map(m => s[m].total_chars).reduce(sum),
-			correct_chars: modes.map(m => s[m].total_correct_chars).reduce(sum),
+			started: modes.map(m => stats[m].started).reduce(sum),
+			completed: modes.map(m => stats[m].completed).reduce(sum),
+			total_time: modes.map(m => stats[m].total_time).reduce(sum),
+			total_chars: modes.map(m => stats[m].total_chars).reduce(sum),
+			total_correct_chars: modes.map(m => stats[m].total_correct_chars).reduce(sum),
 		};
 
-		const last_ten = (() => {
-			const games = m === 'all' ? s.last_ten : s[m].all_games.slice(-10)
-			const total_chars = games.map(g => g.total_chars).reduce(sum);
-			const correct_chars = games.map(g => g.correct_chars).reduce(sum);
-			const time = games.map(g => g.time).reduce(sum);
+		const last_ten = () => {
+			const games = stats.last_ten
+			const total_chars = games[0] ? games.map(g => g.total_chars).reduce(sum): 0;
+			const correct_chars = games[0] ? games.map(g => g.correct_chars).reduce(sum): 0;
+			const time = games[0] ? games.map(g => parseInt(g.time)).reduce(sum): 0;
 			return {correct_chars, total_chars, time};
-		});
-		console.log("FML", agg.correct, agg.total_chars)
+		};
+
+		const lt = last_ten();
+
 		return {
 			totals: agg,
 			avg_all: {
-				wpm: wpm(agg.correct_chars, agg.time),
-				cps: cps(agg.correct_chars, agg.time),
-				acc: acc(agg.correct_chars, agg.total_chars)
+				wpm: wpm(agg.total_correct_chars, agg.total_time),
+				cps: cps(agg.total_correct_chars, agg.total_time),
+				acc: acc(agg.total_correct_chars, agg.total_chars)
 			},
 			avg_ten: {
-				wpm: wpm(last_ten.correct_chars, last_ten.time),
-				cps: cps(last_ten.correct_chars, last_ten.time),
-				acc: acc(last_ten.correct_chars, last_ten.total_chars)
+				wpm: wpm(lt.correct_chars, lt.time),
+				cps: cps(lt.correct_chars, lt.time),
+				acc: acc(lt.correct_chars, lt.total_chars)
 			},
-			bests: {wpm: 0, cps: 0, acc: 0}
+			bests: getBests(stats_by_mode)
 		};
-	};
+	}, [stats]);
 
 	return user ? (
 		<div className='flex flex-col items-center h-screen justify-center'>
@@ -88,7 +106,11 @@ const Account = ({ user }) => {
 					stats 
 					? <AccountGameStats 
 							mode={mode}
-							stats={getTotals(stats, mode)} 
+							stats={
+								mode === 'all'
+								? overall_stats
+								: stats_by_mode[`${mode}_game`]
+							} 
 						/>
 					: <span>LOADING...</span>
 				}

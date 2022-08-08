@@ -31,7 +31,6 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 	const wrongChars = total - correct;
 
 	useEffect(() => {
-		console.log("HUHUHU")
 		updateStats(mode, total, correct, gameTime);
 	}, [mode, total, correct, gameTime]);
 
