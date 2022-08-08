@@ -44,19 +44,24 @@ const TextBox = ({
 			setPassagePtr(updatePtr(0));
 			incorrect.current = 0;
 		}
-	}, [ready, setPassagePtr, updatePtr, setProgress, setSinceSpace]);
+	}, [ready, setPassagePtr, updatePtr, setProgress]);
 
 	const handleKeyDown = (e) => {
 		const [val, p_raw] = [typed.val, passage.raw];
 
 		console.log(sinceSpace);
 		if (e.ctrlKey && e.key === 'Backspace') {
-			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
+			if (
+				sinceSpace < 0 &&
+				(val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ')
+			) {
 				setTyped({
 					val: val.slice(0, sinceSpace),
 					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 					done: false,
 				});
+				setSinceSpace(0);
+				incorrect.current = 0;
 			}
 		} else if (e.key === 'Backspace' && val.length > 0) {
 			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
@@ -66,6 +71,9 @@ const TextBox = ({
 					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 					done: false,
 				});
+				if (sinceSpace <= 0) {
+					setSinceSpace((sinceSpace) => sinceSpace + 1);
+				}
 			}
 
 			if (
@@ -89,7 +97,9 @@ const TextBox = ({
 				};
 			});
 
-			if (e.key !== p_raw[val.length]) incorrect.current++;
+			if (e.key !== p_raw[val.length]) {
+				incorrect.current++;
+			}
 
 			if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
 				setPassagePtr(updatePtr(passagePtr.lb1));

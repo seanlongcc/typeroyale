@@ -12,7 +12,20 @@ const AccountGameStats = ({ mode, stats }) => {
 	return (
 		<div className='flex flex-col items-center justify-center'>
 			{/* general stats */}
-			<span className='text-4xl m-4'>Totals</span>
+			<span className='mb-4'>
+				<Button
+					key={'overall'}
+					label={'overall'}
+					mode={avgMode}
+					setMode={setAvgMode}
+				/>
+				<Button
+					key={'last 10'}
+					label={'last 10'}
+					mode={avgMode}
+					setMode={setAvgMode}
+				/>
+			</span>
 			<div className='stats'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
@@ -42,23 +55,8 @@ const AccountGameStats = ({ mode, stats }) => {
 					<div className='stat-value'>{total_time.toFixed(2)}s</div>
 				</div>
 			</div>
-			<div className='divider'></div>
+			<div className='m-4'></div>
 			{/* averages */}
-			<span className='text-4xl mb-4'>Averages</span>
-			<span className='mb-4'>
-				<Button
-					key={'overall'}
-					label={'overall'}
-					mode={avgMode}
-					setMode={setAvgMode}
-				/>
-				<Button
-					key={'last 10'}
-					label={'last 10'}
-					mode={avgMode}
-					setMode={setAvgMode}
-				/>
-			</span>
 			<div className='stats'>
 				<div className='stat'>
 					<div className='stat-figure text-secondary'></div>
@@ -87,8 +85,7 @@ const AccountGameStats = ({ mode, stats }) => {
 			{/* bests */}
 			{mode === 'all' && (
 				<>
-					<div className='divider'></div>
-					<span className='text-4xl mb-4'>Personal Bests</span>
+					<div className='m-4'></div>
 					<div className='stats'>
 						<div className='stat'>
 							<div className='stat-figure text-secondary'></div>
