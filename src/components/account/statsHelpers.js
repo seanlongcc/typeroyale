@@ -21,7 +21,7 @@ const getBests = (modeStats) => {
 
   for(const m in modeStats) {
     if(modeStats[m].avg_all.wpm > maxWpm) {
-      res.wpm = {val: modeStats[m].avg_all.cps, mode: m};
+      res.wpm = {val: modeStats[m].avg_all.wpm, mode: m};
       maxWpm = res.wpm.val;
     }
     if(modeStats[m].avg_all.cps > maxCps) {
