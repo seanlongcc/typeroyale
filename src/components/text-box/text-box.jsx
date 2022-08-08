@@ -18,6 +18,7 @@ const TextBox = ({
 }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
+
 	let incorrect = useRef(0);
 
 	const updatePtr = useCallback(
@@ -36,18 +37,28 @@ const TextBox = ({
 	);
 
 	const [passagePtr, setPassagePtr] = useState(updatePtr(0));
+	const [sinceSpace, setSinceSpace] = useState(0);
 
 	useEffect(() => {
 		if (!ready) {
 			setPassagePtr(updatePtr(0));
 			incorrect.current = 0;
 		}
-	}, [ready, setPassagePtr, updatePtr, setProgress]);
+	}, [ready, setPassagePtr, updatePtr, setProgress, setSinceSpace]);
 
 	const handleKeyDown = (e) => {
 		const [val, p_raw] = [typed.val, passage.raw];
 
-		if (e.key === 'Backspace' && val.length > 0) {
+		console.log(sinceSpace);
+		if (e.ctrlKey && e.key === 'Backspace') {
+			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
+				setTyped({
+					val: val.slice(0, sinceSpace),
+					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
+					done: false,
+				});
+			}
+		} else if (e.key === 'Backspace' && val.length > 0) {
 			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
 			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
 				setTyped({
@@ -69,7 +80,7 @@ const TextBox = ({
 				setReady(true);
 				updateGamesStarted(mode);
 			}
-
+			setSinceSpace((sinceSpace) => sinceSpace - 1);
 			setTyped((t) => {
 				return {
 					val: t.val + e.key,
@@ -90,7 +101,9 @@ const TextBox = ({
 				incorrect.current === 0
 			) {
 				setProgress((progress) => progress + 1);
+				setSinceSpace(0);
 			}
+			console.log(sinceSpace);
 		}
 	};
 

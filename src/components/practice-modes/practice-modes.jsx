@@ -90,6 +90,7 @@ const PracticeModes = () => {
 	const nextGame = async () => {
 		setReady(false);
 		setProgress(0);
+
 		setTyped({ val: '', keysPressed: [], done: false });
 		await waitFor(() => document.querySelector('text-box'));
 		setReset((r) => r + 1);
