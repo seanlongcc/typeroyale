@@ -12,7 +12,7 @@ const AccountGameStats = ({ mode, stats }) => {
 	return (
 		<div className='flex flex-col items-center justify-center'>
 			{/* general stats */}
-			<span className='mb-4'>
+			<span className='btn-group m-2'>
 				<Button
 					key={'overall'}
 					label={'overall'}
