@@ -7,7 +7,7 @@ import WordsGame from '../game-modes/words-game';
 import QuoteGame from '../game-modes/quote-game';
 import GibberishGame from '../game-modes/gibberish-game.jsx';
 
-import { RiRefreshLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RiRefreshLine, RiArrowRightSLine, RiLock2Line } from 'react-icons/ri';
 
 const PracticeModes = () => {
 	const [mode, setMode] = useState('time');
@@ -99,8 +99,19 @@ const PracticeModes = () => {
 
 	return (
 		<div className='flex flex-col items-center'>
-			<span className='text-5xl animate-bounce text-primary'>
-				{caps && <span>Caps Lock</span>}
+			<span className='text-primary'>
+				{caps && !typed.done ? (
+					<div class='alert bg-primary text-base-content'>
+						<div>
+							<RiLock2Line className='w-5 h-5' />
+							<span>Caps Lock</span>
+						</div>
+					</div>
+				) : (
+					<span className='alert text-primary bg-base-content invisible'>
+						Caps Lock
+					</span>
+				)}
 			</span>
 			<span tabIndex={0} className='outline-none'>
 				{renderMode()}
