@@ -73,7 +73,6 @@ const AccountGameStats = ({ mode, stats }) => {
 				</>
 			)}
 			{/* general stats */}
-
 			{mode !== 'all' && (
 				<div className='flex flex-col items-center justify-center'>
 					<span className='btn-group mb-2'>
