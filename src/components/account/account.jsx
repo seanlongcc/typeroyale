@@ -39,7 +39,6 @@ const Account = ({ user }) => {
 						return { correct_chars, total_chars, time };
 					};
 					const lt = last_ten();
-					console.log('last ten', lt);
 					return {
 						[m]: {
 							totals: stats[m],
@@ -107,16 +106,16 @@ const Account = ({ user }) => {
 	}, [stats, stats_by_mode]);
 
 	return user ? (
-		<div className='flex flex-col items-center h-screen justify-center'>
-			<div className='avatar mb-4'>
+		<div className='flex flex-col items-center h-screen py-40 overflow-y-auto scrollbar'>
+			<div className='avatar mb-4 '>
 				<div className='flex flex-col w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
 					<img className='mask mask-circle ' src={user.photoURL} alt='' />
 				</div>
 			</div>
-			<span className='flex justify-center text-4xl mb-4'>
+			<span className='flex justify-center text-4xl mb-4 '>
 				{user.displayName}
 			</span>
-			<div className='btn-group'>
+			<div className='btn-group '>
 				{['all', 'time', 'words', 'quote', 'gibberish'].map((label, i) => (
 					<Button key={i} label={label} mode={mode} setMode={setMode} />
 				))}

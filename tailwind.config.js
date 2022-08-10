@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+	mode: 'jit',
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
@@ -35,9 +36,9 @@ module.exports = {
 					secondary: '#4C4452', //typed text, should be dark
 					'base-100': '#111111ff', //background, dark
 					'base-content': '#E8D5B5', //text color, bright
-					'--rounded-box': '0rem',
-					'--rounded-btn': '0rem',
-					'--rounded-badge': '0rem',
+					'--rounded-box': '4px',
+					'--rounded-btn': '4px',
+					'--rounded-badge': '4px',
 				},
 			},
 			{

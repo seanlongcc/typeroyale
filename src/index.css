@@ -12,3 +12,26 @@
 		font-family: TeX-Gyre-Heroes, system-ui, sans-serif;
 	}
 }
+
+@layer utilities {
+	.scrollbar::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		@apply bg-primary;
+		@apply rounded-sm;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+		@apply bg-base-content;
+	}
+	.scrollbar::-webkit-scrollbar-corner {
+		@apply bg-base-content;
+	}
+}

@@ -1,7 +1,7 @@
 const ThemePicker = () => {
 	return (
 		<div>
-			<button className='absolute bottom-0 p-10'>
+			<button className='fixed bottom-0 p-10'>
 				<select className='select select-xs w-full max-w-xs' data-choose-theme>
 					<option value='typeroyale'>typeroyale</option>
 					<option value='rin'>rin</option>

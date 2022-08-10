@@ -16,7 +16,7 @@ const StaticElements = ({ user }) => {
 	}, []);
 
 	return (
-		<div className='relative'>
+		<div className='overflow-auto scrollbar'>
 			{/* title */}
 			<Link
 				className='absolute left-0 text-4xl font-bold p-10 hover:animate-pulse text-primary'
@@ -28,7 +28,7 @@ const StaticElements = ({ user }) => {
 			<ThemePicker />
 			{/* github link */}
 			<a
-				className='absolute bottom-0 right-0 p-10 hover:animate-pulse'
+				className='fixed bottom-0 right-0 p-10 hover:animate-pulse'
 				href='https://github.com/seanlongcc/typeroyale'
 				rel='noopener noreferrer'
 				target='_blank'

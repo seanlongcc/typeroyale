@@ -7,9 +7,8 @@ const AccountGameStats = ({ mode, stats }) => {
 	const { completed, started, total_chars, total_correct_chars, total_time } =
 		stats.totals;
 	const [avg_all, avg_ten] = [stats.avg_all, stats.avg_ten];
-
 	const [avgMode, setAvgMode] = useState('overall');
-	console.log('avg ten', avg_ten);
+
 	return (
 		<div className='flex flex-col items-center justify-center'>
 			<div className='m-2'></div>
