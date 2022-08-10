@@ -24,7 +24,7 @@ const AccountGameStats = ({ mode, stats }) => {
 					<div className='stat-value'>{started}</div>
 				</div>
 			</div>
-			<div class='divider'></div>
+			<div className='divider'></div>
 			<div className=''></div>
 			<div className='stats'>
 				<div className='stat'>
@@ -43,7 +43,7 @@ const AccountGameStats = ({ mode, stats }) => {
 					<div className='stat-value'>{total_time.toFixed(2)}s</div>
 				</div>
 			</div>
-			<div class='divider'></div>
+			<div className='divider'></div>
 			{/* bests */}
 			{mode === 'all' && (
 				<>
