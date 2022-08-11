@@ -49,7 +49,6 @@ const TextBox = ({
 	const handleKeyDown = (e) => {
 		const [val, p_raw] = [typed.val, passage.raw];
 
-		console.log(sinceSpace);
 		if (e.ctrlKey && e.key === 'Backspace') {
 			if (
 				sinceSpace < 0 &&
@@ -113,7 +112,6 @@ const TextBox = ({
 				setProgress((progress) => progress + 1);
 				setSinceSpace(0);
 			}
-			console.log(sinceSpace);
 		}
 	};
 

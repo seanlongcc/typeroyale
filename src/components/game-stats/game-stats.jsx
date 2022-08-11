@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { RiPulseLine, RiFontSize, RiMedalLine } from 'react-icons/ri';
 import { updateStats } from '../../firebase/firebase';
 
-const GameStats = ({ gameTime, typed, passage, mode }) => {
+const GameStats = ({ gameTime, typed, passage, mode, source }) => {
 	const acc = () => {
 		let ptr = 0;
 		let correct = 0;
@@ -35,64 +35,77 @@ const GameStats = ({ gameTime, typed, passage, mode }) => {
 	}, [mode, total, correct, gameTime]);
 
 	return (
-		<div className='flex flex-row mb-16'>
-			{/* left */}
-			<div className='stats stats-vertical'>
-				<div className='stat'>
-					<div className='stat-figure text-secondary'>
-						<RiPulseLine className='w-10 h-10' />
+		<div className='flex flex-col items-center'>
+			{source !== undefined ? (
+				<div className='flex flex-col items-center'>
+					<div>
+						<span>Quote from</span>
+					</div>
+					<span className='italic'>{source}</span>
+				</div>
+			) : (
+				<div></div>
+			)}
+
+			<div className='flex flex-row mb-16'>
+				{/* left */}
+				<div className='stats stats-vertical'>
+					<div className='stat'>
+						<div className='stat-figure text-secondary'>
+							<RiPulseLine className='w-10 h-10' />
+						</div>
+					</div>
+
+					<div className='stat'>
+						<div className='stat-figure text-secondary'>
+							<RiFontSize className='w-10 h-10' />
+						</div>
+					</div>
+
+					<div className='stat'>
+						<div className='stat-figure text-secondary'>
+							<RiMedalLine className='w-10 h-10' />
+						</div>
 					</div>
 				</div>
+				{/* left */}
+				<div className='stats stats-vertical'>
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>words per minute</div>
+						<div className='stat-value'>{wpm}</div>
+					</div>
 
-				<div className='stat'>
-					<div className='stat-figure text-secondary'>
-						<RiFontSize className='w-10 h-10' />
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>total characters</div>
+						<div className='stat-value'>{charsTyped}</div>
+					</div>
+
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>time</div>
+						<div className='stat-value'>{gameTime}s</div>
 					</div>
 				</div>
-
-				<div className='stat'>
-					<div className='stat-figure text-secondary'>
-						<RiMedalLine className='w-10 h-10' />
+				{/* right */}
+				<div className='stats stats-vertical'>
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>characters per second</div>
+						<div className='stat-value'>{cps}</div>
 					</div>
-				</div>
-			</div>
-			{/* left */}
-			<div className='stats stats-vertical'>
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>words per minute</div>
-					<div className='stat-value'>{wpm}</div>
-				</div>
 
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>total characters</div>
-					<div className='stat-value'>{charsTyped}</div>
-				</div>
-
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>time</div>
-					<div className='stat-value'>{gameTime}s</div>
-				</div>
-			</div>
-			{/* right */}
-			<div className='stats stats-vertical'>
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>characters per second</div>
-					<div className='stat-value'>{cps}</div>
-				</div>
-
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>incorrect characters</div>
-					<div className='stat-value'>{wrongChars}</div>
-				</div>
-				<div className='stat'>
-					<div className='stat-figure text-secondary'></div>
-					<div className='stat-title'>accuracy</div>
-					<div className='stat-value'>{accuracy}%</div>
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>incorrect characters</div>
+						<div className='stat-value'>{wrongChars}</div>
+					</div>
+					<div className='stat'>
+						<div className='stat-figure text-secondary'></div>
+						<div className='stat-title'>accuracy</div>
+						<div className='stat-value'>{accuracy}%</div>
+					</div>
 				</div>
 			</div>
 		</div>
