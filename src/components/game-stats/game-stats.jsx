@@ -1,10 +1,5 @@
 import { useEffect } from 'react';
-import {
-	RiPulseLine,
-	RiFontSize,
-	RiMedalLine,
-	RiBook2Line,
-} from 'react-icons/ri';
+import { RiPulseLine, RiFontSize, RiMedalLine } from 'react-icons/ri';
 import { updateStats } from '../../firebase/firebase';
 
 const GameStats = ({ gameTime, typed, passage, mode, source }) => {
@@ -41,6 +36,17 @@ const GameStats = ({ gameTime, typed, passage, mode, source }) => {
 
 	return (
 		<div className='flex flex-col items-center'>
+			{source !== undefined ? (
+				<div className='flex flex-col items-center'>
+					<div>
+						<span>Quote from</span>
+					</div>
+					<span className='italic'>{source}</span>
+				</div>
+			) : (
+				<div></div>
+			)}
+
 			<div className='flex flex-row mb-16'>
 				{/* left */}
 				<div className='stats stats-vertical'>
@@ -102,7 +108,6 @@ const GameStats = ({ gameTime, typed, passage, mode, source }) => {
 					</div>
 				</div>
 			</div>
-			<span className='absolute py-[19rem] -z-10'>{source}</span>
 		</div>
 	);
 };
