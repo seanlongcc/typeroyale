@@ -98,7 +98,7 @@ const PracticeModes = () => {
 	};
 
 	return (
-		<div className='flex flex-col items-center'>
+		<div className='flex flex-col items-center scrollbar'>
 			<span className='text-primary'>
 				{caps && !typed.done ? (
 					<div class='alert bg-primary text-base-content'>

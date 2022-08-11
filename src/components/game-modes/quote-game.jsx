@@ -29,7 +29,6 @@ const QuoteGame = ({
 			document.getElementById('text-box').focus();
 		}
 	}, [mode, setReady, setTyped, setProgress]);
-
 	return (
 		<div className='flex flex-col items-center w-screen'>
 			<span className='flex flex-col items-center'>
@@ -47,6 +46,7 @@ const QuoteGame = ({
 						gameTime={time}
 						passage={passage.raw}
 						mode='quote'
+						source={passage.source}
 					/>
 				)}
 			</span>
