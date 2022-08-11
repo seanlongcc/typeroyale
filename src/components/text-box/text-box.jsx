@@ -132,10 +132,13 @@ const TextBox = ({
 	return (
 		<div
 			id='text-box'
-			className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
+			className='w-screen-md text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
+			<div
+			className='absolute left-1/3'
+			>
 			<span>
 				{passage.display
 					.slice(passagePtr.start, passagePtr.end)
@@ -182,6 +185,7 @@ const TextBox = ({
 						}
 					})}
 			</span>
+			</div>
 		</div>
 	);
 };
