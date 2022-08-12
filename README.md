@@ -26,10 +26,9 @@
 - Battle Royale mode
 - and more!
 
-## Libraries Used
+## Technologies Used
 
 - React
+- Firebase
 - Tailwind CSS
 - DaisyUI
-- Firebase
-- Remix Icon Library
