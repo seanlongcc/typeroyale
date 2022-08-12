@@ -1,15 +1,38 @@
-const LastTenChart = ({ mode, stats }) => {
-	const [avg_ten] = [stats.avg_ten];
+const AllLastTenChart = ({ stats }) => {
 	const lastTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-	console.log();
+	const average = (array) => array.reduce((a, b) => a + b) / array.length;
+	const avgWPM = average(
+		lastTen.map(
+			(m) =>
+				(stats[stats.length - [m]].correct_chars /
+					stats[stats.length - [m]].time /
+					5) *
+				60
+		)
+	);
+	const avgCPS = average(
+		lastTen.map(
+			(m) =>
+				stats[stats.length - [m]].correct_chars / stats[stats.length - [m]].time
+		)
+	);
+	const avgACC = average(
+		lastTen.map(
+			(m) =>
+				(stats[stats.length - [m]].correct_chars /
+					stats[stats.length - [m]].total_chars) *
+				100
+		)
+	);
+
 	return (
-		<div>
-			{stats.totals.all_games.length < 10 ? (
+		<div className='mt-2'>
+			{stats.length < 10 ? (
 				<div className='text-2xl flex flex-col items-center justify-center'>
 					<span>play at least 10 games to show your stats</span>
 					<progress
 						className='progress progress-primary w-56 mt-4 bg-secondary'
-						value={stats.totals.all_games.length}
+						value={stats.length}
 						max='10'
 					></progress>
 				</div>
@@ -30,34 +53,22 @@ const LastTenChart = ({ mode, stats }) => {
 									<td>{[m]}</td>
 									<td>
 										{(
-											(stats.totals.all_games[
-												stats.totals.all_games.length - [m]
-											].correct_chars /
-												stats.totals.all_games[
-													stats.totals.all_games.length - [m]
-												].time /
+											(stats[stats.length - [m]].correct_chars /
+												stats[stats.length - [m]].time /
 												5) *
 											60
 										).toFixed(2)}
 									</td>
 									<td>
 										{(
-											stats.totals.all_games[
-												stats.totals.all_games.length - [m]
-											].correct_chars /
-											stats.totals.all_games[
-												stats.totals.all_games.length - [m]
-											].time
+											stats[stats.length - [m]].correct_chars /
+											stats[stats.length - [m]].time
 										).toFixed(2)}
 									</td>
 									<td>
 										{(
-											(stats.totals.all_games[
-												stats.totals.all_games.length - [m]
-											].correct_chars /
-												stats.totals.all_games[
-													stats.totals.all_games.length - [m]
-												].total_chars) *
+											(stats[stats.length - [m]].correct_chars /
+												stats[stats.length - [m]].total_chars) *
 											100
 										).toFixed(2)}
 										%
@@ -68,9 +79,9 @@ const LastTenChart = ({ mode, stats }) => {
 						<tfoot>
 							<tr>
 								<th>avg</th>
-								<th>{avg_ten.wpm}</th>
-								<th>{avg_ten.cps}</th>
-								<th>{avg_ten.acc}%</th>
+								<th>{avgWPM.toFixed(2)}</th>
+								<th>{avgCPS.toFixed(2)}</th>
+								<th>{avgACC.toFixed(2)}%</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -79,4 +90,4 @@ const LastTenChart = ({ mode, stats }) => {
 		</div>
 	);
 };
-export default LastTenChart;
+export default AllLastTenChart;

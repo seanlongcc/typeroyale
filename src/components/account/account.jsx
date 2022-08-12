@@ -102,6 +102,7 @@ const Account = ({ user }) => {
 				acc: acc(lt.correct_chars, lt.total_chars),
 			},
 			bests: getBests(stats_by_mode),
+			last_ten: stats.last_ten,
 		};
 	}, [stats, stats_by_mode]);
 

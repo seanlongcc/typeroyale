@@ -2,11 +2,12 @@ import { useState } from 'react';
 import Button from '../button/button';
 import { mode_map } from './statsHelpers';
 import LastTenChart from './last-ten-chart';
+import AllLastTenChart from './all-last-ten-chart';
 
 const AccountGameStats = ({ mode, stats }) => {
 	const { completed, started, total_chars, total_correct_chars, total_time } =
 		stats.totals;
-	const [avg_all, avg_ten] = [stats.avg_all, stats.avg_ten];
+	const [avg_all] = [stats.avg_all];
 	const [avgMode, setAvgMode] = useState('overall');
 
 	return (
@@ -47,7 +48,6 @@ const AccountGameStats = ({ mode, stats }) => {
 			{/* bests */}
 			{mode === 'all' && (
 				<>
-					<div className=' '></div>
 					<div className='stats'>
 						<div className='stat'>
 							<div className='stat-figure text-secondary'></div>
@@ -69,6 +69,12 @@ const AccountGameStats = ({ mode, stats }) => {
 							<div className='stat-value'>{stats.bests.acc.val}%</div>
 							<div className='stat-desc'>{mode_map[stats.bests.acc.mode]}</div>
 						</div>
+					</div>
+					<div className='flex flex-col items-center m-4'>
+						<button className='btn btn-sm no-animation btn-outline btn-primary'>
+							last 10
+						</button>
+						<AllLastTenChart stats={stats.last_ten} />
 					</div>
 				</>
 			)}
