@@ -47,7 +47,7 @@ const INITIAL_DOC = {
 	words_game: FIELDS,
 	quote_game: FIELDS,
 	gibberish_game: FIELDS,
-	last_ten: []
+	last_ten: [],
 };
 
 ///////////////////////// AUTH /////////////////////////////////////
@@ -78,8 +78,9 @@ const logout = () => {
 };
 
 ///////////////////////// STATS /////////////////////////////////////
-const updateGamesStarted = async (mode) => {
+const updateGamesStarted = async (mode, duration) => {
 	try {
+		if (mode !== 'quote' && duration < 15) return;
 		const user = auth.currentUser;
 		if (!user) return;
 		const userRef = doc(db, 'users', user.uid);
@@ -90,8 +91,15 @@ const updateGamesStarted = async (mode) => {
 	}
 };
 
-const updateStats = async (mode, total_chars, correct_chars, time) => {
+const updateStats = async (
+	mode,
+	total_chars,
+	correct_chars,
+	time,
+	duration
+) => {
 	try {
+		if (mode !== 'quote' && duration < 15) return;
 		const user = auth.currentUser;
 		if (!user) return;
 
@@ -103,10 +111,10 @@ const updateStats = async (mode, total_chars, correct_chars, time) => {
 		const newGame = { total_chars, correct_chars, time };
 		let lastTen = userDoc.data()['practice'].last_ten;
 
-		const newTen = 
+		const newTen =
 			lastTen.length < 10
-			? [...lastTen, newGame]
-			: [...lastTen.slice(1), newGame]; 
+				? [...lastTen, newGame]
+				: [...lastTen.slice(1), newGame];
 
 		let base = `practice.${mode}_game`;
 
@@ -117,7 +125,7 @@ const updateStats = async (mode, total_chars, correct_chars, time) => {
 			[`${base}.total_time`]: increment(time),
 			[`${base}.max_chars`]: newMaxChars,
 			[`${base}.all_games`]: arrayUnion(newGame),
-			"practice.last_ten": newTen 
+			'practice.last_ten': newTen,
 		});
 	} catch (e) {
 		console.log('Transaction failed: ', e);

@@ -15,6 +15,7 @@ const TextBox = ({
 	mode,
 	progress,
 	setProgress,
+	duration,
 }) => {
 	const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
@@ -85,7 +86,7 @@ const TextBox = ({
 		} else if (validCharSet.has(e.key) && val.length < p_raw.length) {
 			if (val.length === 0) {
 				setReady(true);
-				updateGamesStarted(mode);
+				updateGamesStarted(mode, duration);
 			}
 			setSinceSpace((sinceSpace) => sinceSpace - 1);
 			setTyped((t) => {

@@ -54,6 +54,7 @@ const TimeGame = ({
 					/>
 				) : (
 					<GameStats
+						duration={mode}
 						typed={typed}
 						gameTime={mode}
 						passage={passage.raw}
@@ -65,6 +66,7 @@ const TimeGame = ({
 			<span>
 				{!typed.done ? (
 					<TextBox
+						duration={mode}
 						passage={passage}
 						typed={typed}
 						setTyped={setTyped}

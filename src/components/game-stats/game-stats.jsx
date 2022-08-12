@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
-import { RiPulseLine, RiFontSize, RiMedalLine } from 'react-icons/ri';
+import {
+	RiPulseLine,
+	RiFontSize,
+	RiMedalLine,
+	RiInformationLine,
+} from 'react-icons/ri';
 import { updateStats } from '../../firebase/firebase';
 
-const GameStats = ({ gameTime, typed, passage, mode, source }) => {
+const GameStats = ({ gameTime, typed, passage, mode, source, duration }) => {
 	const acc = () => {
 		let ptr = 0;
 		let correct = 0;
@@ -31,8 +36,8 @@ const GameStats = ({ gameTime, typed, passage, mode, source }) => {
 	const wrongChars = total - correct;
 
 	useEffect(() => {
-		updateStats(mode, total, correct, gameTime);
-	}, [mode, total, correct, gameTime]);
+		updateStats(mode, total, correct, gameTime, duration);
+	}, [mode, total, correct, gameTime, duration]);
 
 	return (
 		<div className='flex flex-col items-center'>
@@ -42,6 +47,19 @@ const GameStats = ({ gameTime, typed, passage, mode, source }) => {
 						<span>Quote from</span>
 					</div>
 					<span className='italic'>{source}</span>
+				</div>
+			) : (
+				<div></div>
+			)}
+
+			{mode !== 'quote' && duration < 15 ? (
+				<div className='alert bg-primary flex flex-col items-center w-80'>
+					<span>
+						<RiInformationLine className='w-5 h-5' />
+						{mode === 'time'
+							? "Tests under 15 seconds aren't saved"
+							: "Tests under 15 words aren't saved"}
+					</span>
 				</div>
 			) : (
 				<div></div>

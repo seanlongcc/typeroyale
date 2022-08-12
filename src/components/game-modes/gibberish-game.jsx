@@ -56,6 +56,7 @@ const GibberishGame = ({
 					/>
 				) : (
 					<GameStats
+						duration={mode}
 						typed={typed}
 						gameTime={time}
 						passage={passage.raw}
@@ -69,6 +70,7 @@ const GibberishGame = ({
 			<span className='font-sans'>
 				{!typed.done ? (
 					<TextBox
+						duration={mode}
 						passage={passage}
 						typed={typed}
 						setTyped={setTyped}

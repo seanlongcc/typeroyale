@@ -71,10 +71,43 @@ const AccountGameStats = ({ mode, stats }) => {
 						</div>
 					</div>
 					<div className='flex flex-col items-center m-4'>
-						<button className='btn btn-sm no-animation btn-outline btn-primary'>
-							last 10
-						</button>
-						<AllLastTenChart stats={stats.last_ten} />
+						<span className='btn-group mb-2'>
+							<Button
+								key={'overall'}
+								label={'overall'}
+								mode={avgMode}
+								setMode={setAvgMode}
+							/>
+							<Button
+								key={'last 10'}
+								label={'last 10'}
+								mode={avgMode}
+								setMode={setAvgMode}
+							/>
+						</span>
+						{avgMode === 'overall' ? (
+							<div className='stats'>
+								<div className='stat'>
+									<div className='stat-figure text-secondary'></div>
+									<div className='stat-title'>words per minute</div>
+									<div className='stat-value'>{avg_all.wpm}</div>
+								</div>
+
+								<div className='stat'>
+									<div className='stat-figure text-secondary'></div>
+									<div className='stat-title'>characters per second</div>
+									<div className='stat-value'>{avg_all.cps}</div>
+								</div>
+
+								<div className='stat'>
+									<div className='stat-figure text-secondary'></div>
+									<div className='stat-title'>accuracy</div>
+									<div className='stat-value'>{avg_all.acc}%</div>
+								</div>
+							</div>
+						) : (
+							<AllLastTenChart stats={stats.last_ten} />
+						)}
 					</div>
 				</>
 			)}

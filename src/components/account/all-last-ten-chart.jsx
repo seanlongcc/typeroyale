@@ -48,8 +48,8 @@ const AllLastTenChart = ({ stats }) => {
 							</tr>
 						</thead>
 						<tbody>
-							{lastTen.map((m) => (
-								<tr>
+							{lastTen.map((m, i) => (
+								<tr key={i}>
 									<td>{[m]}</td>
 									<td>
 										{(
