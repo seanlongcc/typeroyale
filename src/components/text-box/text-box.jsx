@@ -132,56 +132,58 @@ const TextBox = ({
 	return (
 		<div
 			id='text-box'
-			className='max-w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
+			className='w-screen-md  min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>
-			<span>
-				{passage.display
-					.slice(passagePtr.start, passagePtr.end)
-					.split('')
-					.map((c, i) => {
-						i += passagePtr.start;
-						if (typed.val[i] === c) {
-							return (
-								<span key={i} className='text-secondary'>
-									{c}
-									{textFocused && i === typed.val.length - 1 && <Caret />}
-								</span>
-							);
-						} else if (typed.val[i]) {
-							//if spacebar is wrong, highlight
-							if (
-								passage.display[i] === ' ' &&
-								typed.val[i] !== passage.display[i]
-							) {
+			<div className='absolute -mx-[22rem]'>
+				<span>
+					{passage.display
+						.slice(passagePtr.start, passagePtr.end)
+						.split('')
+						.map((c, i) => {
+							i += passagePtr.start;
+							if (typed.val[i] === c) {
 								return (
-									<span key={i} className='bg-primary bg-opacity-50'>
+									<span key={i} className='text-secondary'>
 										{c}
 										{textFocused && i === typed.val.length - 1 && <Caret />}
 									</span>
 								);
+							} else if (typed.val[i]) {
+								//if spacebar is wrong, highlight
+								if (
+									passage.display[i] === ' ' &&
+									typed.val[i] !== passage.display[i]
+								) {
+									return (
+										<span key={i} className='bg-primary bg-opacity-50'>
+											{c}
+											{textFocused && i === typed.val.length - 1 && <Caret />}
+										</span>
+									);
+								} else {
+									return (
+										<span key={i} className='text-primary'>
+											{c}
+											{textFocused && i === typed.val.length - 1 && <Caret />}
+										</span>
+									);
+								}
 							} else {
+								//returns the passage if nothing is typed, renders all at once
 								return (
-									<span key={i} className='text-primary'>
+									<span key={i}>
+										{textFocused && typed.val.length === 0 && i === 0 && (
+											<Caret />
+										)}
 										{c}
-										{textFocused && i === typed.val.length - 1 && <Caret />}
 									</span>
 								);
 							}
-						} else {
-							//returns the passage if nothing is typed, renders all at once
-							return (
-								<span key={i}>
-									{textFocused && typed.val.length === 0 && i === 0 && (
-										<Caret />
-									)}
-									{c}
-								</span>
-							);
-						}
-					})}
-			</span>
+						})}
+				</span>
+			</div>
 		</div>
 	);
 };
