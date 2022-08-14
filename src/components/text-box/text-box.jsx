@@ -4,7 +4,9 @@ import { updateGamesStarted } from '../../firebase/firebase';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
-let validCharSet = new Set(validChars.split(''));
+const allCharSet = new Set(validChars.split(''));
+const spaceSet = new Set(validChars.slice(-1));
+let validCharSet = allCharSet;
 
 const TextBox = ({
 	passage,
@@ -44,7 +46,7 @@ const TextBox = ({
 		if (!ready) {
 			setPassagePtr(updatePtr(0));
 			incorrect.current = 0;
-			validCharSet = new Set(validChars.split(''));
+			validCharSet = allCharSet;
 		}
 	}, [ready, setPassagePtr, updatePtr, setProgress]);
 
@@ -63,7 +65,7 @@ const TextBox = ({
 				});
 				setSinceSpace(0);
 				incorrect.current = 0;
-				validCharSet = new Set(validChars.split(''));
+				validCharSet = allCharSet;
 			}
 		} else if (e.key === 'Backspace' && val.length > 0) {
 			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
@@ -76,7 +78,7 @@ const TextBox = ({
 				if (sinceSpace <= 0) {
 					setSinceSpace((sinceSpace) => sinceSpace + 1);
 				}
-				validCharSet = new Set(validChars.split(''));
+				validCharSet = allCharSet;
 			}
 
 			if (
@@ -109,7 +111,7 @@ const TextBox = ({
 
 			//allows only space to be typed if \n is next char
 			if (passage.display[val.length + 1] === '\n') {
-				validCharSet = new Set(validChars.slice(-1));
+				validCharSet = spaceSet;
 			}
 
 			// progress counter
@@ -120,7 +122,7 @@ const TextBox = ({
 			) {
 				setProgress((progress) => progress + 1);
 				setSinceSpace(0);
-				validCharSet = new Set(validChars.split(''));
+				validCharSet = allCharSet;
 			}
 		}
 	};
@@ -142,7 +144,7 @@ const TextBox = ({
 	return (
 		<div
 			id='text-box'
-			className='w-screen-md  min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
+			className='w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
 			tabIndex={0}
 			onKeyDown={handleKeyDown}
 		>

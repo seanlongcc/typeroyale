@@ -98,7 +98,7 @@ const PracticeModes = () => {
 	};
 
 	return (
-		<div className='flex flex-col items-center scrollbar'>
+		<div className='flex flex-col items-center overflow-y-auto scrollbar'>
 			<span className='text-primary'>
 				{caps && !typed.done ? (
 					<div class='alert bg-primary text-base-content'>
@@ -137,7 +137,7 @@ const PracticeModes = () => {
 					{typed.done ? <RiArrowRightSLine /> : <RiRefreshLine />}
 				</button>
 			</div>
-			<div className='absolute bottom-24'>
+			<span className='items-center absolute bottom-11'>
 				<button className='btn btn-xs no-animation btn-outline btn-primary'>
 					tab
 				</button>{' '}
@@ -146,7 +146,7 @@ const PracticeModes = () => {
 					enter
 				</button>{' '}
 				- {typed.done ? 'next' : 'restart'}
-			</div>
+			</span>
 		</div>
 	);
 };
