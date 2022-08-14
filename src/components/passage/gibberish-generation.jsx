@@ -16,7 +16,7 @@ export const generateGibberish = (wordCount) => {
 		return wordArray;
 	};
 	const gibPassage = generateString(wordCount);
-	const LINE_LEN = 50; // play around with value depending on desired text box size
+	const LINE_LEN = 40; // play around with value depending on desired text box size
 
 	let charCount = 0;
 	let dispPassage = '';

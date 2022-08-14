@@ -1,29 +1,36 @@
 const AllLastTenChart = ({ stats }) => {
 	const lastTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	const average = (array) => array.reduce((a, b) => a + b) / array.length;
-	const avgWPM = average(
-		lastTen.map(
-			(m) =>
-				(stats[stats.length - [m]].correct_chars /
-					stats[stats.length - [m]].time /
-					5) *
-				60
-		)
-	);
-	const avgCPS = average(
-		lastTen.map(
-			(m) =>
-				stats[stats.length - [m]].correct_chars / stats[stats.length - [m]].time
-		)
-	);
-	const avgACC = average(
-		lastTen.map(
-			(m) =>
-				(stats[stats.length - [m]].correct_chars /
-					stats[stats.length - [m]].total_chars) *
-				100
-		)
-	);
+	let avgWPM = 0,
+		avgCPS = 0,
+		avgACC = 0;
+
+	if (stats.length >= 10) {
+		avgWPM = average(
+			lastTen.map(
+				(m) =>
+					(stats[stats.length - [m]].correct_chars /
+						stats[stats.length - [m]].time /
+						5) *
+					60
+			)
+		);
+		avgCPS = average(
+			lastTen.map(
+				(m) =>
+					stats[stats.length - [m]].correct_chars /
+					stats[stats.length - [m]].time
+			)
+		);
+		avgACC = average(
+			lastTen.map(
+				(m) =>
+					(stats[stats.length - [m]].correct_chars /
+						stats[stats.length - [m]].total_chars) *
+					100
+			)
+		);
+	}
 
 	return (
 		<div className='mt-2'>

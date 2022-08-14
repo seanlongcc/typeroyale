@@ -51,21 +51,23 @@ const AccountGameStats = ({ mode, stats }) => {
 					<div className='stats'>
 						<div className='stat'>
 							<div className='stat-figure text-secondary'></div>
-							<div className='stat-title'>highest words per minute</div>
+							<div className='stat-title'>highest avg words per minute</div>
 							<div className='stat-value'>{stats.bests.wpm.val}</div>
 							<div className='stat-desc'>{mode_map[stats.bests.wpm.mode]}</div>
 						</div>
 
 						<div className='stat'>
 							<div className='stat-figure text-secondary'></div>
-							<div className='stat-title'>highest characters per second</div>
+							<div className='stat-title'>
+								highest avg characters per second
+							</div>
 							<div className='stat-value'>{stats.bests.cps.val}</div>
 							<div className='stat-desc'>{mode_map[stats.bests.cps.mode]}</div>
 						</div>
 
 						<div className='stat'>
 							<div className='stat-figure text-secondary'></div>
-							<div className='stat-title'>highest average accuracy</div>
+							<div className='stat-title'>highest avg average accuracy</div>
 							<div className='stat-value'>{stats.bests.acc.val}%</div>
 							<div className='stat-desc'>{mode_map[stats.bests.acc.mode]}</div>
 						</div>
