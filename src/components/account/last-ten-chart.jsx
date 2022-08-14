@@ -1,7 +1,7 @@
 const LastTenChart = ({ mode, stats }) => {
 	const [avg_ten] = [stats.avg_ten];
 	const lastTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-	console.log();
+
 	return (
 		<div>
 			{stats.totals.all_games.length < 10 ? (
