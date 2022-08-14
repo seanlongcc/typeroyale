@@ -44,6 +44,7 @@ const TextBox = ({
 		if (!ready) {
 			setPassagePtr(updatePtr(0));
 			incorrect.current = 0;
+			validCharSet = new Set(validChars.split(''));
 		}
 	}, [ready, setPassagePtr, updatePtr, setProgress]);
 
