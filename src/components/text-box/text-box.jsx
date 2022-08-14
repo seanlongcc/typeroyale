@@ -4,7 +4,7 @@ import { updateGamesStarted } from '../../firebase/firebase';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
-const validCharSet = new Set(validChars.split(''));
+let validCharSet = new Set(validChars.split(''));
 
 const TextBox = ({
 	passage,
@@ -62,6 +62,7 @@ const TextBox = ({
 				});
 				setSinceSpace(0);
 				incorrect.current = 0;
+				validCharSet = new Set(validChars.split(''));
 			}
 		} else if (e.key === 'Backspace' && val.length > 0) {
 			//BACKSPACE if previous key typed is NOT a space OR if previous character in passage is NOT a space
@@ -74,6 +75,7 @@ const TextBox = ({
 				if (sinceSpace <= 0) {
 					setSinceSpace((sinceSpace) => sinceSpace + 1);
 				}
+				validCharSet = new Set(validChars.split(''));
 			}
 
 			if (
@@ -104,6 +106,11 @@ const TextBox = ({
 			if (val.length + 1 === passagePtr.lb2 && val.length !== passagePtr.start)
 				setPassagePtr(updatePtr(passagePtr.lb1));
 
+			//allows only space to be typed if \n is next char
+			if (passage.display[val.length + 1] === '\n') {
+				validCharSet = new Set(validChars.slice(-1));
+			}
+
 			// progress counter
 			if (
 				e.key === ' ' &&
@@ -112,6 +119,7 @@ const TextBox = ({
 			) {
 				setProgress((progress) => progress + 1);
 				setSinceSpace(0);
+				validCharSet = new Set(validChars.split(''));
 			}
 		}
 	};
