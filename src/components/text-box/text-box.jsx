@@ -1,6 +1,7 @@
 import Caret from '../caret/caret';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { updateGamesStarted } from '../../firebase/firebase';
+import { RiCursorFill } from 'react-icons/ri';
 
 const validChars =
 	'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,/\'"!?@#$%^&*()_+-=<>\\|`~[]{};: ';
@@ -140,61 +141,76 @@ const TextBox = ({
 			setTextFocused(false);
 		}
 	}, [textFocused, click, typed]);
-
 	return (
-		<div
-			id='text-box'
-			className='w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
-			tabIndex={0}
-			onKeyDown={handleKeyDown}
-		>
-			<div className='absolute -mx-[22rem]'>
+		<div>
+			<span
+				className={
+					textFocused === true ? 'hidden' : 'absolute -mx-9 mt-14 text-xl'
+				}
+			>
 				<span>
-					{passage.display
-						.slice(passagePtr.start, passagePtr.end)
-						.split('')
-						.map((c, i) => {
-							i += passagePtr.start;
-							if (typed.val[i] === c) {
-								return (
-									<span key={i} className='text-secondary'>
-										{c}
-										{textFocused && i === typed.val.length - 1 && <Caret />}
-									</span>
-								);
-							} else if (typed.val[i]) {
-								//if spacebar is wrong, highlight
-								if (
-									passage.display[i] === ' ' &&
-									typed.val[i] !== passage.display[i]
-								) {
+					<RiCursorFill className='w-5 h-5 inline' />
+					Click to focus
+				</span>
+			</span>
+			<div
+				id='text-box'
+				className={
+					textFocused === true
+						? 'w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed'
+						: 'w-screen-md min-w-full text-3xl box-content m-10 h-36 outline-none whitespace-pre leading-relaxed blur'
+				}
+				tabIndex={0}
+				onKeyDown={handleKeyDown}
+			>
+				<div className='absolute -mx-[22rem]'>
+					<span>
+						{passage.display
+							.slice(passagePtr.start, passagePtr.end)
+							.split('')
+							.map((c, i) => {
+								i += passagePtr.start;
+								if (typed.val[i] === c) {
 									return (
-										<span key={i} className='bg-primary bg-opacity-50'>
+										<span key={i} className='text-secondary'>
 											{c}
 											{textFocused && i === typed.val.length - 1 && <Caret />}
 										</span>
 									);
+								} else if (typed.val[i]) {
+									//if spacebar is wrong, highlight
+									if (
+										passage.display[i] === ' ' &&
+										typed.val[i] !== passage.display[i]
+									) {
+										return (
+											<span key={i} className='bg-primary bg-opacity-50'>
+												{c}
+												{textFocused && i === typed.val.length - 1 && <Caret />}
+											</span>
+										);
+									} else {
+										return (
+											<span key={i} className='text-primary'>
+												{c}
+												{textFocused && i === typed.val.length - 1 && <Caret />}
+											</span>
+										);
+									}
 								} else {
+									//returns the passage if nothing is typed, renders all at once
 									return (
-										<span key={i} className='text-primary'>
+										<span key={i}>
+											{textFocused && typed.val.length === 0 && i === 0 && (
+												<Caret />
+											)}
 											{c}
-											{textFocused && i === typed.val.length - 1 && <Caret />}
 										</span>
 									);
 								}
-							} else {
-								//returns the passage if nothing is typed, renders all at once
-								return (
-									<span key={i}>
-										{textFocused && typed.val.length === 0 && i === 0 && (
-											<Caret />
-										)}
-										{c}
-									</span>
-								);
-							}
-						})}
-				</span>
+							})}
+					</span>
+				</div>
 			</div>
 		</div>
 	);
