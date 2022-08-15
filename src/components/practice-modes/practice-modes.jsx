@@ -101,7 +101,7 @@ const PracticeModes = () => {
 		<div className='flex flex-col items-center scrollbar'>
 			<span className='text-primary'>
 				{caps && !typed.done ? (
-					<div class='alert bg-primary text-base-content'>
+					<div className='alert bg-primary text-base-content'>
 						<div>
 							<RiLock2Line className='w-5 h-5' />
 							<span>Caps Lock</span>
@@ -138,11 +138,17 @@ const PracticeModes = () => {
 				</button>
 			</div>
 			<span className='items-center absolute bottom-11'>
-				<button className='btn btn-xs no-animation btn-outline btn-primary'>
+				<button
+					className='btn btn-xs no-animation btn-outline btn-primary'
+					tabIndex={-1}
+				>
 					tab
 				</button>{' '}
 				+{' '}
-				<button className='btn btn-xs no-animation btn-outline btn-primary'>
+				<button
+					className='btn btn-xs no-animation btn-outline btn-primary'
+					tabIndex={-1}
+				>
 					enter
 				</button>{' '}
 				- {typed.done ? 'next' : 'restart'}
