@@ -1,10 +1,11 @@
 const ThemePicker = () => {
 	return (
 		<div>
-			<button className='fixed bottom-0 p-10'>
+			<button className='fixed bottom-0 p-10' tabIndex={-1}>
 				<select
 					className='select select-xs w-full max-w-xs scrollbar'
 					data-choose-theme
+					tabIndex={-1}
 				>
 					<option value='typeroyale'>typeroyale</option>
 					<option value='rin'>rin</option>

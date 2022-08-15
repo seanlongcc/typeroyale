@@ -21,6 +21,7 @@ const StaticElements = ({ user }) => {
 			<Link
 				className='absolute left-0 text-4xl font-bold p-10 hover:animate-pulse text-primary'
 				to='/'
+				tabIndex={-1}
 			>
 				TypeRoyale
 			</Link>
@@ -32,22 +33,23 @@ const StaticElements = ({ user }) => {
 				href='https://github.com/seanlongcc/typeroyale'
 				rel='noopener noreferrer'
 				target='_blank'
+				tabIndex={-1}
 			>
 				<RiGithubLine className='w-5 h-5' />
 			</a>
 
 			{user ? (
-				<div className='absolute right-0 pr-10 pt-14'>
+				<div className='absolute right-0 pr-10 pt-14 '>
 					<div className='dropdown dropdown-bottom dropdown-end '>
-						<button tabIndex='0'>
+						<button tabIndex={-1}>
 							<RiUser3Line className='w-5 h-5' />
 						</button>
 						<ul
-							tabIndex='0'
+							tabIndex={-1}
 							className='dropdown-content menu p-2 shadow bg-primary rounded-box w-32'
 						>
 							<li>
-								<Link to='/account'>
+								<Link to='/account' tabIndex={-1}>
 									<RiBarChart2Line className='w-5 h-5' />
 									stats
 								</Link>
@@ -62,8 +64,11 @@ const StaticElements = ({ user }) => {
 					</div>
 				</div>
 			) : (
-				<Link to='/login'>
-					<button className='absolute right-0 pr-10 pt-14 hover:animate-pulse'>
+				<Link to='/login' tabIndex={-1}>
+					<button
+						className='absolute right-0 pr-10 pt-14 hover:animate-pulse'
+						tabIndex={-1}
+					>
 						<RiUser3Line className='w-5 h-5' />
 					</button>
 				</Link>
