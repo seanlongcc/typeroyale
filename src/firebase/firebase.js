@@ -142,6 +142,26 @@ const getStats = async () => {
 	return {};
 };
 
+/////////////// TODO: ASYNC GAME ///////////////
+const createAsyncGame = async () => {
+	const auth = getAuth();
+	console.log(auth);
+	// save passage, mode, {user_id: {name, keysPressed[], color}, ...}
+
+};
+
+const getAsyncGame = async () => {
+	const auth = getAuth();
+
+	// they have to be logged in to make it work
+	// can't be more than X number of players
+};
+
+const asyncGameFinished = async () => {
+	const auth = getAuth();
+};
+/////////////////////////////////////////
+
 export {
 	signInWithGoogle,
 	logout,

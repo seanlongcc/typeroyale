@@ -9,7 +9,17 @@ const allCharSet = new Set(validChars.split(''));
 const spaceSet = new Set(validChars.slice(-1));
 let validCharSet = allCharSet;
 
-const TextBox = ({
+// TODO: method stub
+const updateCursors = (players) => {
+
+  players.forEach( p => {
+    let key = p.keysPressed.shift();
+
+  });
+};
+
+
+const MultiTextBox = ({
 	passage,
 	typed,
 	setTyped,
@@ -17,6 +27,7 @@ const TextBox = ({
 	setReady,
 	mode,
 	progress,
+  players,
 	setProgress,
 	duration,
 }) => {
@@ -61,7 +72,7 @@ const TextBox = ({
 			) {
 				setTyped({
 					val: val.slice(0, sinceSpace),
-					keysPressed: [...typed.keysPressed, { key: e.key, time: Date.now()}],
+					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 					done: false,
 				});
 				setSinceSpace(0);
@@ -73,7 +84,7 @@ const TextBox = ({
 			if (val[val.length - 1] !== ' ' || passage.raw[val.length - 1] !== ' ') {
 				setTyped({
 					val: val.slice(0, -1),
-					keysPressed: [...typed.keysPressed, { key: e.key, time: Date.now()}],
+					keysPressed: [...typed.keysPressed, { key: e.key, time: new Date() }],
 					done: false,
 				});
 				if (sinceSpace <= 0) {
@@ -98,7 +109,7 @@ const TextBox = ({
 			setTyped((t) => {
 				return {
 					val: t.val + e.key,
-					keysPressed: [...t.keysPressed, { key: e.key, time: Date.now()}],
+					keysPressed: [...t.keysPressed, { key: e.key, time: new Date() }],
 					done: t.val + e.key === p_raw,
 				};
 			});
@@ -216,4 +227,4 @@ const TextBox = ({
 	);
 };
 
-export default TextBox;
+export default MultiTextBox;

@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	RiPulseLine,
 	RiFontSize,
 	RiMedalLine,
 	RiInformationLine,
+	RiShareForwardFill
 } from 'react-icons/ri';
 import { updateStats } from '../../firebase/firebase';
 
@@ -39,6 +40,34 @@ const GameStats = ({ gameTime, typed, passage, mode, source, duration }) => {
 		updateStats(mode, total, correct, gameTime, duration);
 	}, [mode, total, correct, gameTime, duration]);
 
+	///// SHARE GAME CODE /////
+	// TODO: TIME GAME CANT BE SHARED
+						// game can have max of 5 players
+
+	const [shareStatus, setShareStatus] = useState("NOT_SHARED"); // NOT_SHARED, 1: fetching, 2:
+	// TODO:
+	const onShareGameClicked = (e) => {
+		setShareStatus("FETCHING_LINK");
+
+		/* if logged in 
+
+		let cursorPos = typed.keysPressed.map((k, i) => ({
+			change: k.key === 'Backspace' ? -1 : 1, 
+			delay: i === 0 ? 0 : k.time - keysPressed[i-1] 
+		}));
+
+		// check if current game is shared game
+			// if not, firebase creates a new entry
+				with the user's name and game entry
+		// if new shared game
+		// schema: {id, asyncGameEntry[], }
+		*/
+
+		//let asyncGameEntry = {name: "name", gameType, mode, cursorPos};
+		// copy game url to keyboard and give indicator to user
+	};
+	/////////////////////////////////////////////
+
 	return (
 		<div className='flex flex-col items-center'>
 			{source !== undefined ? (
@@ -65,7 +94,7 @@ const GameStats = ({ gameTime, typed, passage, mode, source, duration }) => {
 				<div></div>
 			)}
 
-			<div className='flex flex-row mb-16'>
+			<div className='flex flex-row mb-4'>
 				{/* left */}
 				<div className='stats stats-vertical'>
 					<div className='stat'>
@@ -125,6 +154,19 @@ const GameStats = ({ gameTime, typed, passage, mode, source, duration }) => {
 						<div className='stat-value'>{accuracy}%</div>
 					</div>
 				</div>
+			</div>
+			<div>
+				{
+					shareStatus === 'NOT_SHARED'
+					? <button 
+							className='btn btn-sm text-primary btn-outline btn-primary mb-4 gap-2'
+							onClick={onShareGameClicked}
+						>
+							<RiShareForwardFill/>
+							<span>race friends</span>
+						</button>
+					: <button className='btn loading btn-sm text-primary btn-outline btn-primary mb-4'>generating link</button>
+				}
 			</div>
 		</div>
 	);
