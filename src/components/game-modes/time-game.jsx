@@ -16,6 +16,8 @@ const TimeGame = ({
 	reset,
 	progress,
 	setProgress,
+	textFocused,
+	setTextFocused,
 }) => {
 	const [mode, setMode] = useState(60);
 	const [customTime, setCustomTime] = useState('');
@@ -75,6 +77,8 @@ const TimeGame = ({
 						mode='time'
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				) : (
 					<span />

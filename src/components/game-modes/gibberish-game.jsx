@@ -16,6 +16,8 @@ const GibberishGame = ({
 	reset,
 	progress,
 	setProgress,
+	textFocused,
+	setTextFocused,
 }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
@@ -79,6 +81,8 @@ const GibberishGame = ({
 						mode='gibberish'
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				) : (
 					<span />
