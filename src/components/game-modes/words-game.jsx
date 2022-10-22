@@ -16,6 +16,8 @@ const WordsGame = ({
 	reset,
 	progress,
 	setProgress,
+	textFocused,
+	setTextFocused,
 }) => {
 	const [mode, setMode] = useState(60);
 	const [time, setTime] = useState(0);
@@ -77,6 +79,8 @@ const WordsGame = ({
 						mode='words'
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				) : (
 					<span />

@@ -16,6 +16,7 @@ const PracticeModes = () => {
 	const [caps, setCaps] = useState(false);
 	const [reset, setReset] = useState(0);
 	const [progress, setProgress] = useState(0); // stores user word count
+	const [textFocused, setTextFocused] = useState(false);
 
 	useEffect(() => {
 		setTyped({ val: '', keysPressed: [], done: false });
@@ -35,6 +36,8 @@ const PracticeModes = () => {
 						setTyped={setTyped}
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				);
 			case 'time':
@@ -47,6 +50,8 @@ const PracticeModes = () => {
 						setTyped={setTyped}
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				);
 			case 'quote':
@@ -59,6 +64,8 @@ const PracticeModes = () => {
 						setTyped={setTyped}
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				);
 			case 'gibberish':
@@ -71,6 +78,8 @@ const PracticeModes = () => {
 						setTyped={setTyped}
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				);
 			default:

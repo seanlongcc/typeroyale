@@ -19,8 +19,10 @@ const TextBox = ({
 	progress,
 	setProgress,
 	duration,
+	textFocused,
+	setTextFocused,
 }) => {
-	const [textFocused, setTextFocused] = useState(false);
+	// const [textFocused, setTextFocused] = useState(false);
 	const [click, setClick] = useState(false);
 
 	let incorrect = useRef(0);
@@ -140,7 +142,7 @@ const TextBox = ({
 		} else {
 			setTextFocused(false);
 		}
-	}, [textFocused, click, typed]);
+	}, [textFocused, click, typed, setTextFocused]);
 	return (
 		<div>
 			<span

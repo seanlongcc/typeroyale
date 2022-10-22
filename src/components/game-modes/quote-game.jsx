@@ -13,6 +13,8 @@ const QuoteGame = ({
 	reset,
 	progress,
 	setProgress,
+	textFocused,
+	setTextFocused,
 }) => {
 	const [mode, setMode] = useState('all');
 	const [time, setTime] = useState(0);
@@ -64,6 +66,8 @@ const QuoteGame = ({
 						mode='quote'
 						progress={progress}
 						setProgress={setProgress}
+						textFocused={textFocused}
+						setTextFocused={setTextFocused}
 					/>
 				) : (
 					<span />
